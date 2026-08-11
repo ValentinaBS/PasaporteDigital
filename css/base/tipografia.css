@@ -1,0 +1,77 @@
+/* ============================================================
+   TIPOGRAFÍA  ·  Fuentes de marca y estilos de texto base
+   ------------------------------------------------------------
+   El manual PUMM 2026 define dos fuentes:
+     · Road Rage      → títulos
+     · Special Gothic → textos
+
+   Las dos están en assets/fuentes/ en formato .woff2 y se
+   sirven desde ahí, no desde Google Fonts: la app se usa dentro
+   del predio con el wifi saturado, así que un dominio externo
+   sería un punto de falla más. Y además cada carga desde Google
+   mandaría la IP de la participante a un tercero — son menores
+   de edad y privacidad por diseño es uno de los principios del
+   producto.
+
+   ⚠️ Los nombres de acá abajo tienen que coincidir exactamente
+   con los de --fuente-titulo y --fuente-texto en variables.css.
+   Si no coinciden, el navegador no falla ni avisa: usa la fuente
+   de respaldo y listo. Es un bug silencioso y molesto.
+   ============================================================ */
+
+/* --- Road Rage · títulos ---
+   font-display: swap → el texto se ve enseguida con la fuente de
+   respaldo y se reemplaza cuando la de marca termina de bajar.
+   Sin esto, con el wifi del evento la pantalla puede quedar en
+   blanco hasta 3 segundos. Preferimos que se lea desde el primer
+   instante aunque cambie de aspecto a mitad de camino. */
+@font-face {
+  font-family: "Road Rage";
+  src: url("../../assets/fuentes/road-rage.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Special Gothic · textos ---
+   Ojo: el archivo es "Special Gothic", que no es lo mismo que
+   "Special Gothic Expanded One" (son dos familias distintas en
+   Google Fonts). El nombre de acá es el que manda. */
+@font-face {
+  font-family: "Special Gothic";
+  src: url("../../assets/fuentes/special-gothic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  line-height: 1.5;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;  /* Road Rage está pensada en mayúsculas. */
+}
+
+h1 { font-size: var(--texto-xl); }
+h2 { font-size: var(--texto-lg); }
+h3 { font-size: var(--texto-md); }
+
+p {
+  line-height: 1.55;
+}
+
+/* Foco visible en todo lo navegable por teclado.
+   No sacar: es el único indicador para quien no usa el dedo. */
+:focus-visible {
+  outline: 3px solid var(--color-acento);
+  outline-offset: 2px;
+  border-radius: var(--radio-sm);
+}

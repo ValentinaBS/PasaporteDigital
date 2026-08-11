@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PLANTILLA DE PANTALLA  ·  copiar, no editar
+  ------------------------------------------------------------
+  Este archivo NO es una pantalla: es el molde para crear una.
+
+  CÓMO SE USA
+    1. Copiá este archivo y renombralo (ej. pasaporte.html).
+       Los nombres van en minúscula y sin acentos ni espacios.
+    2. Cambiá el <title> y el data-pagina del <body>.
+    3. Escribí tu contenido dentro de <main>.
+    4. Si necesitás CSS propio:
+         · creá css/paginas/tu-pantalla.css
+         · agregá su @import al final de css/main.css
+    5. Si necesitás JS propio:
+         · creá js/paginas/tu-pantalla.js
+         · descomentá la última línea de scripts de acá abajo
+    6. Borrá de esta copia lo que no uses (la nav, el modal)
+       y borrá estos comentarios de instrucciones.
+
+  El archivo empieza con guion bajo para que quede primero en
+  la lista de VS Code y para que se note que no es una pantalla.
+
+  ⚠️ LA PRIMERA PANTALLA QUE HAY QUE CREAR ES html/index.html
+  El index.html de la raíz redirige ahí, y js/ui.js manda ahí a
+  quien no tenga el pasaporte activado. Hasta que exista, el
+  proyecto no tiene puerta de entrada.
+
+  ⚠️ REGLA DE RUTAS EN ESTA CARPETA
+  Todos los .html viven en html/, así que para salir a css/, js/
+  o data/ hay que subir un nivel con ../
+      ✅  ../css/main.css
+      ❌  css/main.css      (busca html/css/, no existe)
+      ❌  /css/main.css     (la barra inicial rompe en WordPress)
+  Nunca empieces una ruta con / — cuando esto se suba a una
+  subcarpeta de la web de CET, dejaría de encontrar todo.
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✏️ Cambiar por el nombre de tu pantalla -->
+  <title>Nombre de la pantalla - PUMM 2026</title>
+
+  <!-- Color de la barra del navegador en el celular. -->
+  <meta name="theme-color" content="#5B0099">
+
+  <!-- Un solo CSS: main.css importa todo lo demás. No agregues
+       más <link> acá, agregá el @import en main.css. -->
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<!-- ✏️ data-pagina lo lee js/app.js para marcar la sección activa
+     en la barra de navegación. Tiene que coincidir con el
+     data-seccion de la nav: "pasaporte", "actividades" o "logros".
+     Si tu pantalla no está en la nav, poné el nombre igual. -->
+<body data-pagina="nombre-de-tu-pantalla">
+
+  <!-- .contenedor centra y limita el ancho.
+       .con-nav deja lugar abajo para que la barra fija no tape
+       el último elemento. Sacala si tu pantalla no lleva nav. -->
+  <main class="contenedor con-nav">
+
+    <header class="encabezado">
+      <h1 class="encabezado__titulo">Título de la pantalla</h1>
+      <p class="encabezado__bajada">Una línea de contexto, si hace falta.</p>
+    </header>
+
+    <!-- ✏️ Tu contenido va acá.
+
+         Componentes disponibles (ver css/componentes/):
+           .tarjeta            bloque de contenido
+           .boton--primario    acción principal (una por pantalla)
+           .boton--fantasma    acción alternativa
+           .progreso           barra de avance
+           .insignia           insignia del recorrido
+
+         Utilidades (ver css/base/utilidades.css):
+           .pila .fila .fila-entre .centrado .oculto .texto-suave
+    -->
+
+  </main>
+
+  <!--
+    NAVEGACIÓN — borrala si tu pantalla no la lleva (bienvenida,
+    registro por QR, completado y el panel organizador no la usan).
+
+    ⚠️ Este bloque queda duplicado en cada pantalla que lo use.
+    Sin herramientas de compilación no hay forma de compartir un
+    pedazo de HTML. Si cambiás algo acá, cambialo en todas.
+  -->
+  <nav class="nav" aria-label="Secciones principales">
+    <a class="nav__item" data-seccion="pasaporte" href="pasaporte.html">
+      <span class="nav__icono" aria-hidden="true">🎫</span>
+      Pasaporte
+    </a>
+    <a class="nav__item" data-seccion="actividades" href="actividades.html">
+      <span class="nav__icono" aria-hidden="true">📍</span>
+      Actividades
+    </a>
+    <a class="nav__item" data-seccion="logros" href="logros.html">
+      <span class="nav__icono" aria-hidden="true">🏆</span>
+      Logros
+    </a>
+  </nav>
+
+  <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}).
+       Dejalo aunque no lo uses todavía: no se ve hasta que se abre. -->
+  <dialog class="modal" id="modal"></dialog>
+
+  <!--
+    ORDEN DE LOS SCRIPTS — importa y no es arbitrario:
+      1. data/    los arrays de datos
+      2. config   las constantes
+      3. datos    la capa de acceso (necesita que config ya corrió)
+      4. ui       los helpers (necesitan textos)
+      5. app      lo común a todas las pantallas
+      6. paginas/ la lógica de ESTA pantalla
+    Si invertís 2 y 3, datos.js no encuentra CONFIG y todo rompe.
+
+    Podés sacar los data/ que tu pantalla no use, pero si tenés
+    dudas dejalos: son archivos chicos y el costo es cero.
+  -->
+  <script src="../data/participantes.js"></script>
+  <script src="../data/actividades.js"></script>
+  <script src="../data/insignias.js"></script>
+  <script src="../data/textos.js"></script>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+
+  <!-- ✏️ Descomentá y apuntá al JS de tu pantalla -->
+  <!-- <script src="../js/paginas/tu-pantalla.js"></script> -->
+</body>
+</html>

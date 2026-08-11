@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PUERTA DE ENTRADA DEL PROYECTO
+  ------------------------------------------------------------
+  Los servidores web (y WordPress) buscan un index.html en la
+  raíz de la carpeta. Si no está, quien entre al link ve un
+  listado de archivos o un error 404. Por eso este archivo.
+
+  Ya solo redirige: html/index.html existe, así que el refresh
+  de abajo está activo y este archivo no se toca más.
+
+  El contenido del <body> quedó como respaldo — se ve nada más
+  si el navegador ignora el redirect (por ejemplo con una
+  extensión que lo bloquea). No hace falta mantenerlo.
+
+  ¿Por qué redirige en vez de ser la bienvenida?
+  Para que las pantallas vivan TODAS en html/ y escriban
+  exactamente las mismas rutas hacia css/, js/ y data/. Si una
+  quedara en la raíz, usaría css/main.css y las demás
+  ../css/main.css — esa mezcla es la causa número uno de
+  "a mí me anda y a vos no".
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pasaporte Digital · PUMM 2026</title>
+  <meta name="theme-color" content="#5B0099">
+
+  <!-- Redirección a la pantalla de bienvenida. Es la que funciona
+       siempre, incluso si el JavaScript está bloqueado. -->
+  <meta http-equiv="refresh" content="0; url=html/index.html">
+  <link rel="canonical" href="html/index.html">
+
+  <!-- Desde la raíz la ruta NO lleva ../ porque este archivo no
+       está dentro de html/. Es el único del proyecto así. -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-pagina="inicio">
+
+  <main class="pantalla-plena">
+    <div class="contenedor centrado">
+
+      <h1 class="pantalla-plena__logo">PUMM</h1>
+      <p class="pantalla-plena__slogan">Programando un mundo mejor</p>
+
+      <p class="pantalla-plena__texto">
+        Base del proyecto lista.<br>
+        Las pantallas se crean copiando <strong>html/_plantilla.html</strong>
+      </p>
+
+      <p class="pantalla-plena__nota">
+        Empezá por <strong>html/index.html</strong>: es la bienvenida y la
+        activación del pasaporte. Cuando exista, descomentá el redirect
+        de este archivo.
+      </p>
+
+      <p class="pantalla-plena__nota mt-8">
+        ¿Ves esta pantalla en violeta, con el recuadro blanco torcido?
+        Entonces el CSS carga bien y podés empezar.
+      </p>
+
+    </div>
+  </main>
+
+  <div class="franja-ajedrez" aria-hidden="true"></div>
+</body>
+</html>

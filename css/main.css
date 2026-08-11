@@ -1,0 +1,58 @@
+/* ============================================================
+    MAIN.CSS  ·  El único archivo CSS que se linkea en el HTML
+    ------------------------------------------------------------
+    Cada .html tiene UNA sola línea:
+        <link rel="stylesheet" href="../css/main.css">
+    y este archivo se encarga de traer todo lo demás.
+
+    ¿Por qué así y no un <link> por archivo?
+      · Si agregamos un componente nuevo, se toca este archivo y
+        aparece en las 8 pantallas. Con links sueltos habría que
+        editar 8 HTML y siempre queda uno viejo.
+      · El orden de carga queda escrito en un solo lugar, y en
+        CSS el orden decide quién gana cuando hay conflicto.
+
+    EL ORDEN IMPORTA — de lo más general a lo más específico:
+      1. base        · reset y decisiones globales
+      2. componentes · piezas reutilizables
+      3. paginas     · lo que existe en una sola pantalla
+
+    Contra: @import hace que el navegador pida los archivos en
+    cascada, así que carga un toque más lento que un archivo
+    único. Con el tamaño de esta app no se nota, y la claridad
+    para un equipo de 5 personas vale más. Si alguna vez pesa,
+    se concatenan todos en un solo main.css antes de entregar.
+
+    ⚠️ Los @import van SIEMPRE arriba de todo: si hay una regla
+    CSS antes de un @import, el navegador lo ignora en silencio.
+   ============================================================ */
+
+/* 1 · Base ------------------------------------------------- */
+@import url("base/reset.css");
+@import url("base/variables.css");
+@import url("base/tipografia.css");
+@import url("base/utilidades.css");
+
+/* 2 · Componentes ------------------------------------------ */
+@import url("componentes/boton.css");
+@import url("componentes/campo.css");
+@import url("componentes/tarjeta.css");
+@import url("componentes/modal.css");
+@import url("componentes/navegacion.css");
+@import url("componentes/pantalla-plena.css");
+@import url("componentes/progreso.css");
+@import url("componentes/insignia.css");
+
+/* 3 · Páginas ----------------------------------------------
+    Todavía no hay ninguna: las pantallas se crean copiando
+    html/_plantilla.html.
+
+    Cuando crees css/paginas/tu-pantalla.css, sumá su línea acá
+    abajo. Van al final a propósito: la última regla es la que
+    gana.
+
+    Ejemplo de cómo va a quedar:
+        @import url("paginas/activacion.css");
+        @import url("paginas/pasaporte.css");
+        @import url("paginas/admin.css");
+   ---------------------------------------------------------- */

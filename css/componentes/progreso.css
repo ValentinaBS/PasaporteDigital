@@ -1,0 +1,44 @@
+/* ============================================================
+   COMPONENTE · PROGRESO
+   ------------------------------------------------------------
+   Barra de avance del recorrido. El amarillo se usa acá como
+   color de relleno sobre violeta: es uno de los pocos lugares
+   donde funciona bien (no es texto).
+   ============================================================ */
+
+.progreso {
+  width: 100%;
+}
+
+.progreso__numeros {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-2);
+}
+
+.progreso__actual {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-2xl);
+  line-height: 1;
+}
+
+.progreso__total {
+  font-size: var(--texto-sm);
+  opacity: 0.85;
+}
+
+.progreso__barra {
+  height: 12px;
+  border-radius: var(--radio-full);
+  background-color: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.progreso__relleno {
+  height: 100%;
+  width: 0%;  /* Lo setea el JS. */
+  background-color: var(--color-secundario);
+  border-radius: var(--radio-full);
+  transition: width 400ms ease-out;
+}

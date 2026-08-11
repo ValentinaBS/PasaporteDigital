@@ -1,0 +1,67 @@
+/* ============================================================
+   COMPONENTE · PANTALLA PLENA
+   ------------------------------------------------------------
+   Pantalla completa con el violeta de marca de fondo, centrada
+   en vertical. Es el patrón de los momentos fuertes del
+   recorrido: la bienvenida, el registro por QR y el recorrido
+   completado.
+
+   Está en componentes/ y no en paginas/ porque lo usan varias
+   pantallas. Si lo dejáramos en una, la segunda lo copiaría.
+   ============================================================ */
+
+.pantalla-plena {
+  /* dvh = alto real del visor, descontando la barra del navegador
+     en el celular. Con 100vh la pantalla queda cortada en iOS. */
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+  padding: var(--espacio-8) 0;
+}
+
+.pantalla-plena__logo {
+  font-family: var(--fuente-titulo);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--color-secundario);
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Recuadro blanco torcido del logo, tal como está en el manual. */
+.pantalla-plena__slogan {
+  display: inline-block;
+  background-color: var(--pumm-blanco);
+  color: var(--pumm-negro);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: var(--espacio-1) var(--espacio-3);
+  transform: rotate(-1.5deg);
+  margin-top: var(--espacio-2);
+}
+
+.pantalla-plena__texto {
+  margin: var(--espacio-6) 0;
+  text-align: center;
+}
+
+/* Texto chico sobre el fondo violeta. */
+.pantalla-plena__nota {
+  font-size: var(--texto-xs);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--espacio-2);
+}
+
+/* Botón fantasma sobre fondo violeta: el borde violeta no se
+   vería, así que va en blanco. */
+.pantalla-plena .boton--fantasma {
+  color: var(--pumm-blanco);
+  border-color: var(--pumm-blanco);
+}

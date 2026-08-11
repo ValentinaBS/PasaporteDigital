@@ -1,0 +1,46 @@
+/* ============================================================
+   COMPONENTE · TARJETA
+   ------------------------------------------------------------
+   Contenedor de una actividad, un dato o un bloque de info.
+   Es la pieza que más se repite en la app.
+   ============================================================ */
+
+.tarjeta {
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  padding: var(--espacio-4);
+  box-shadow: var(--sombra-sm);
+}
+
+.tarjeta__titulo {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  font-weight: 700;
+  text-transform: none;
+  margin-bottom: var(--espacio-1);
+}
+
+.tarjeta__meta {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+/* Actividad ya registrada: se apaga pero no desaparece.
+   La participante tiene que poder ver dónde estuvo. */
+.tarjeta--hecha {
+  background-color: var(--gris-100);
+  border-color: var(--color-primario);
+  border-left-width: 5px;
+}
+
+/* Tarjeta de destaque, para el bloque de progreso principal. */
+.tarjeta--destacada {
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+  border-color: var(--color-primario);
+}
+
+.tarjeta--destacada .tarjeta__meta {
+  color: rgba(255, 255, 255, 0.85);
+}

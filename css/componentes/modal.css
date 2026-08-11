@@ -1,0 +1,59 @@
+/* ============================================================
+   COMPONENTE · MODAL
+   ------------------------------------------------------------
+   Los estados "registro exitoso", "actividad ya registrada",
+   "código inválido" y "pasaporte no activado" son modales,
+   NO son páginas. Por eso no tienen archivo .html propio.
+
+   Están construidos sobre <dialog>, el elemento nativo de HTML.
+   Nos da gratis: cierre con Escape, foco atrapado adentro del
+   modal, y anuncio correcto en lectores de pantalla. Hacerlo a
+   mano con divs implicaría escribir todo eso nosotras.
+   ============================================================ */
+
+.modal {
+  width: calc(100% - var(--espacio-8));
+  max-width: 380px;
+  padding: var(--espacio-6);
+  border: none;
+  border-radius: var(--radio-lg);
+  background-color: var(--color-superficie);
+  box-shadow: var(--sombra-md);
+  color: var(--color-texto);
+}
+
+.modal::backdrop {
+  background-color: rgba(15, 15, 15, 0.55);
+}
+
+.modal__icono {
+  font-size: var(--texto-2xl);
+  line-height: 1;
+  text-align: center;
+  margin-bottom: var(--espacio-3);
+}
+
+.modal__titulo {
+  font-size: var(--texto-lg);
+  text-align: center;
+  margin-bottom: var(--espacio-2);
+}
+
+.modal__texto {
+  text-align: center;
+  color: var(--color-texto-suave);
+  margin-bottom: var(--espacio-6);
+}
+
+.modal__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+/* Variantes por tipo de mensaje. Cambian solo el borde superior:
+   el color refuerza el mensaje pero el texto ya lo dice solo
+   (no dependemos únicamente del color para comunicar estado). */
+.modal--exito { border-top: 6px solid var(--color-exito); }
+.modal--error { border-top: 6px solid var(--color-error); }
+.modal--aviso { border-top: 6px solid var(--color-secundario); }

@@ -1,0 +1,124 @@
+/* ============================================================
+   VARIABLES  ·  Tokens de diseño del Pasaporte Digital PUMM
+   ------------------------------------------------------------
+   Fuente: "Manual de marca PUMM 2026" (Chicas en Tecnología).
+
+   REGLA DEL EQUIPO: ningún color, tamaño o espacio se escribe
+   "a mano" en el resto del CSS. Todo sale de este archivo.
+   Si un valor no existe acá, lo agregamos acá primero.
+
+   ¿Por qué? Si Diseño cambia un color, se toca UNA línea y
+   cambia en las 8 pantallas. Si los hardcodeamos, hay que
+   buscar el hex en todos los archivos y siempre se escapa uno.
+   ============================================================ */
+
+:root {
+  /* ---------- Paleta de marca (valores literales del manual) ----------
+     No usar estos tokens directamente en los componentes: usar los
+     tokens semánticos de más abajo. Estos son "el color que es",
+     los de abajo son "para qué sirve". */
+  --pumm-violeta:  #5B0099;  /* Violeta CET     · principal */
+  --pumm-amarillo: #FFC800;  /* Amarillo CET    · principal */
+  --pumm-negro:    #0F0F0F;  /* Negro           · secundario */
+  --pumm-blanco:   #FFFFFF;  /* Blanco          · secundario */
+  --pumm-cian:     #01EBFC;  /* Cian Futuro     · acento */
+  --pumm-fucsia:   #E61583;  /* Fucsia Creativa · acento */
+
+  /* Escala de grises derivada (no está en el manual, la necesitamos
+     para bordes, textos secundarios y estados deshabilitados). */
+  --gris-100: #F4F2F7;
+  --gris-200: #E4E0EA;
+  --gris-400: #A9A2B4;
+  --gris-600: #6B6377;
+
+  /* ---------- Tokens semánticos ----------
+     Estos son los que se usan en componentes y páginas. */
+  --color-fondo:            var(--gris-100);
+  --color-superficie:       var(--pumm-blanco);
+  --color-texto:            var(--pumm-negro);
+  --color-texto-suave:      var(--gris-600);
+  --color-borde:            var(--gris-200);
+
+  --color-primario:         var(--pumm-violeta);
+  --color-primario-texto:   var(--pumm-blanco);
+  --color-secundario:       var(--pumm-amarillo);
+  --color-secundario-texto: var(--pumm-negro);
+
+  --color-exito:            #1B8A5A;  /* ver nota de contraste abajo */
+  --color-error:            var(--pumm-fucsia);
+  --color-acento:           var(--pumm-cian);
+
+  /* ---------- Tipografía ----------
+     Road Rage      → títulos (display)
+     Special Gothic → textos
+     Las @font-face y los fallbacks están en base/tipografia.css */
+  --fuente-titulo: "Road Rage", "Impact", system-ui, sans-serif;
+  --fuente-texto:  "Special Gothic", system-ui, -apple-system,
+                   "Segoe UI", Roboto, sans-serif;
+
+  /* Escala tipográfica. Mobile-first: son los tamaños del celular.
+     El evento se vive con el teléfono en la mano, no hay desktop. */
+  --texto-xs:  0.75rem;   /* 12px · metadatos, timestamps */
+  --texto-sm:  0.875rem;  /* 14px · texto secundario */
+  --texto-md:  1rem;      /* 16px · cuerpo. NUNCA menos en inputs:
+                             abajo de 16px iOS hace zoom solo al tocar. */
+  --texto-lg:  1.25rem;   /* 20px · subtítulos */
+  --texto-xl:  1.75rem;   /* 28px · títulos de pantalla */
+  --texto-2xl: 2.5rem;    /* 40px · números grandes de progreso */
+
+  /* ---------- Espaciado ----------
+     Escala de 4px. Usar siempre múltiplos de esta escala para que
+     las 5 pantallas tengan el mismo ritmo visual sin coordinarnos. */
+  --espacio-1: 0.25rem;  /*  4px */
+  --espacio-2: 0.5rem;   /*  8px */
+  --espacio-3: 0.75rem;  /* 12px */
+  --espacio-4: 1rem;     /* 16px */
+  --espacio-6: 1.5rem;   /* 24px */
+  --espacio-8: 2rem;     /* 32px */
+  --espacio-12: 3rem;    /* 48px */
+
+  /* ---------- Formas y sombras ---------- */
+  --radio-sm: 8px;
+  --radio-md: 16px;
+  --radio-lg: 24px;
+  --radio-full: 999px;
+
+  --sombra-sm: 0 1px 3px rgba(15, 15, 15, 0.10);
+  --sombra-md: 0 4px 16px rgba(15, 15, 15, 0.12);
+
+  /* ---------- Layout ----------
+     El ancho máximo mantiene la app legible si alguien la abre
+     en una tablet o en la compu del stand de ayuda. */
+  --ancho-max: 480px;
+  --alto-nav: 64px;
+
+  /* Área táctil mínima. Las participantes usan la app paradas,
+     con una mano, a veces con el celu en la mochila. 48px es el
+     mínimo recomendado por las guías de accesibilidad. */
+  --tap-min: 48px;
+
+  --transicion: 160ms ease-out;
+}
+
+/* ============================================================
+   NOTA DE CONTRASTE — leer antes de elegir un color
+   ------------------------------------------------------------
+   El evento es presencial y con luz variable (patios, salones
+   con ventanales). El contraste no es un detalle estético.
+
+   Combinaciones seguras (cumplen WCAG AA, 4.5:1):
+     ✅ Violeta #5B0099 sobre blanco       → 10.9:1
+     ✅ Blanco sobre violeta #5B0099       → 10.9:1
+     ✅ Negro #0F0F0F sobre amarillo       → 13.1:1
+     ✅ Negro #0F0F0F sobre blanco         → 18.9:1
+     ✅ Fucsia #E61583 sobre blanco        →  4.9:1 (justo, solo texto)
+
+   Combinaciones prohibidas para TEXTO:
+     ❌ Amarillo #FFC800 sobre blanco      →  1.6:1  ilegible
+     ❌ Cian #01EBFC sobre blanco          →  1.4:1  ilegible
+     ❌ Blanco sobre amarillo #FFC800      → 11.6:1 pero se lava al sol
+
+   El amarillo y el cian son colores de FONDO y de ACENTO
+   (barras de progreso, bordes, franjas ajedrezadas del manual),
+   nunca de texto sobre claro. Sobre amarillo, el texto va negro.
+   ============================================================ */

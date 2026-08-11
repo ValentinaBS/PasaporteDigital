@@ -1,0 +1,77 @@
+/* ============================================================
+   COMPONENTE · CAMPO DE FORMULARIO
+   ------------------------------------------------------------
+   El MVP tiene un solo formulario (el código de acreditación),
+   pero el campo vive acá y no en una pantalla porque el panel
+   organizador va a necesitar filtros y búsqueda.
+   ============================================================ */
+
+.campo {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--espacio-3) var(--espacio-4);
+
+  /* ⚠️ Nunca bajar de 16px en un input: abajo de ese tamaño,
+     Safari en iPhone hace zoom solo al tocarlo y la pantalla
+     queda corrida. Es de las cosas más molestas en mobile. */
+  font-size: var(--texto-lg);
+
+  color: var(--color-texto);
+  background-color: var(--pumm-blanco);
+  border: 3px solid var(--color-borde);
+  border-radius: var(--radio-md);
+}
+
+.campo:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.campo--error {
+  border-color: var(--color-error);
+}
+
+/* Variante para el código de acreditación: grande, centrado y
+   espaciado, para que se lea mientras se tipea a mano parada. */
+.campo--codigo {
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Sobre fondo violeta el borde gris no se ve. */
+.pantalla-plena .campo {
+  border-color: transparent;
+}
+
+.pantalla-plena .campo:focus {
+  border-color: var(--color-secundario);
+}
+
+.pantalla-plena .campo--error {
+  border-color: var(--color-error);
+}
+
+.campo__etiqueta {
+  display: block;
+  font-size: var(--texto-sm);
+  font-weight: 700;
+  margin-bottom: var(--espacio-2);
+}
+
+/* Mensaje de ayuda o de error debajo del campo.
+   En el HTML va con aria-live="polite" para que el lector de
+   pantalla lo anuncie cuando aparece. */
+.campo__ayuda {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  margin-top: var(--espacio-2);
+  min-height: 1.2em;  /* Reserva el lugar: sin esto, al aparecer
+                         el mensaje empuja el botón hacia abajo
+                         justo cuando la usuaria lo va a tocar. */
+}
+
+.pantalla-plena .campo__ayuda {
+  color: rgba(255, 255, 255, 0.8);
+}

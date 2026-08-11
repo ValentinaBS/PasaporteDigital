@@ -1,0 +1,74 @@
+/* ============================================================
+   UTILIDADES  ·  Clases chiquitas de un solo propósito
+   ------------------------------------------------------------
+   Son atajos para cosas que se repiten en todas las pantallas.
+   Ojo: si una utilidad empieza a usarse siempre junto a otras
+   tres, probablemente sea un componente. Mudala a componentes/.
+   ============================================================ */
+
+/* Contenedor central de todas las pantallas. */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 0 var(--espacio-4);
+}
+
+/* Deja lugar para la barra de navegación fija de abajo,
+   así el último elemento de la página no queda tapado. */
+.con-nav {
+  padding-bottom: calc(var(--alto-nav) + var(--espacio-8));
+}
+
+/* Apila elementos con separación pareja. */
+.pila       { display: flex; flex-direction: column; gap: var(--espacio-4); }
+.pila-sm    { display: flex; flex-direction: column; gap: var(--espacio-2); }
+
+.fila       { display: flex; align-items: center; gap: var(--espacio-3); }
+.fila-entre { display: flex; align-items: center; justify-content: space-between; gap: var(--espacio-3); }
+
+.centrado   { text-align: center; }
+
+.texto-suave { color: var(--color-texto-suave); font-size: var(--texto-sm); }
+.texto-xs    { font-size: var(--texto-xs); }
+
+.mt-4 { margin-top: var(--espacio-4); }
+.mt-8 { margin-top: var(--espacio-8); }
+
+/* Oculta a la vista pero lo dejan leer los lectores de pantalla.
+   Se usa para las etiquetas de los íconos. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Oculta del todo. La usa el JS para mostrar y esconder bloques.
+   Lleva !important porque tiene que ganarle a cualquier display
+   que traiga el componente. */
+.oculto {
+  display: none !important;
+}
+
+/* Franja ajedrezada del manual de marca. Es decorativa:
+   siempre con aria-hidden="true" en el HTML. */
+.franja-ajedrez {
+  height: 12px;
+  background-image:
+    linear-gradient(45deg,  var(--pumm-negro) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--pumm-negro) 25%, transparent 25%),
+    linear-gradient(45deg,  transparent 75%, var(--pumm-negro) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--pumm-negro) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  background-color: var(--pumm-amarillo);
+}
+
+.franja-ajedrez--cian   { background-color: var(--pumm-cian); }
+.franja-ajedrez--fucsia { background-color: var(--pumm-fucsia); }

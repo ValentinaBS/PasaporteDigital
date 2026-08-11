@@ -1,0 +1,67 @@
+/* ============================================================
+   COMPONENTE · NAVEGACIÓN
+   ------------------------------------------------------------
+   Barra fija de abajo con 3 secciones: Pasaporte / Actividades
+   / Logros. Va abajo porque el pulgar llega ahí sin cambiar de
+   mano, y las participantes usan la app paradas y en movimiento.
+
+   Se repite en 5 archivos HTML. Ver la nota sobre duplicación
+   de HTML en el README (sección "Lo que sabemos que duele").
+   ============================================================ */
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  height: var(--alto-nav);
+
+  background-color: var(--color-superficie);
+  border-top: 1px solid var(--color-borde);
+
+  /* Respeta la barra de gestos del iPhone. */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  transition: color var(--transicion);
+}
+
+.nav__icono {
+  font-size: var(--texto-lg);
+  line-height: 1;
+}
+
+/* La sección actual. La marca app.js leyendo data-pagina del <body>,
+   así no hay que acordarse de poner la clase a mano en cada HTML. */
+.nav__item--activo {
+  color: var(--color-primario);
+  font-weight: 700;
+}
+
+/* Encabezado de pantalla. */
+.encabezado {
+  padding: var(--espacio-6) 0 var(--espacio-4);
+}
+
+.encabezado__titulo {
+  color: var(--color-primario);
+}
+
+.encabezado__bajada {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+  margin-top: var(--espacio-1);
+}

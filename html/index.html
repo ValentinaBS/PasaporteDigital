@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PANTALLA · BIENVENIDA Y ACTIVACIÓN
+  ------------------------------------------------------------
+  Puerta de entrada de la app. Acá la participante escribe el
+  código de su acreditación y activa su pasaporte.
+
+  ESTADO: estructura vacía. El contenido (el formulario del
+  código, los textos, el logo) todavía no está hecho.
+
+  Este archivo es el punto de entrada real del proyecto:
+    · el index.html de la raíz redirige acá
+    · js/ui.js manda acá a quien no tenga el pasaporte activado
+      (PUMM.UI.exigirActivacion)
+  Por eso existe aunque esté vacío: sin él, las dos cosas
+  llevarían a un 404.
+
+  PARA SEGUIR
+    1. Escribí el contenido dentro de <main>.
+       Componentes que te sirven: .campo y .campo--codigo para
+       el input, .campo__etiqueta, .campo__ayuda, y .boton--
+       secundario para el CTA (el amarillo sobre violeta).
+    2. Creá js/paginas/activacion.js copiando
+       js/paginas/_plantilla.js y descomentá su <script> abajo.
+       Ojo: sacale el UI.exigirActivacion() de la plantilla —
+       esta pantalla es justamente la que NO lo lleva, o entra
+       en un bucle de redirecciones consigo misma.
+    3. Si necesitás CSS propio, creá css/paginas/activacion.css
+       y agregá su @import al final de css/main.css.
+    4. Para validar el código, usá PUMM.Datos.activar(codigo),
+       que devuelve { ok: true, nombre } o { ok: false }.
+
+  ⚠️ Esta pantalla NO lleva la barra de navegación: todavía no
+  hay pasaporte que mostrar. La nav aparece recién después de
+  activar.
+
+  ⚠️ REGLA DE RUTAS EN ESTA CARPETA
+  Este archivo vive en html/, así que para salir a css/, js/ o
+  data/ hay que subir un nivel con ../
+      ✅  ../css/main.css
+      ❌  css/main.css      (busca html/css/, no existe)
+      ❌  /css/main.css     (la barra inicial rompe en WordPress)
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pasaporte Digital - PUMM 2026</title>
+  <meta name="description" content="Tu recorrido por PUMM 2026.">
+  <meta name="theme-color" content="#5B0099">
+
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body data-pagina="activacion">
+
+  <main class="pantalla-plena">
+    <div class="contenedor">
+
+      <!-- ✏️ El contenido de la pantalla va acá. -->
+
+    </div>
+  </main>
+
+  <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}).
+       Lo va a necesitar el estado de "código inválido". -->
+  <dialog class="modal" id="modal"></dialog>
+
+  <!--
+    ORDEN DE LOS SCRIPTS — importa y no es arbitrario:
+      1. data/    los arrays de datos
+      2. config   las constantes
+      3. datos    la capa de acceso (necesita que config ya corrió)
+      4. ui       los helpers (necesitan textos)
+      5. app      lo común a todas las pantallas
+      6. paginas/ la lógica de ESTA pantalla
+    Si invertís 2 y 3, datos.js no encuentra CONFIG y todo rompe.
+  -->
+  <script src="../data/participantes.js"></script>
+  <script src="../data/actividades.js"></script>
+  <script src="../data/insignias.js"></script>
+  <script src="../data/textos.js"></script>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+
+  <!-- ✏️ Descomentar al crear js/paginas/activacion.js -->
+  <!-- <script src="../js/paginas/activacion.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,33 @@
+# ============================================================
+#  .gitignore  ·  Lo que NO se sube al repositorio
+# ============================================================
+
+# --- Sistema operativo ---
+# Windows y Mac dejan archivos ocultos en cada carpeta.
+# Si no los ignoramos, aparecen en los commits de todas.
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# --- Editores ---
+.vscode/*
+!.vscode/settings.json   # este sí lo compartimos, ver README
+.idea/
+
+# --- Dependencias ---
+# El proyecto es HTML/CSS/JS puro y no debería tener node_modules.
+# Está por las dudas: si alguna instala algo para probar, que no
+# se suben 40.000 archivos sin querer.
+node_modules/
+
+# --- Temporales ---
+*.log
+*.tmp
+*~
+
+# --- ⚠️ DATOS DE PARTICIPANTES ---
+# Nunca subir exportaciones con datos reales. Son menores de edad.
+# Si necesitás mirar un CSV exportado, dejalo fuera del repo.
+*.csv
+!ejemplo-*.csv

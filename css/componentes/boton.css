@@ -1,0 +1,63 @@
+/* ============================================================
+   COMPONENTE · BOTÓN
+   ------------------------------------------------------------
+   Principio de producto: "una acción principal por pantalla".
+   Por eso hay un solo estilo primario y todo lo demás es
+   secundario o fantasma. Si en una pantalla hay dos botones
+   violetas, algo está mal en el diseño, no en el CSS.
+
+   Nomenclatura BEM:  .bloque  .bloque--variante  .bloque__parte
+   ============================================================ */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+
+  min-height: var(--tap-min);
+  padding: var(--espacio-3) var(--espacio-6);
+
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  font-weight: 700;
+  text-align: center;
+
+  border: 2px solid transparent;
+  border-radius: var(--radio-full);
+  transition: transform var(--transicion), background-color var(--transicion);
+}
+
+.boton:active {
+  transform: scale(0.97);  /* Feedback táctil: confirma que registró el toque. */
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Acción principal de la pantalla. Una sola por vista. */
+.boton--primario {
+  background-color: var(--color-primario);
+  color: var(--color-primario-texto);
+}
+
+/* Acción destacada sobre fondo violeta (ej. el CTA de bienvenida). */
+.boton--secundario {
+  background-color: var(--color-secundario);
+  color: var(--color-secundario-texto);  /* Negro: el amarillo con blanco no se lee. */
+}
+
+/* Acción alternativa, menos peso visual. */
+.boton--fantasma {
+  background-color: transparent;
+  color: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+/* Ocupa todo el ancho. En mobile es el default para el CTA. */
+.boton--ancho {
+  width: 100%;
+}
