@@ -16,6 +16,26 @@
      cuenta, migrar al backend sería tocar los 6 archivos de
      js/paginas/ y encontrar todos los lugares. Esto es lo que
      evita esa tarde perdida.
+
+   ------------------------------------------------------------
+   ⚠️ VOCABULARIO PENDIENTE — la pantalla de activación salió del
+   flujo y ahora la primera pantalla es la de registro, pero este
+   archivo todavía habla de "activar":
+
+       activar(codigo)   estaActivado()   cerrarSesion()
+       CONFIG.CLAVE_CODIGO   CONFIG.FORMATO_CODIGO
+
+   No los renombramos todavía a propósito: el nombre correcto
+   depende de qué pide el registro (¿sigue habiendo un código de
+   acreditación? ¿se piden nombre y DNI?), y eso es una decisión
+   de producto que todavía no está.
+
+   Cuando esté, el cambio es barato justamente por esta capa:
+   se reescriben estas funciones y nada más. Ojo con un detalle
+   al elegir los nombres: registrarMision() ya existe y es
+   otra cosa. Si el registro de la participante pasa a llamarse
+   registrar(), las dos se van a confundir. Mejor algo como
+   registrarParticipante() / estaRegistrada().
    ============================================================ */
 
 window.PUMM = window.PUMM || {};
@@ -105,36 +125,36 @@ window.PUMM.Datos = (function () {
       localStorage.removeItem(CONFIG.CLAVE_REGISTROS);
     },
 
-    /* --- Registros de actividad --- */
+    /* --- Registros de misión --- */
 
-    /* Lista de { actividadId, fecha } de la participante activa. */
+    /* Lista de { misionId, fecha } de la participante activa. */
     obtenerRegistros: function () {
       return leerJSON(CONFIG.CLAVE_REGISTROS, []);
     },
 
-    yaRegistro: function (actividadId) {
+    yaRegistro: function (misionId) {
       return this.obtenerRegistros().some(function (r) {
-        return r.actividadId === actividadId;
+        return r.misionId === misionId;
       });
     },
 
-    /* Registra una actividad. Devuelve uno de estos estados:
+    /* Registra una misión. Devuelve uno de estos estados:
          "ok"          · se registró bien
          "repetida"    · ya la tenía (no es un error, es info)
          "desconocida" · el id del QR no existe
        Devolvemos un string y no true/false porque la pantalla
        muestra un modal distinto en cada caso. */
-    registrarActividad: function (actividadId) {
-      var existe = window.PUMM.ACTIVIDADES.some(function (a) {
-        return a.id === actividadId;
+    registrarMision: function (misionId) {
+      var existe = window.PUMM.MISIONES.some(function (a) {
+        return a.id === misionId;
       });
       if (!existe) return "desconocida";
 
-      if (this.yaRegistro(actividadId)) return "repetida";
+      if (this.yaRegistro(misionId)) return "repetida";
 
       var registros = this.obtenerRegistros();
       registros.push({
-        actividadId: actividadId,
+        misionId: misionId,
         fecha: new Date().toISOString()
       });
       guardarJSON(CONFIG.CLAVE_REGISTROS, registros);
@@ -145,7 +165,7 @@ window.PUMM.Datos = (function () {
 
     obtenerProgreso: function () {
       var hechas = this.obtenerRegistros().length;
-      var meta = window.PUMM.ACTIVIDADES_PARA_COMPLETAR;
+      var meta = window.PUMM.MISIONES_PARA_COMPLETAR;
       return {
         hechas: hechas,
         meta: meta,
@@ -162,12 +182,12 @@ window.PUMM.Datos = (function () {
       var registros = this.obtenerRegistros();
       var progreso = this.obtenerProgreso();
 
-      /* ids de las insignias ganadas por actividad */
+      /* ids de las insignias ganadas por misión */
       var ganadas = registros.map(function (r) {
-        var act = window.PUMM.ACTIVIDADES.filter(function (a) {
-          return a.id === r.actividadId;
+        var mision = window.PUMM.MISIONES.filter(function (a) {
+          return a.id === r.misionId;
         })[0];
-        return act ? act.insignia : null;
+        return mision ? mision.insignia : null;
       });
 
       return window.PUMM.INSIGNIAS.map(function (insignia) {

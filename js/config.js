@@ -33,9 +33,9 @@ window.PUMM.CONFIG = {
   CLAVE_REGISTROS: "pumm.registros",
 
   /* Nombre del parámetro que llevan los QR.
-     Un QR apunta a:  .../html/registro.html?actividad=labs
-     El valor tiene que coincidir con un id de data/actividades.js */
-  PARAM_QR: "actividad",
+     Un QR apunta a:  .../html/nueva-mision.html?mision=labs
+     El valor tiene que coincidir con un id de data/misiones.js */
+  PARAM_QR: "mision",
 
   /* Formato esperado del código de acreditación.
      ⚠️ HIPÓTESIS SIN VALIDAR: hay que confirmar con el equipo

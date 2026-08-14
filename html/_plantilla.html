@@ -22,10 +22,10 @@
   El archivo empieza con guion bajo para que quede primero en
   la lista de VS Code y para que se note que no es una pantalla.
 
-  ⚠️ LA PRIMERA PANTALLA QUE HAY QUE CREAR ES html/index.html
-  El index.html de la raíz redirige ahí, y js/ui.js manda ahí a
-  quien no tenga el pasaporte activado. Hasta que exista, el
-  proyecto no tiene puerta de entrada.
+  ⚠️ LA PUERTA DE ENTRADA YA EXISTE: html/index.html
+  Es la pantalla de registro, la primera del recorrido. El
+  index.html de la raíz redirige ahí, y js/ui.js manda ahí a
+  quien todavía no tenga pasaporte. No la borres ni la renombres.
 
   ⚠️ REGLA DE RUTAS EN ESTA CARPETA
   Todos los .html viven en html/, así que para salir a css/, js/
@@ -55,7 +55,7 @@
 
 <!-- ✏️ data-pagina lo lee js/app.js para marcar la sección activa
      en la barra de navegación. Tiene que coincidir con el
-     data-seccion de la nav: "pasaporte", "actividades" o "logros".
+     data-seccion de la nav: "pasaporte", "misiones" o "logros".
      Si tu pantalla no está en la nav, poné el nombre igual. -->
 <body data-pagina="nombre-de-tu-pantalla">
 
@@ -97,9 +97,9 @@
       <span class="nav__icono" aria-hidden="true">🎫</span>
       Pasaporte
     </a>
-    <a class="nav__item" data-seccion="actividades" href="actividades.html">
+    <a class="nav__item" data-seccion="misiones" href="misiones.html">
       <span class="nav__icono" aria-hidden="true">📍</span>
-      Actividades
+      Misiones
     </a>
     <a class="nav__item" data-seccion="logros" href="logros.html">
       <span class="nav__icono" aria-hidden="true">🏆</span>
@@ -125,7 +125,7 @@
     dudas dejalos: son archivos chicos y el costo es cero.
   -->
   <script src="../data/participantes.js"></script>
-  <script src="../data/actividades.js"></script>
+  <script src="../data/misiones.js"></script>
   <script src="../data/insignias.js"></script>
   <script src="../data/textos.js"></script>
 

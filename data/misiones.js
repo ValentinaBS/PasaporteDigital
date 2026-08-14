@@ -1,9 +1,9 @@
 /* ============================================================
-   DATOS · ACTIVIDADES del recorrido PUMM
+   DATOS · MISIONES del recorrido PUMM
    ------------------------------------------------------------
    ⚠️ POR QUÉ ESTO ES .js Y NO .json
 
-   Lo natural sería un actividades.json y leerlo con fetch().
+   Lo natural sería un misiones.json y leerlo con fetch().
    No funciona en este proyecto: cuando abrís un archivo con
    doble clic, la URL es file:///... y el navegador bloquea
    fetch() por seguridad (CORS). Te tira un error rojo en la
@@ -25,7 +25,7 @@
    existe todavía, y lo reutiliza si ya lo creó otro archivo. */
 window.PUMM = window.PUMM || {};
 
-window.PUMM.ACTIVIDADES = [
+window.PUMM.MISIONES = [
   {
     id: "labs",                          // Va en el QR. No cambiar una vez impreso.
     nombre: "PUMM Labs",
@@ -76,8 +76,8 @@ window.PUMM.ACTIVIDADES = [
   }
 ];
 
-/* Cuántas actividades hacen falta para completar el recorrido.
+/* Cuántas misiones hacen falta para completar el recorrido.
    ⚠️ HIPÓTESIS SIN VALIDAR: el número definitivo lo define
    Producción. Está acá y no repartido por el código para que
    cambiarlo sea tocar una sola línea. */
-window.PUMM.ACTIVIDADES_PARA_COMPLETAR = window.PUMM.ACTIVIDADES.length;
+window.PUMM.MISIONES_PARA_COMPLETAR = window.PUMM.MISIONES.length;

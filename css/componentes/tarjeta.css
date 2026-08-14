@@ -1,7 +1,7 @@
 /* ============================================================
    COMPONENTE · TARJETA
    ------------------------------------------------------------
-   Contenedor de una actividad, un dato o un bloque de info.
+   Contenedor de una misión, un dato o un bloque de info.
    Es la pieza que más se repite en la app.
    ============================================================ */
 
@@ -26,7 +26,7 @@
   color: var(--color-texto-suave);
 }
 
-/* Actividad ya registrada: se apaga pero no desaparece.
+/* Misión ya registrada: se apaga pero no desaparece.
    La participante tiene que poder ver dónde estuvo. */
 .tarjeta--hecha {
   background-color: var(--gris-100);

@@ -1,7 +1,7 @@
 # Pasaporte Digital · PUMM 2026
 
 Web app que acompaña el recorrido de las participantes por el evento PUMM.
-Escanean el QR de cada espacio, se les registra la actividad, ven su progreso
+Escanean el QR de cada espacio, se les registra la misión, ven su progreso
 y desbloquean insignias. En paralelo, le da al equipo organizador datos de
 participación sin carga manual.
 
@@ -28,9 +28,6 @@ resuelto y es igual para las cinco.
 2. Instalá **Live Server** (VS Code te la va a ofrecer sola la primera vez,
    porque está en `.vscode/extensions.json`).
 3. Clic derecho sobre `index.html` → **Open with Live Server**.
-
-Si ves la pantalla violeta con el logo PUMM y el recuadro blanco torcido, el
-CSS está cargando bien y podés empezar.
 
 > **Usá siempre Live Server, no el doble clic.**
 > Abrir un `.html` con doble clic funciona hoy, pero el navegador lo trata
@@ -61,28 +58,38 @@ Los pasos, que están comentados dentro de cada plantilla:
    `js/paginas/pasaporte.js` y descomentá su `<script>` en tu HTML.
 6. Borrá de tu copia los comentarios de instrucciones y lo que no uses.
 
-**La primera pantalla que hay que crear es `html/index.html`** (bienvenida y
-activación): el `index.html` de la raíz redirige ahí, y `js/ui.js` manda ahí a
-quien no tenga el pasaporte activado.
+**`html/index.html` ya existe: es la pantalla de registro**, la primera del
+recorrido. Está creada pero vacía de contenido — completarla es el primer
+trabajo. No la borres ni la renombres: el `index.html` de la raíz redirige ahí
+y `js/ui.js` manda ahí a quien todavía no tenga pasaporte.
 
 ### Las pantallas que faltan
 
-Once para participantes y un panel organizador aparte. Ojo con esto: varios de
-esos estados **no son páginas, son modales** — "registro exitoso", "actividad
-ya registrada", "código inválido" y "pasaporte no activado" se resuelven con
-`PUMM.UI.abrirModal({...})` sobre la pantalla en la que ya está la persona, no
-navegando a otro lado. Contando así, los archivos HTML reales son ocho:
+Ojo con esto: varios de los estados de la lista de producto **no son páginas,
+son modales** — "registro exitoso", "ocurrió un error" se resuelven con `PUMM.UI.abrirModal({...})` sobre la pantalla en la
+que ya está la persona, no navegando a otro lado. Contando así, los archivos
+HTML reales son siete:
 
-| Archivo | Qué es |
-|---|---|
-| `html/index.html` | Bienvenida y activación |
-| `html/pasaporte.html` | Mi Pasaporte (pantalla principal) |
-| `html/actividades.html` | Listado de actividades |
-| `html/logros.html` | Insignias |
-| `html/registro.html` | Adonde apuntan los QR |
-| `html/completado.html` | Recorrido completado |
-| `html/ayuda.html` | Preguntas frecuentes |
-| `html/admin.html` | Panel organizador |
+| Archivo | Qué es | Estado |
+|---|---|---|
+| `html/index.html` | Registro de la participante | creada, vacía |
+| `html/pasaporte.html` | Mi Pasaporte (pantalla principal) | falta |
+| `html/misiones.html` | Listado de misiones | falta |
+| `html/logros.html` | Insignias | falta |
+| `html/nueva-mision.html` | Adonde apuntan los QR | falta |
+| `html/mision-ya-registrada.html` | Repetición de misiones | falta |
+| `html/completado.html` | Recorrido completado | falta |
+
+> **Cambio de requerimientos:** la pantalla de activación (código de
+> acreditación) salió del flujo. Ahora se entra directo por el registro. Si
+> encontrás "activación" mencionada en algún archivo, es una referencia vieja
+> — avisá y la limpiamos.
+
+> **Cuidado con la palabra "registro":** en este proyecto significa dos cosas.
+> El registro **de la participante** es `html/index.html`, la pantalla inicial.
+> El registro **de una misión** es la pantalla del QR, que por eso conviene
+> llamar `nueva-mision.html` y no `registro.html`. Mismo cuidado en el JS:
+> `registrarMision()` es lo segundo, no lo primero.
 
 ---
 
@@ -91,12 +98,13 @@ navegando a otro lado. Contando así, los archivos HTML reales son ocho:
 ```
 PasaporteDigital/
 │
-├── index.html              ← puerta de entrada (hoy: pantalla de arranque)
+├── index.html              ← redirige a html/index.html
 ├── README.md
 ├── .gitignore
 ├── .vscode/                ← configuración compartida del equipo
 │
 ├── html/
+│   ├── index.html          ← pantalla de registro (creada, sin contenido)
 │   └── _plantilla.html     ← copiar para crear cada pantalla
 │
 ├── css/
@@ -114,7 +122,7 @@ PasaporteDigital/
 │   └── paginas/
 │       └── _plantilla.js   ← copiar para la lógica de cada pantalla
 │
-├── data/                   ← arrays de datos (actividades, insignias, textos)
+├── data/                   ← arrays de datos (misiones, insignias, textos)
 │
 └── assets/                 ← imágenes, íconos y fuentes
 ```
@@ -162,18 +170,25 @@ Y en `css/base/utilidades.css`: `.contenedor` `.pila` `.fila` `.fila-entre`
 ```js
 PUMM.UI.$("#id")                    // buscar un elemento
 PUMM.UI.$$(".clase")                // buscar varios
-PUMM.UI.leerParametro("actividad")  // leer la URL
+PUMM.UI.leerParametro("mision")     // leer la URL
 PUMM.UI.abrirModal({ ... })         // abrir un modal
 PUMM.UI.formatearHora(iso)          // "2026-08-10T14:32:00Z" → "14:32"
-PUMM.UI.exigirActivacion()          // redirigir si no activó
+PUMM.UI.exigirRegistro()            // redirigir si todavía no tiene pasaporte
 
-PUMM.Datos.activar(codigo)          // validar y activar el pasaporte
-PUMM.Datos.registrarActividad(id)   // "ok" | "repetida" | "desconocida"
+PUMM.Datos.activar(codigo)          // ⚠️ nombre viejo, ver abajo
+PUMM.Datos.registrarMision(id)      // "ok" | "repetida" | "desconocida"
 PUMM.Datos.obtenerProgreso()        // { hechas, meta, porcentaje, completo }
-PUMM.Datos.obtenerRegistros()       // las actividades registradas
+PUMM.Datos.obtenerRegistros()       // las misiones registradas
 PUMM.Datos.obtenerInsignias()       // todas, con .desbloqueada
 PUMM.Datos.cerrarSesion()           // borrar todo (útil para probar)
 ```
+
+⚠️ `js/datos.js` todavía habla de "activar" (`activar()`, `estaActivado()`,
+`CLAVE_CODIGO`, `FORMATO_CODIGO`) porque venía de la pantalla de activación.
+No lo renombramos todavía a propósito: el nombre correcto depende de qué pide
+el registro, y eso es una decisión de producto que falta. Cuando esté, el
+cambio es barato justamente por esa capa — se tocan esas funciones y nada más.
+La nota completa está arriba de `js/datos.js`.
 
 Para probar, los códigos de acreditación de desarrollo son `PUMM-2026-A1` y
 `PUMM-2026-B2` (están en `data/participantes.js`). Cualquier otro tiene que
@@ -219,7 +234,7 @@ y siempre queda uno.
 
 Esta es la que más rara se ve y tiene la mejor razón.
 
-Lo natural sería `actividades.json` y leerlo con `fetch()`. **No funciona en
+Lo natural sería `misiones.json` y leerlo con `fetch()`. **No funciona en
 este proyecto:** cuando abrís un archivo con doble clic, la URL es `file:///…`
 y el navegador bloquea `fetch()` por seguridad. Tira un error rojo sobre CORS
 y la lista queda vacía. Es el bug clásico de este tipo de proyecto y se pierden
@@ -234,9 +249,8 @@ de `window.PUMM`, el único objeto global de toda la app.
 Existe porque los servidores web (y WordPress) buscan un `index.html` en la
 raíz: sin él, quien entre al link ve un listado de archivos o un 404.
 
-Hoy es una pantalla de arranque que confirma que el CSS carga. **Cuando exista
-`html/index.html`, hay que descomentar el redirect** que está adentro del
-archivo, y a partir de ahí no se toca más.
+Ya solo redirige a `html/index.html`, la pantalla de registro. No hay que
+tocarlo más.
 
 Redirige en vez de ser la bienvenida para que las ocho pantallas vivan todas en
 `html/` y escriban exactamente las mismas rutas. Si la bienvenida estuviera en
@@ -332,14 +346,15 @@ exactamente qué tocar.
 
 | Hipótesis | Dónde impacta |
 |---|---|
+| **Qué datos pide el registro** ahora que no hay activación | `js/datos.js` → `activar()` / `estaActivado()`, `js/config.js` → `FORMATO_CODIGO`, `data/textos.js` |
 | Cada participante recibe un código único en la acreditación | `js/config.js` → `FORMATO_CODIGO` |
 | Salesforce puede exportar los registros confirmados | La exportación del panel organizador |
 | Hay conectividad suficiente en todas las zonas | Todo el flujo de registro por QR |
 | Cada espacio puede exhibir un QR visible | Todo el flujo de registro por QR |
-| Cuántas actividades hacen falta para completar el recorrido | `data/actividades.js` → `ACTIVIDADES_PARA_COMPLETAR` |
+| Cuántas misiones hacen falta para completar el recorrido | `data/misiones.js` → `MISIONES_PARA_COMPLETAR` |
 
 Sobre los QR: la app **no escanea**. Cada espacio tiene impreso un QR que
-apunta a `…/html/registro.html?actividad=labs`, y lo lee la cámara nativa del
+apunta a `…/html/nueva-mision.html?mision=labs`, y lo lee la cámara nativa del
 celular (iOS y Android leen QR de fábrica hace años). Nos ahorramos una
 librería, el permiso de cámara y bastante peso — que es justo lo que
 necesitamos con presupuesto cero.

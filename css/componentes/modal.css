@@ -1,9 +1,10 @@
 /* ============================================================
    COMPONENTE · MODAL
    ------------------------------------------------------------
-   Los estados "registro exitoso", "actividad ya registrada",
-   "código inválido" y "pasaporte no activado" son modales,
-   NO son páginas. Por eso no tienen archivo .html propio.
+   Los mensajes cortos que no interrumpen el recorrido van acá:
+   "registro exitoso", "ocurrió un error", los errores de
+   formulario. Son modales, NO páginas, así que no tienen
+   archivo .html propio.
 
    Están construidos sobre <dialog>, el elemento nativo de HTML.
    Nos da gratis: cierre con Escape, foco atrapado adentro del

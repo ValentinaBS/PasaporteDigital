@@ -14,7 +14,7 @@
    app funcione, no lo guardamos.
 
    Códigos para probar:
-     PUMM-2026-A1   → participante nueva, sin actividades
+     PUMM-2026-A1   → participante nueva, sin misiones
      PUMM-2026-B2   → participante con recorrido empezado
      cualquier otro → dispara el modal de "código inválido"
    ============================================================ */

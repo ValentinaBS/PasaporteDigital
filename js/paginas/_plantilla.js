@@ -26,14 +26,14 @@
 
   /* --- Funciones de la pantalla ---
      Una función por cosa que hace. Nombres que digan qué hacen:
-     pintarActividades(), no init2(). */
+     pintarMisiones(), no init2(). */
 
   function pintar() {
     // ✏️ Tu código acá.
     //
     // Buscar un elemento:       var caja = UI.$("#mi-elemento");
     // Buscar varios:            UI.$$(".tarjeta")
-    // Leer la URL:              UI.leerParametro("actividad")
+    // Leer la URL:              UI.leerParametro("mision")
     // Abrir un modal:           UI.abrirModal({ tipo: "exito",
     //                             icono: "✅", titulo: "...", texto: "..." })
     // Progreso:                 Datos.obtenerProgreso()
@@ -46,11 +46,12 @@
      y devuelven null. Todo arranca acá adentro. */
   document.addEventListener("DOMContentLoaded", function () {
 
-    /* Manda a la pantalla de activación si el pasaporte no está
-       activado. Sacalo en las pantallas públicas (bienvenida,
-       ayuda). Es comodidad de UX, no seguridad: la validación de
-       verdad tiene que estar en el backend. */
-    if (!UI.exigirActivacion()) return;
+    /* Manda a la pantalla de registro a quien todavía no tenga
+       pasaporte. Sacalo en las pantallas públicas: el registro
+       mismo (si no, entra en un bucle consigo mismo) y la ayuda.
+       Es comodidad de UX, no seguridad: la validación de verdad
+       tiene que estar en el backend. */
+    if (!UI.exigirRegistro()) return;
 
     pintar();
   });

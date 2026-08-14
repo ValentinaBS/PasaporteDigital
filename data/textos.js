@@ -27,20 +27,20 @@ window.PUMM.TEXTOS = {
     "acercate al stand de ayuda y lo resolvemos.",
   codigoVacio: "Escribí tu código para empezar.",
 
-  /* --- Registro de actividad --- */
+  /* --- Registro de misión --- */
   registroExitoTitulo: "¡Listo! Quedó registrado",
-  registroExitoTexto: "Ya podés seguir disfrutando la actividad.",
+  registroExitoTexto: "Ya podés seguir disfrutando la misión.",
 
   yaRegistradaTitulo: "Esta ya la tenías",
   yaRegistradaTexto:
-    "Registraste esta actividad hace un rato. Está guardada en tu pasaporte.",
+    "Registraste esta misión hace un rato. Está guardada en tu pasaporte.",
 
   noActivadoTitulo: "Todavía no activaste tu pasaporte",
   noActivadoTexto:
     "Activalo con el código de tu acreditación y volvé a escanear el QR.",
 
-  actividadDesconocidaTitulo: "No encontramos esa actividad",
-  actividadDesconocidaTexto:
+  misionDesconocidaTitulo: "No encontramos esa misión",
+  misionDesconocidaTexto:
     "Puede que el QR esté dañado. Avisale a alguien del equipo y seguimos.",
 
   /* --- Recorrido completado --- */
@@ -48,8 +48,8 @@ window.PUMM.TEXTOS = {
   completadoTexto: "Recorriste PUMM 2026 de punta a punta.",
 
   /* --- Estados vacíos --- */
-  sinActividades:
-    "Todavía no registraste ninguna actividad. Escaneá el QR del primer " +
+  sinMisiones:
+    "Todavía no registraste ninguna misión. Escaneá el QR del primer " +
     "espacio al que entres y arrancamos.",
   sinInsignias:
     "Tus insignias van a aparecer acá a medida que recorras el evento.",
@@ -58,5 +58,5 @@ window.PUMM.TEXTOS = {
   botonActivar: "Activar mi pasaporte",
   botonCerrar: "Entendido",
   botonVerPasaporte: "Ver mi pasaporte",
-  botonVerActividades: "Ver actividades"
+  botonVerMisiones: "Ver misiones"
 };

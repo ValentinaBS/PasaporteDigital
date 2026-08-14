@@ -30,8 +30,8 @@ window.PUMM.UI = (function () {
     },
 
     /* Lee un parámetro de la URL.
-       Ej: en registro.html?actividad=labs
-           leerParametro("actividad")  →  "labs" */
+       Ej: en nueva-mision.html?mision=labs
+           leerParametro("mision")  →  "labs" */
     leerParametro: function (nombre) {
       var params = new URLSearchParams(window.location.search);
       return params.get(nombre);
@@ -103,21 +103,31 @@ window.PUMM.UI = (function () {
       });
     },
 
-    /* Busca una actividad por id en data/actividades.js. */
-    buscarActividad: function (id) {
-      return window.PUMM.ACTIVIDADES.filter(function (a) {
+    /* Busca una misión por id en data/misiones.js. */
+    buscarMision: function (id) {
+      return window.PUMM.MISIONES.filter(function (a) {
         return a.id === id;
       })[0] || null;
     },
 
-    /* Manda a la pantalla de activación si el pasaporte no está
-       activado. Devuelve true si puede seguir.
+    /* Manda a la pantalla de registro (html/index.html) si la
+       participante todavía no tiene pasaporte. Devuelve true si
+       puede seguir.
 
        Se llama al principio de cada pantalla protegida. Es una
        comodidad de UX, NO una medida de seguridad: cualquiera
        puede saltearla desde la consola. La validación de verdad
-       tiene que estar en el backend. */
-    exigirActivacion: function () {
+       tiene que estar en el backend.
+
+       ⚠️ NO la llames desde html/index.html: es la pantalla a la
+       que redirige, así que entraría en un bucle consigo misma.
+
+       ⚠️ Adentro todavía llama a Datos.estaActivado(), que quedó
+       con el vocabulario de cuando existía la pantalla de
+       activación. Renombrarlo es una línea acá y otra en
+       js/datos.js, pero primero hay que definir qué guarda el
+       registro. Ver la nota al final de js/datos.js. */
+    exigirRegistro: function () {
       if (!window.PUMM.Datos.estaActivado()) {
         window.location.href = "index.html";
         return false;

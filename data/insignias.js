@@ -1,11 +1,11 @@
 /* ============================================================
    DATOS · INSIGNIAS
    ------------------------------------------------------------
-   Cada insignia se desbloquea al registrar la actividad que la
-   referencia en data/actividades.js (campo "insignia").
+   Cada insignia se desbloquea al registrar la misión que la
+   referencia en data/misiones.js (campo "insignia").
    La de recorrido completo se desbloquea por cantidad.
 
-   Mismo criterio que actividades.js: es .js y no .json a
+   Mismo criterio que misiones.js: es .js y no .json a
    propósito. La explicación completa está en ese archivo.
    ============================================================ */
 
@@ -47,8 +47,8 @@ window.PUMM.INSIGNIAS = [
     nombre: "Recorrido completo",
     icono: "🏆",
     descripcion: "Completaste el recorrido PUMM 2026.",
-    /* Esta no viene de una actividad puntual: se otorga al
-       llegar a ACTIVIDADES_PARA_COMPLETAR. */
+    /* Esta no viene de una misión puntual: se otorga al
+       llegar a MISIONES_PARA_COMPLETAR. */
     porCantidad: true
   }
 ];
