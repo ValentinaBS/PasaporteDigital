@@ -23,19 +23,36 @@
   font-weight: 700;
   text-align: center;
 
-  border: 2px solid transparent;
+  /* Borde negro + sombra dura: el look neo-brutalista del manual.
+     El borde va en negro (no transparente) para que el bloque de la
+     sombra cierre contra un contorno definido. */
+  border: 2px solid var(--pumm-negro);
   border-radius: var(--radio-full);
-  transition: transform var(--transicion), background-color var(--transicion);
+  box-shadow: var(--sombra-dura);
+  transition: transform var(--transicion), box-shadow var(--transicion),
+              background-color var(--transicion);
 }
 
+/* Feedback táctil: el botón se "hunde" hacia su sombra en vez de
+   escalar. Se corre hasta pisar el bloque negro y la sombra se achica,
+   como si lo apretaran contra la página. */
 .boton:active {
-  transform: scale(0.97);  /* Feedback táctil: confirma que registró el toque. */
+  transform: translate(3px, 3px);
+  box-shadow: var(--sombra-dura-sm);
 }
 
 .boton:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
+}
+
+/* Ícono (SVG) al lado del texto del botón: flecha de continuar,
+   reintento, etc. El gap del .boton ya lo separa del texto. */
+.boton__icono {
+  width: 1.1em;
+  height: 1.1em;
 }
 
 /* Acción principal de la pantalla. Una sola por vista. */

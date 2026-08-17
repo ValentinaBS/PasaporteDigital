@@ -18,8 +18,12 @@
 
   color: var(--color-texto);
   background-color: var(--pumm-blanco);
-  border: 3px solid var(--color-borde);
+
+  /* Borde negro + sombra dura: mismo lenguaje neo-brutalista que el
+     botón y la tarjeta, para que el formulario se lea como un set. */
+  border: 3px solid var(--pumm-negro);
   border-radius: var(--radio-md);
+  box-shadow: var(--sombra-dura-sm);
 }
 
 .campo:focus {
@@ -70,6 +74,12 @@
   min-height: 1.2em;  /* Reserva el lugar: sin esto, al aparecer
                          el mensaje empuja el botón hacia abajo
                          justo cuando la usuaria lo va a tocar. */
+}
+
+/* Mensaje en estado de error: fucsia, a juego con el borde del
+   .campo--error. El JS le suma esta clase cuando la validación falla. */
+.campo__ayuda--error {
+  color: var(--color-error);
 }
 
 .pantalla-plena .campo__ayuda {

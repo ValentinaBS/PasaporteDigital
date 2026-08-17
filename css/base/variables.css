@@ -86,6 +86,12 @@
   --sombra-sm: 0 1px 3px rgba(15, 15, 15, 0.10);
   --sombra-md: 0 4px 16px rgba(15, 15, 15, 0.12);
 
+  /* Sombra dura desplazada, sin difuminar. Es el recurso neo-brutalista
+     del manual PUMM 2026: la tarjeta, los inputs, los botones y los
+     modales "flotan" sobre un bloque negro corrido en diagonal. */
+  --sombra-dura:    6px 6px 0 var(--pumm-negro);
+  --sombra-dura-sm: 4px 4px 0 var(--pumm-negro);
+
   /* ---------- Layout ----------
      El ancho máximo mantiene la app legible si alguien la abre
      en una tablet o en la compu del stand de ayuda. */

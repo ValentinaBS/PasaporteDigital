@@ -20,6 +20,19 @@
 window.PUMM = window.PUMM || {};
 
 window.PUMM.TEXTOS = {
+  /* --- Registro de la participante (html/index.html) --- */
+  registroParticipanteExitoTitulo: "¡Registro exitoso!",
+  registroParticipanteExitoTexto:
+    "Ya podés ingresar a tu Pasaporte Digital 💜 ¡Disfrutá del evento!",
+  registroParticipanteErrorTitulo: "¡Ups! Algo salió mal",
+  registroParticipanteErrorTexto:
+    "No pudimos procesar tu registro. Por favor, revisá tus datos e " +
+    "intentá de nuevo en unos minutos.",
+  /* Validaciones */
+  nombreVacio: "Escribí tu nombre para continuar.",
+  dniVacio: "Escribí tu DNI para continuar.",
+  dniInvalido: "El DNI son 8 números, sin puntos, guiones ni espacios.",
+
   /* --- Activación --- */
   codigoInvalidoTitulo: "Ese código no nos suena",
   codigoInvalidoTexto:
@@ -58,5 +71,8 @@ window.PUMM.TEXTOS = {
   botonActivar: "Activar mi pasaporte",
   botonCerrar: "Entendido",
   botonVerPasaporte: "Ver mi pasaporte",
-  botonVerMisiones: "Ver misiones"
+  botonVerMisiones: "Ver misiones",
+  botonRegistrarme: "Registrarme",
+  botonReintentar: "Volver a intentar",
+  botonContinuar: "Continuar"
 };

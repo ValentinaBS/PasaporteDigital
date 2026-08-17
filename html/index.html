@@ -6,7 +6,9 @@
   Primera pantalla del recorrido. Acá la participante se
   registra y queda identificada para el resto del evento.
 
-  ESTADO: estructura vacía. El contenido todavía no está hecho.
+  Acá la participante se da de alta con nombre y DNI. El
+  formulario se valida en el cliente (ver js/paginas/registro.js)
+  y el resultado se muestra en un modal de éxito o de error.
 
   ⚠️ CAMBIO DE REQUERIMIENTOS
   Antes la primera pantalla era la de activación (código de
@@ -18,30 +20,13 @@
     · el index.html de la raíz redirige acá
     · js/ui.js manda acá a quien no tenga pasaporte todavía
       (PUMM.UI.exigirRegistro)
-  Por eso existe aunque esté vacío: sin él, las dos cosas
-  llevarían a un 404.
-
-  PARA SEGUIR
-    1. Escribí el contenido dentro de <main>.
-       Componentes que te sirven: .campo y .campo__etiqueta para
-       los inputs, .campo__ayuda para los mensajes de error, y
-       .boton--secundario para el CTA (el amarillo sobre violeta
-       es el par que mejor contrasta).
-    2. Creá js/paginas/registro.js copiando
-       js/paginas/_plantilla.js y descomentá su <script> abajo.
-       ⚠️ Sacale el UI.exigirRegistro() que trae la plantilla:
-       esta pantalla es justamente a la que redirige esa función,
-       así que entraría en un bucle consigo misma.
-    3. Si necesitás CSS propio, creá css/paginas/registro.css y
-       agregá su @import al final de css/main.css.
-    4. Para guardar el registro vas a usar js/datos.js. Hoy sus
-       funciones se llaman activar() / estaActivado(), del
-       vocabulario viejo. Antes de escribir esta pantalla leé la
-       nota de arriba de js/datos.js: hay que definir qué pide el
-       registro y recién ahí renombrarlas.
 
   ⚠️ Esta pantalla NO lleva la barra de navegación: todavía no
   hay pasaporte que mostrar. La nav aparece recién después.
+
+  ⚠️ js/paginas/registro.js NO llama a UI.exigirRegistro(): esta
+  es la pantalla a la que esa función redirige, así que entraría
+  en un bucle consigo misma.
 
   ⚠️ REGLA DE RUTAS EN ESTA CARPETA
   Este archivo vive en html/, así que para salir a css/, js/ o
@@ -64,10 +49,56 @@
 
 <body data-pagina="registro">
 
-  <main class="pantalla-plena">
-    <div class="contenedor">
+  <main class="registro">
 
-      <!-- ✏️ El contenido de la pantalla va acá. -->
+    <!-- Estrellas decorativas de la esquina. aria-hidden: no aportan
+         información, no las tiene que leer un lector de pantalla. -->
+    <img class="registro__estrellas" src="../assets/img/estrellas.webp"
+         alt="" aria-hidden="true">
+
+    <div class="registro__card">
+
+      <img class="registro__logo" src="../assets/img/logo-pumm.webp" alt="PUMM">
+
+      <h1 class="registro__titulo">Pasaporte Digital</h1>
+
+      <p class="registro__slogan">
+        ¡No te pierdas este festival!
+        <img class="registro__corazon" src="../assets/img/corazon-amarillo.webp"
+             alt="" aria-hidden="true">
+      </p>
+
+      <!-- novalidate: apagamos los globos nativos del navegador para
+           usar nuestros propios mensajes bajo cada campo (registro.js). -->
+      <form id="form-registro" novalidate>
+
+        <div class="registro__campo">
+          <label class="campo__etiqueta" for="nombre">Nombre</label>
+          <input class="campo" id="nombre" name="nombre" type="text"
+                 placeholder="Tu nombre" autocomplete="given-name"
+                 aria-describedby="ayuda-nombre">
+          <p class="campo__ayuda" id="ayuda-nombre" aria-live="polite"></p>
+        </div>
+
+        <div class="registro__campo">
+          <label class="campo__etiqueta" for="dni">DNI</label>
+          <input class="campo" id="dni" name="dni" type="text"
+                 inputmode="numeric" maxlength="8" placeholder="12345678"
+                 autocomplete="off" aria-describedby="ayuda-dni">
+          <p class="campo__ayuda" id="ayuda-dni" aria-live="polite"></p>
+        </div>
+
+        <button class="boton boton--primario boton--ancho" type="submit">
+          Registrarme
+          <img class="boton__icono" src="../assets/iconos/flecha-der-blanca.svg"
+               alt="" aria-hidden="true">
+        </button>
+
+      </form>
+
+      <p class="registro__nota">
+        Utilizaremos estos datos para generar tu código de ingreso al evento.
+      </p>
 
     </div>
   </main>
@@ -96,7 +127,6 @@
   <script src="../js/ui.js"></script>
   <script src="../js/app.js"></script>
 
-  <!-- ✏️ Descomentar al crear js/paginas/registro.js -->
-  <!-- <script src="../js/paginas/registro.js"></script> -->
+  <script src="../js/paginas/registro.js"></script>
 </body>
 </html>
