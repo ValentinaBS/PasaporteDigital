@@ -37,19 +37,24 @@
   overflow: hidden;
 }
 
-/* Estrellas decorativas en la esquina inferior izquierda. Van
-   detrás de la tarjeta para que nunca tapen el formulario. */
+/* Estrellas decorativas colgadas de la esquina inferior izquierda de
+   la TARJETA (son hijas de .registro__card, que es el ancla). Los
+   offset negativos las hacen asomar por fuera del borde, pisándolo,
+   como en el diseño. Al anclarse a la tarjeta y no al viewport, se
+   quedan siempre pegadas a la esquina sin importar el tamaño de
+   pantalla. pointer-events:none deja pasar los toques al formulario. */
 .registro__estrellas {
   position: absolute;
-  left: var(--espacio-2);
-  bottom: var(--espacio-2);
-  width: 96px;
-  z-index: 0;
+  left: calc(-1 * var(--espacio-3));
+  bottom: calc(-1 * var(--espacio-8));
+  width: 6rem;
+  z-index: 2;
   pointer-events: none;
 }
 
 .registro__card {
-  position: relative;  /* por encima de las estrellas */
+  /* Ancla de posición de las estrellas y capa por encima del fondo. */
+  position: relative;
   z-index: 1;
 
   width: 100%;
@@ -58,24 +63,24 @@
 
   background-color: var(--color-superficie);
   border: 3px solid var(--pumm-negro);
-  border-radius: var(--radio-sm);
   box-shadow: var(--sombra-dura);
   padding: var(--espacio-8);
 
   text-align: center;
+  rotate: calc(1deg);
 }
 
 .registro__logo {
   display: block;
-  width: 55%;
-  max-width: 180px;
+  width: 90%;
+  max-width: 286px;
   margin: 0 auto var(--espacio-4);
 }
 
 .registro__titulo {
   font-size: var(--texto-2xl);
   color: var(--color-primario);
-  margin-bottom: var(--espacio-6);
+  margin-bottom: var(--espacio-4);
 }
 
 /* Cartelito torcido con borde y sombra dura, tal como el manual.
@@ -85,12 +90,11 @@
   display: inline-block;
   background-color: var(--gris-100);
   color: var(--pumm-negro);
-  font-size: var(--texto-sm);
-  font-weight: 700;
+  font-size: var(--texto-md);
+  font-weight: bold;
   padding: var(--espacio-2) var(--espacio-3);
   border: 3px solid var(--pumm-negro);
-  border-radius: var(--radio-sm);
-  box-shadow: var(--sombra-dura-sm);
+  box-shadow: var(--sombra-dura);
   transform: rotate(-2deg);
   margin-bottom: var(--espacio-8);
 }
@@ -98,9 +102,8 @@
 .registro__corazon {
   position: absolute;
   right: -1.4em;
-  bottom: -0.8em;
-  width: 2.2em;
-  transform: rotate(12deg);
+  bottom: -1.2em;
+  width: 2.8em;
   pointer-events: none;
 }
 
@@ -108,12 +111,11 @@
    va alineado a la izquierda aunque la tarjeta esté centrada. */
 .registro__campo {
   text-align: left;
-  margin-bottom: var(--espacio-4);
 }
 
 /* Nota final: para qué se usan los datos. */
 .registro__nota {
-  font-size: var(--texto-xs);
+  font-size: var(--texto-sm);
   color: var(--color-texto-suave);
   margin-top: var(--espacio-6);
 }

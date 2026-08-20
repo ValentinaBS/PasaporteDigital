@@ -18,13 +18,11 @@
 
   /* padding-top más grande que el resto: deja lugar a la franja
      ajedrezada que va pegada al borde superior (el ::before). */
-  padding: var(--espacio-8) var(--espacio-6) var(--espacio-6);
+  padding: var(--espacio-12) var(--espacio-6) var(--espacio-8);
 
-  /* Borde negro + sombra dura, esquinas apenas redondeadas: el mismo
+  /* sombra dura, esquinas apenas redondeadas: el mismo
      lenguaje neo-brutalista de la tarjeta de registro. overflow:hidden
      recorta la franja del ::before contra las esquinas del modal. */
-  border: 3px solid var(--pumm-negro);
-  border-radius: var(--radio-sm);
   background-color: var(--color-superficie);
   box-shadow: var(--sombra-dura);
   color: var(--color-texto);
@@ -47,7 +45,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 16px;
+  height: 24px;
   background-image:
     linear-gradient(45deg,  var(--pumm-negro) 25%, transparent 25%),
     linear-gradient(-45deg, var(--pumm-negro) 25%, transparent 25%),
@@ -75,21 +73,20 @@
 
 /* El SVG blanco/negro que va adentro del cuadro de color. */
 .modal__icono-img {
-  width: 46%;
-  height: 46%;
+  width: 50%;
+  height: 50%;
 }
 
 .modal__titulo {
-  font-size: var(--texto-xl);
+  font-size: var(--texto-2xl);
   color: var(--color-primario);
   text-align: center;
-  margin-bottom: var(--espacio-2);
+  margin: var(--espacio-8) auto var(--espacio-4);
 }
 
 .modal__texto {
   text-align: center;
-  color: var(--color-texto-suave);
-  margin-bottom: var(--espacio-6);
+  margin-bottom: var(--espacio-2)
 }
 
 .modal__acciones {

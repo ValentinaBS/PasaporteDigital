@@ -16,18 +16,18 @@
   gap: var(--espacio-2);
 
   min-height: var(--tap-min);
-  padding: var(--espacio-3) var(--espacio-6);
+  padding: var(--espacio-2) var(--espacio-6);
+  margin-top: var(--espacio-4);
 
-  font-family: var(--fuente-texto);
-  font-size: var(--texto-md);
-  font-weight: 700;
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-1xl);
   text-align: center;
+  text-transform: uppercase;
 
   /* Borde negro + sombra dura: el look neo-brutalista del manual.
      El borde va en negro (no transparente) para que el bloque de la
      sombra cierre contra un contorno definido. */
   border: 2px solid var(--pumm-negro);
-  border-radius: var(--radio-full);
   box-shadow: var(--sombra-dura);
   transition: transform var(--transicion), box-shadow var(--transicion),
               background-color var(--transicion);
@@ -51,8 +51,7 @@
 /* Ícono (SVG) al lado del texto del botón: flecha de continuar,
    reintento, etc. El gap del .boton ya lo separa del texto. */
 .boton__icono {
-  width: 1.1em;
-  height: 1.1em;
+  width: 0.6em;
 }
 
 /* Acción principal de la pantalla. Una sola por vista. */

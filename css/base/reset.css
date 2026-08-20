@@ -40,9 +40,11 @@ svg {
 input,
 button,
 textarea,
-select {
+select,
+dialog {
   font: inherit;
   color: inherit;
+  border: none;
 }
 
 button {

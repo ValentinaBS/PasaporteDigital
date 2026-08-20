@@ -51,11 +51,6 @@
 
   <main class="registro">
 
-    <!-- Estrellas decorativas de la esquina. aria-hidden: no aportan
-         información, no las tiene que leer un lector de pantalla. -->
-    <img class="registro__estrellas" src="../assets/img/estrellas.webp"
-         alt="" aria-hidden="true">
-
     <div class="registro__card">
 
       <img class="registro__logo" src="../assets/img/logo-pumm.webp" alt="PUMM">
@@ -99,6 +94,13 @@
       <p class="registro__nota">
         Utilizaremos estos datos para generar tu código de ingreso al evento.
       </p>
+
+      <!-- Estrellas decorativas colgadas de la esquina inferior izquierda
+           de la tarjeta. Van adentro de la tarjeta a propósito: así quedan
+           siempre pegadas a su esquina, no a la del viewport. aria-hidden:
+           no aportan información, no las lee un lector de pantalla. -->
+      <img class="registro__estrellas" src="../assets/img/estrellas.webp"
+           alt="" aria-hidden="true">
 
     </div>
   </main>

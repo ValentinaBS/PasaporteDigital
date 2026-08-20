@@ -14,7 +14,7 @@
   /* ⚠️ Nunca bajar de 16px en un input: abajo de ese tamaño,
      Safari en iPhone hace zoom solo al tocarlo y la pantalla
      queda corrida. Es de las cosas más molestas en mobile. */
-  font-size: var(--texto-lg);
+  font-size: var(--texto-md);
 
   color: var(--color-texto);
   background-color: var(--pumm-blanco);
@@ -22,8 +22,7 @@
   /* Borde negro + sombra dura: mismo lenguaje neo-brutalista que el
      botón y la tarjeta, para que el formulario se lea como un set. */
   border: 3px solid var(--pumm-negro);
-  border-radius: var(--radio-md);
-  box-shadow: var(--sombra-dura-sm);
+  box-shadow: var(--sombra-dura);
 }
 
 .campo:focus {
@@ -59,7 +58,7 @@
 
 .campo__etiqueta {
   display: block;
-  font-size: var(--texto-sm);
+  font-size: var(--texto-md);
   font-weight: 700;
   margin-bottom: var(--espacio-2);
 }
@@ -68,7 +67,7 @@
    En el HTML va con aria-live="polite" para que el lector de
    pantalla lo anuncie cuando aparece. */
 .campo__ayuda {
-  font-size: var(--texto-xs);
+  font-size: var(--texto-sm);
   color: var(--color-texto-suave);
   margin-top: var(--espacio-2);
   min-height: 1.2em;  /* Reserva el lugar: sin esto, al aparecer

@@ -60,11 +60,11 @@
      El evento se vive con el teléfono en la mano, no hay desktop. */
   --texto-xs:  0.75rem;   /* 12px · metadatos, timestamps */
   --texto-sm:  0.875rem;  /* 14px · texto secundario */
-  --texto-md:  1rem;      /* 16px · cuerpo. NUNCA menos en inputs:
-                             abajo de 16px iOS hace zoom solo al tocar. */
+  --texto-md:  1rem;      /* 16px · cuerpo. NUNCA menos en inputs: abajo de 16px iOS hace zoom solo al tocar. */
   --texto-lg:  1.25rem;   /* 20px · subtítulos */
-  --texto-xl:  1.75rem;   /* 28px · títulos de pantalla */
-  --texto-2xl: 2.5rem;    /* 40px · números grandes de progreso */
+  --texto-xl:  1.75rem;   /* 28px · títulos de pantalla, botones principales */
+  --texto-1xl: 2rem;   /* 32px · botones principales */
+  --texto-2xl: 3rem;    /* 48px · números grandes de progreso */
 
   /* ---------- Espaciado ----------
      Escala de 4px. Usar siempre múltiplos de esta escala para que
