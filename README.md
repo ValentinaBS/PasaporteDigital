@@ -332,10 +332,6 @@ vez de estar escrito por nosotras, hay que escaparlo antes de meterlo en
 `innerHTML`. Hoy todos los datos son nuestros, así que no hay riesgo; queda
 anotado para cuando eso cambie.
 
-**Las fuentes de marca no están.**
-La app usa las del sistema como respaldo y se ve bien igual. Ver
-`assets/fuentes/LEEME.md` para el paso pendiente.
-
 ---
 
 ## Hipótesis todavía sin validar

@@ -123,6 +123,37 @@ window.PUMM.Datos = (function () {
     cerrarSesion: function () {
       localStorage.removeItem(CONFIG.CLAVE_CODIGO);
       localStorage.removeItem(CONFIG.CLAVE_REGISTROS);
+      localStorage.removeItem(CONFIG.CLAVE_PARTICIPANTE);
+    },
+
+    /* --- Registro de la participante ---
+       La pantalla de registro (html/index.html) da de alta a la
+       participante con { nombre, dni }. Devuelve { ok: true } o
+       { ok: false }: la pantalla muestra el modal de éxito o el de
+       error según el resultado.
+
+       ⚠️ DEMO: hoy no hay backend. Para poder probar el modal de
+       error, simulamos una falla del servidor con el DNI 00000000.
+       Cuando exista el backend, esta función pasa a ser asíncrona
+       (async/await) y el { ok: false } lo va a devolver el servidor
+       (DNI duplicado, servicio caído, etc.). La pantalla no cambia:
+       ya sabe reaccionar a los dos resultados. */
+    registrarParticipante: function (datos) {
+      var dni = String((datos && datos.dni) || "");
+
+      if (dni === "00000000") {
+        return { ok: false };
+      }
+
+      var guardado = guardarJSON(CONFIG.CLAVE_PARTICIPANTE, {
+        nombre: (datos && datos.nombre) || "",
+        dni: dni
+      });
+      return { ok: guardado };
+    },
+
+    estaRegistrada: function () {
+      return leerJSON(CONFIG.CLAVE_PARTICIPANTE, null) !== null;
     },
 
     /* --- Registros de misión --- */

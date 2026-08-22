@@ -45,6 +45,19 @@
   font-display: swap;
 }
 
+/* --- Special Gothic · negrita ---
+   Special Gothic es de un solo peso en Google Fonts, así que el bold
+   viene de un archivo aparte. Con esta segunda cara, font-weight: 700
+   (etiquetas, botones, énfasis) usa la negrita de verdad en vez del
+   "bold sintético" que el navegador dibujaba engrosando el Regular. */
+@font-face {
+  font-family: "Special Gothic";
+  src: url("../../assets/fuentes/special-gothic-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-family: var(--fuente-texto);
   font-size: var(--texto-md);
@@ -58,11 +71,12 @@ h1, h2, h3 {
   line-height: 1.15;
   letter-spacing: 0.01em;
   text-transform: uppercase;  /* Road Rage está pensada en mayúsculas. */
+  font-weight: 400;
 }
 
-h1 { font-size: var(--texto-xl); }
-h2 { font-size: var(--texto-lg); }
-h3 { font-size: var(--texto-md); }
+h1 { font-size: var(--texto-2xl); }
+h2 { font-size: var(--texto-1xl); }
+h3 { font-size: var(--texto-xl); }
 
 p {
   line-height: 1.55;
@@ -73,5 +87,4 @@ p {
 :focus-visible {
   outline: 3px solid var(--color-acento);
   outline-offset: 2px;
-  border-radius: var(--radio-sm);
 }
