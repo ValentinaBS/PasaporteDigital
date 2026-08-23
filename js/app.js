@@ -44,11 +44,35 @@
     });
   }
 
+  /* Decide qué pantalla del flujo registro/pasaporte mostrar según la
+     sesión, y lo hace UNA sola vez. Las pantallas solo registran su
+     inicializador (UI.alMostrar); acá decidimos cuál corre.
+
+     · Con sesión  → pasaporte
+     · Sin sesión  → registro (index)
+
+     mostrarPantalla resuelve el resto: en local navega al .html que
+     corresponda; en el bundle muestra la vista y corre su init. Por eso
+     el mismo código funciona en los dos modos.
+
+     Solo actúa en las pantallas de este flujo (evita tocar otras que se
+     agreguen en el futuro). */
+  function rutearFlujo() {
+    var Datos = window.PUMM.Datos;
+    var pagina = document.body.getAttribute("data-pagina");
+    var enFlujo = UI.$$("[data-vista]").length > 0 ||
+                  pagina === "index" || pagina === "pasaporte";
+    if (!enFlujo || !Datos) return;
+
+    UI.mostrarPantalla(Datos.estaRegistrada() ? "pasaporte" : "index");
+  }
+
   /* DOMContentLoaded espera a que el HTML esté armado.
      Sin esto, los querySelector corren antes de que existan
      los elementos y devuelven null. */
   document.addEventListener("DOMContentLoaded", function () {
     marcarNavegacionActiva();
     cerrarModalAlTocarAfuera();
+    rutearFlujo();
   });
 })();

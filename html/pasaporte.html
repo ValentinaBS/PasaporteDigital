@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PANTALLA · PASAPORTE (dummy de verificación)
+  ------------------------------------------------------------
+  Muestra el nombre guardado en el registro, para comprobar que
+  la persistencia funciona. Es un placeholder: el pasaporte real
+  (progreso, misiones, insignias) se arma más adelante.
+
+  ⚙️ En desarrollo es un archivo separado (se navega acá desde el
+  registro). El build lo une con el registro en un solo Index.html
+  como una vista más. Ver la nota en html/index.html.
+
+  El router de js/app.js manda al registro a quien entre sin sesión.
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Pasaporte - PUMM 2026</title>
+  <meta name="theme-color" content="#5B0099">
+
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body data-pagina="pasaporte">
+
+  <main class="registro">
+    <div class="registro__card centrado">
+
+      <img class="registro__logo" src="../assets/img/logo-pumm.webp" alt="PUMM">
+
+      <h1 class="registro__titulo" id="pasaporte-saludo"></h1>
+      <p id="pasaporte-bienvenida"></p>
+      <p class="texto-suave" id="pasaporte-dni"></p>
+
+      <!-- Estrellas decorativas de la esquina de la tarjeta. -->
+      <img class="registro__estrellas" src="../assets/img/estrellas.webp"
+           alt="" aria-hidden="true">
+
+    </div>
+  </main>
+
+  <!-- Modal vacío (lo usa PUMM.UI.abrirModal si hiciera falta). -->
+  <dialog class="modal" id="modal"></dialog>
+
+  <!-- Mismo orden de scripts que el resto de las pantallas. -->
+  <script src="../data/participantes.js"></script>
+  <script src="../data/misiones.js"></script>
+  <script src="../data/insignias.js"></script>
+  <script src="../data/textos.js"></script>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script src="../js/paginas/pasaporte.js"></script>
+</body>
+</html>

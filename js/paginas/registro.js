@@ -2,11 +2,13 @@
    PANTALLA · REGISTRO
    ------------------------------------------------------------
    Valida el formulario (nombre y DNI), da de alta a la
-   participante y muestra el modal de éxito o de error.
+   participante y, si sale bien, la manda al pasaporte.
 
-   ⚠️ Esta pantalla NO llama a UI.exigirRegistro(): es justamente
-   la pantalla a la que esa función redirige, así que entraría en
-   un bucle consigo misma.
+   No decide por su cuenta si mostrarse: solo registra su
+   inicializador con UI.alMostrar("index", ...). Quién decide qué
+   pantalla va es el router de js/app.js (según haya sesión). Así
+   el mismo código sirve en local (páginas separadas) y en el
+   bundle de una sola página (ver js/ui.js → mostrarPantalla).
    ============================================================ */
 
 (function () {
@@ -60,8 +62,10 @@
       icono: ICONO_EXITO,
       titulo: TEXTOS.registroParticipanteExitoTitulo,
       texto: TEXTOS.registroParticipanteExitoTexto,
+      /* "Continuar" lleva al pasaporte: en local navega a
+         pasaporte.html; en el bundle muestra la vista de pasaporte. */
       acciones: [
-        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, href: "pasaporte.html" }
+        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, pantalla: "pasaporte" }
       ]
     });
   }
@@ -78,12 +82,16 @@
     });
   }
 
-  /* --- Arranque --- */
-
-  document.addEventListener("DOMContentLoaded", function () {
+  /* --- Inicializador de la pantalla de registro ---
+     Lo corre el router cuando esta pantalla se muestra. Cablea el
+     formulario una sola vez (guard por si se llamara de nuevo). */
+  function initRegistro() {
     var form = UI.$("#form-registro");
-    if (!form) return;
+    if (!form || form.getAttribute("data-listo") === "1") return;
+    form.setAttribute("data-listo", "1");
 
+    var boton = UI.$('button[type="submit"]', form);
+    var textoBoton = boton ? boton.innerHTML : "";
     var inputNombre = UI.$("#nombre");
     var ayudaNombre = UI.$("#ayuda-nombre");
     var inputDni = UI.$("#dni");
@@ -127,13 +135,27 @@
          y recién ahí cortamos. */
       if (hayError) return;
 
-      var resultado = Datos.registrarParticipante({ nombre: nombre, dni: dni });
-
-      if (resultado.ok) {
-        modalExito();
-      } else {
-        modalError();
+      /* El guardado puede ir al servidor (Apps Script), así que es
+         asíncrono. Bloqueamos el botón mientras esperamos para que no
+         se envíe dos veces. */
+      if (boton) {
+        boton.disabled = true;
+        boton.textContent = "Registrando…";
       }
+
+      Datos.registrarParticipante({ nombre: nombre, dni: dni }).then(function (res) {
+        if (res.ok) {
+          modalExito();
+        } else {
+          modalError();
+          if (boton) {
+            boton.disabled = false;
+            boton.innerHTML = textoBoton;
+          }
+        }
+      });
     });
-  });
+  }
+
+  UI.alMostrar("index", initRegistro);
 })();

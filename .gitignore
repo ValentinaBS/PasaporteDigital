@@ -24,10 +24,11 @@ node_modules/
 # --- Temporales ---
 *.log
 *.tmp
+*dist
 *~
 
 # --- ⚠️ DATOS DE PARTICIPANTES ---
-# Nunca subir exportaciones con datos reales. Son menores de edad.
+# Nunca subir exportaciones con datos reales.
 # Si necesitás mirar un CSV exportado, dejalo fuera del repo.
 *.csv
 !ejemplo-*.csv

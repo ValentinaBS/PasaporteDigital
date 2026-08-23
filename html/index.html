@@ -3,36 +3,22 @@
   ============================================================
   PANTALLA · REGISTRO
   ------------------------------------------------------------
-  Primera pantalla del recorrido. Acá la participante se
-  registra y queda identificada para el resto del evento.
+  La participante se da de alta con nombre y DNI. Si sale bien,
+  pasa al pasaporte (html/pasaporte.html).
 
-  Acá la participante se da de alta con nombre y DNI. El
-  formulario se valida en el cliente (ver js/paginas/registro.js)
-  y el resultado se muestra en un modal de éxito o de error.
-
-  ⚠️ CAMBIO DE REQUERIMIENTOS
-  Antes la primera pantalla era la de activación (código de
-  acreditación). Esa pantalla salió del flujo: ahora se entra
-  directo por el registro. Si ves "activación" mencionada en
-  algún lado del proyecto, es una referencia vieja.
-
-  Este archivo es el punto de entrada real del proyecto:
-    · el index.html de la raíz redirige acá
-    · js/ui.js manda acá a quien no tenga pasaporte todavía
-      (PUMM.UI.exigirRegistro)
-
-  ⚠️ Esta pantalla NO lleva la barra de navegación: todavía no
-  hay pasaporte que mostrar. La nav aparece recién después.
-
-  ⚠️ js/paginas/registro.js NO llama a UI.exigirRegistro(): esta
-  es la pantalla a la que esa función redirige, así que entraría
-  en un bucle consigo misma.
+  ⚙️ DOS MODOS
+  En desarrollo, registro y pasaporte son DOS archivos separados
+  (index.html y pasaporte.html) y se navega entre ellos. Al correr
+  `node scripts/empaquetar.js`, el build los UNE en un solo
+  Index.html donde cada pantalla es una vista que se muestra/oculta
+  (Apps Script sirve un solo archivo). El código es el mismo en los
+  dos modos: la navegación pasa por UI.mostrarPantalla (ver js/ui.js)
+  y quién se muestra lo decide el router de js/app.js.
 
   ⚠️ REGLA DE RUTAS EN ESTA CARPETA
   Este archivo vive en html/, así que para salir a css/, js/ o
   data/ hay que subir un nivel con ../
       ✅  ../css/main.css
-      ❌  css/main.css      (busca html/css/, no existe)
       ❌  /css/main.css     (la barra inicial rompe en WordPress)
   ============================================================
 -->
@@ -47,7 +33,7 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 
-<body data-pagina="registro">
+<body data-pagina="index">
 
   <main class="registro">
 
@@ -96,17 +82,14 @@
       </p>
 
       <!-- Estrellas decorativas colgadas de la esquina inferior izquierda
-           de la tarjeta. Van adentro de la tarjeta a propósito: así quedan
-           siempre pegadas a su esquina, no a la del viewport. aria-hidden:
-           no aportan información, no las lee un lector de pantalla. -->
+           de la tarjeta. aria-hidden: no las lee un lector de pantalla. -->
       <img class="registro__estrellas" src="../assets/img/estrellas.webp"
            alt="" aria-hidden="true">
 
     </div>
   </main>
 
-  <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}).
-       Lo vas a necesitar para los errores del formulario. -->
+  <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}). -->
   <dialog class="modal" id="modal"></dialog>
 
   <!--
@@ -115,7 +98,7 @@
       2. config   las constantes
       3. datos    la capa de acceso (necesita que config ya corrió)
       4. ui       los helpers (necesitan textos)
-      5. app      lo común a todas las pantallas
+      5. app      lo común a todas las pantallas (incluye el router)
       6. paginas/ la lógica de ESTA pantalla
     Si invertís 2 y 3, datos.js no encuentra CONFIG y todo rompe.
   -->

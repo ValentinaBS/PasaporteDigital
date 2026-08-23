@@ -33,6 +33,10 @@ window.PUMM.TEXTOS = {
   dniVacio: "Escribí tu DNI para continuar.",
   dniInvalido: "El DNI son 8 números, sin puntos, guiones ni espacios.",
 
+  /* --- Pasaporte (html/pasaporte.html) --- */
+  pasaporteSaludo: "¡Hola",   // se completa en JS: "¡Hola, {nombre}! 💜"
+  pasaporteBienvenida: "Este es tu Pasaporte Digital de PUMM 2026.",
+
   /* --- Activación --- */
   codigoInvalidoTitulo: "Ese código no nos suena",
   codigoInvalidoTexto:
