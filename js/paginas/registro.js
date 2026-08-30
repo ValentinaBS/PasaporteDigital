@@ -23,6 +23,12 @@
      los largos distintos de 8. */
   var FORMATO_DNI = /^\d{8}$/;
 
+  /* Email válido, chequeo pragmático: algo@algo.algo, sin espacios.
+     No intentamos validar el RFC completo (imposible con una regex);
+     alcanza para atajar errores de tipeo. El servidor solo pide que no
+     esté vacío. */
+  var FORMATO_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   /* Íconos (SVG) que van dentro de los modales y sus botones.
      abrirModal inyecta 'icono' y 'texto' como HTML, así que los
      pasamos ya armados sin tener que tocar js/ui.js. */
@@ -92,6 +98,8 @@
 
     var boton = UI.$('button[type="submit"]', form);
     var textoBoton = boton ? boton.innerHTML : "";
+    var inputEmail = UI.$("#email");
+    var ayudaEmail = UI.$("#ayuda-email");
     var inputNombre = UI.$("#nombre");
     var ayudaNombre = UI.$("#ayuda-nombre");
     var inputDni = UI.$("#dni");
@@ -99,6 +107,9 @@
 
     /* Al tocar un campo con error, lo limpiamos: el mensaje ya
        cumplió su función y molesta si se queda mientras corrige. */
+    inputEmail.addEventListener("input", function () {
+      limpiarError(inputEmail, ayudaEmail);
+    });
     inputNombre.addEventListener("input", function () {
       limpiarError(inputNombre, ayudaNombre);
     });
@@ -111,12 +122,22 @@
       evento.preventDefault();
 
       /* Empezamos en limpio para no acumular mensajes viejos. */
+      limpiarError(inputEmail, ayudaEmail);
       limpiarError(inputNombre, ayudaNombre);
       limpiarError(inputDni, ayudaDni);
 
+      var email = inputEmail.value.trim();
       var nombre = inputNombre.value.trim();
       var dni = inputDni.value.trim();
       var hayError = false;
+
+      if (email === "") {
+        mostrarError(inputEmail, ayudaEmail, TEXTOS.emailVacio);
+        hayError = true;
+      } else if (!FORMATO_EMAIL.test(email)) {
+        mostrarError(inputEmail, ayudaEmail, TEXTOS.emailInvalido);
+        hayError = true;
+      }
 
       if (nombre === "") {
         mostrarError(inputNombre, ayudaNombre, TEXTOS.nombreVacio);
@@ -143,7 +164,7 @@
         boton.textContent = "Registrando…";
       }
 
-      Datos.registrarParticipante({ nombre: nombre, dni: dni }).then(function (res) {
+      Datos.registrarParticipante({ email: email, nombre: nombre, dni: dni }).then(function (res) {
         if (res.ok) {
           modalExito();
         } else {

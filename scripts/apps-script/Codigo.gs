@@ -3,7 +3,7 @@
    ------------------------------------------------------------
    Este archivo va en el proyecto de Apps Script LIGADO a la
    planilla de Google Sheets (Extensiones → Apps Script desde la
-   planilla). Ver el instructivo en docs/google-apps-script.md.
+   planilla). Ver el instructivo en google-apps-script.md (misma carpeta).
 
    Expone al cliente (google.script.run.<funcion>(payload)):
      · doGet                 → sirve la página (el HTML "Index").
@@ -14,7 +14,7 @@
    ESTRUCTURA DE LA PLANILLA · dos hojas
 
    Hoja "participantes" — una fila por participante:
-     nombre | dni | fecha_hora_registro |
+     email | nombre | dni | fecha_hora_registro |
      numero_misiones_completadas | nombres_misiones_completadas
 
    Hoja "historial_misiones" — una fila por misión completada (log):
@@ -24,12 +24,16 @@
 
 var HOJA_PARTICIPANTES = "participantes";
 var COL_PARTICIPANTES = [
+  "email",
   "nombre",
   "dni",
   "fecha_hora_registro",
   "numero_misiones_completadas",
   "nombres_misiones_completadas"
 ];
+
+/* En "participantes" el DNI es la 3ª columna (email, nombre, DNI, …). */
+var COL_DNI_PARTICIPANTES = 3;
 
 var HOJA_HISTORIAL = "historial_misiones";
 var COL_HISTORIAL = ["nombre", "dni", "mision_completada", "fecha_hora"];
@@ -48,27 +52,34 @@ function doGet(e) {
 }
 
 /* ---------- Registro de la participante ----------
-   payload = { nombre, dni }.
+   payload = { email, nombre, dni }.
    La identidad es el DNI: si ya existe, no duplica (idempotente).
    Al registrarse arranca con 0 misiones completadas.
    Devuelve { status: "success" } o { status: "error", message }. */
 function registrarParticipante(payload) {
   try {
+    var email = String((payload && payload.email) || "").trim();
     var nombre = String((payload && payload.nombre) || "").trim();
     var dni = String((payload && payload.dni) || "").trim();
 
-    if (!nombre || !/^\d{8}$/.test(dni)) {
+    if (!email || !nombre || !/^\d{8}$/.test(dni)) {
       return { status: "error", message: "Datos incompletos o inválidos." };
+    }
+
+    /* DNI reservado para probar el modal de error de punta a punta
+       (mismo criterio que el modo demo del cliente en js/datos.js). */
+    if (dni === "00000000") {
+      return { status: "error", message: "DNI de prueba (error simulado)." };
     }
 
     var hoja = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
 
-    if (buscarFilaPorDni_(hoja, dni)) {
+    if (buscarFilaPorDni_(hoja, dni, COL_DNI_PARTICIPANTES)) {
       return { status: "success" };   // ya registrada, no duplicamos
     }
 
-    /* nombre | dni | fecha_hora_registro | numero | nombres */
-    hoja.appendRow([nombre, dni, new Date(), 0, ""]);
+    /* email | nombre | dni | fecha_hora_registro | numero | nombres */
+    hoja.appendRow([email, nombre, dni, new Date(), 0, ""]);
     return { status: "success" };
 
   } catch (err) {
@@ -101,15 +112,17 @@ function procesarSello(payload) {
     }
 
     var hojaP = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
-    var fila = buscarFilaPorDni_(hojaP, dni);
+    var fila = buscarFilaPorDni_(hojaP, dni, COL_DNI_PARTICIPANTES);
     if (!fila) {
       return { status: "error", message: "La participante no está registrada." };
     }
 
-    var nombre = hojaP.getRange(fila, 1).getValue();
+    /* Columnas de "participantes": email=1, nombre=2, dni=3,
+       fecha_hora_registro=4, numero_misiones_completadas=5,
+       nombres_misiones_completadas=6. */
+    var nombre = hojaP.getRange(fila, 2).getValue();
 
-    /* Lista actual de misiones completadas (columna 5). */
-    var crudo = String(hojaP.getRange(fila, 5).getValue() || "");
+    var crudo = String(hojaP.getRange(fila, 6).getValue() || "");
     var lista = crudo.split(",").map(recortar_).filter(noVacio_);
 
     if (lista.indexOf(mision) !== -1) {
@@ -122,8 +135,8 @@ function procesarSello(payload) {
 
     /* Actualizar el resumen de la participante. */
     lista.push(mision);
-    hojaP.getRange(fila, 4).setValue(lista.length);
-    hojaP.getRange(fila, 5).setValue(lista.join(", "));
+    hojaP.getRange(fila, 5).setValue(lista.length);
+    hojaP.getRange(fila, 6).setValue(lista.join(", "));
 
     return { status: "success", numeroMisiones: lista.length };
 
@@ -146,11 +159,12 @@ function obtenerHoja_(nombre, columnas) {
 }
 
 /* Devuelve el número de fila (1-based) del DNI en la hoja, o 0 si no
-   está. La columna 2 es "dni" en las dos hojas. */
-function buscarFilaPorDni_(hoja, dni) {
+   está. Recibe en qué columna vive el DNI (cambia según la hoja: en
+   "participantes" es la 3ª porque el email va primero). */
+function buscarFilaPorDni_(hoja, dni, colDni) {
   var ultima = hoja.getLastRow();
   if (ultima < 2) return 0;
-  var dnis = hoja.getRange(2, 2, ultima - 1, 1).getValues();
+  var dnis = hoja.getRange(2, colDni, ultima - 1, 1).getValues();
   for (var i = 0; i < dnis.length; i++) {
     if (String(dnis[i][0]).trim() === dni) return i + 2;
   }

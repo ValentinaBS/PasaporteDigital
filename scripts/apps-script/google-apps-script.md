@@ -48,9 +48,9 @@ las imágenes/fuentes embebidas (base64). Es lo que se pega en Apps Script.
 
    **`participantes`** — una fila por participante:
 
-   | A | B | C | D | E |
-   |---|---|---|---|---|
-   | nombre | dni | fecha_hora_registro | numero_misiones_completadas | nombres_misiones_completadas |
+   | A | B | C | D | E | F |
+   |---|---|---|---|---|---|
+   | email | nombre | dni | fecha_hora_registro | numero_misiones_completadas | nombres_misiones_completadas |
 
    **`historial_misiones`** — una fila por misión completada (log):
 
@@ -109,15 +109,19 @@ las imágenes/fuentes embebidas (base64). Es lo que se pega en Apps Script.
 ## 6. Probar
 
 1. Abrí la URL en el celular o en el navegador.
-2. Registrate con un nombre y un DNI de 8 dígitos.
+2. Registrate con email, nombre y DNI de 8 dígitos.
 3. Deberías ver el modal **"¡Registro exitoso!"** → **Continuar** lo cierra y la
    misma página pasa a mostrar la vista de pasaporte con tu nombre.
-4. En la planilla, en la hoja **Participantes**, tiene que aparecer la fila con
-   nombre, dni y fecha. ✅
+4. En la planilla, en la hoja **`participantes`**, tiene que aparecer la fila con
+   email, nombre, dni y fecha. ✅
 5. Volvé a abrir la URL: como ya hay sesión guardada, arranca directo en la vista
    de pasaporte (no vuelve a pedir el registro).
 6. Registrá el **mismo DNI** otra vez (desde otro dispositivo o borrando los
    datos del navegador): **no** se duplica la fila (idempotente por DNI).
+
+> **Para probar el modal de error:** registrate con el DNI `00000000`. Está
+> reservado como disparador de error (mismo criterio en local y en el servidor),
+> así podés verificar que el aviso de error aparece.
 
 ---
 
@@ -135,7 +139,7 @@ las imágenes/fuentes embebidas (base64). Es lo que se pega en Apps Script.
 ## Notas
 
 - **Contrato cliente ↔ servidor** (por si tocás el código):
-  - Registro: el cliente llama `registrarParticipante({ nombre, dni })`; el
+  - Registro: el cliente llama `registrarParticipante({ email, nombre, dni })`; el
     servidor devuelve `{ status: "success" }` o `{ status: "error", message }`.
   - Misión (futuro): `procesarSello({ dni, mision })` devuelve
     `{ status: "success" | "repetida", numeroMisiones }` o `{ status: "error", message }`.

@@ -29,18 +29,19 @@
     }
   }
 
-  /* Cierra cualquier modal al tocar afuera del cuadro.
-     <dialog> no lo trae de fábrica. */
-  function cerrarModalAlTocarAfuera() {
+  /* Impide cerrar el modal salvo por sus botones.
+     El <dialog> nativo se cierra con Escape; lo bloqueamos con el
+     evento "cancel". Y NO agregamos el cierre por click en el fondo
+     (el <dialog> tampoco lo trae de fábrica), así que tocar afuera no
+     hace nada. Los únicos que cierran son los botones del modal
+     (Continuar / Volver a intentar / Entendido), ya cableados en
+     js/ui.js → abrirModal. */
+  function blindarModal() {
     var dialogo = UI.$("#modal");
     if (!dialogo) return;
 
-    dialogo.addEventListener("click", function (evento) {
-      /* Si el click cayó en el <dialog> mismo y no en su
-         contenido, fue en el fondo oscuro. */
-      if (evento.target === dialogo) {
-        dialogo.close();
-      }
+    dialogo.addEventListener("cancel", function (evento) {
+      evento.preventDefault();
     });
   }
 
@@ -72,7 +73,7 @@
      los elementos y devuelven null. */
   document.addEventListener("DOMContentLoaded", function () {
     marcarNavegacionActiva();
-    cerrarModalAlTocarAfuera();
+    blindarModal();
     rutearFlujo();
   });
 })();

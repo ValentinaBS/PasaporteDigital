@@ -146,7 +146,7 @@ window.PUMM.Datos = (function () {
       localStorage.removeItem(CONFIG.CLAVE_PARTICIPANTE);
     },
 
-    /* Da de alta a la participante con { nombre, dni }.
+    /* Da de alta a la participante con { email, nombre, dni }.
        Devuelve SIEMPRE una Promise que resuelve a:
          { ok: true }                      · quedó registrada
          { ok: false, mensaje }            · el servidor rechazó o falló
@@ -158,14 +158,16 @@ window.PUMM.Datos = (function () {
 
        En local (sin servidor) cae al modo demo: guarda en localStorage
        y, para poder probar el modal de error, simula una falla con el
-       DNI 00000000. */
+       DNI 00000000 (el servidor hace lo mismo, ver Codigo.gs). */
     registrarParticipante: function (datos) {
-      var dni = String((datos && datos.dni) || "");
+      var email = (datos && datos.email) || "";
       var nombre = (datos && datos.nombre) || "";
+      var dni = String((datos && datos.dni) || "");
       var self = this;
 
       function guardarLocal() {
         return guardarJSON(CONFIG.CLAVE_PARTICIPANTE, {
+          email: email,
           nombre: nombre,
           dni: dni
         });
@@ -191,7 +193,7 @@ window.PUMM.Datos = (function () {
               console.warn("[PUMM] Falló registrarParticipante", err);
               resolve({ ok: false, mensaje: "conexion" });
             })
-            .registrarParticipante({ nombre: nombre, dni: dni });
+            .registrarParticipante({ email: email, nombre: nombre, dni: dni });
           return;
         }
 

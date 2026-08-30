@@ -30,6 +30,8 @@
   <meta name="description" content="Tu recorrido por PUMM 2026.">
   <meta name="theme-color" content="#5B0099">
 
+  <link rel="icon" type="image/svg+xml" href="../assets/iconos/corazon-violeta.svg">
+
   <link rel="stylesheet" href="../css/main.css">
 </head>
 
@@ -52,6 +54,14 @@
       <!-- novalidate: apagamos los globos nativos del navegador para
            usar nuestros propios mensajes bajo cada campo (registro.js). -->
       <form id="form-registro" novalidate>
+
+        <div class="registro__campo">
+          <label class="campo__etiqueta" for="email">Email</label>
+          <input class="campo" id="email" name="email" type="email"
+                 inputmode="email" placeholder="tunombre@mail.com"
+                 autocomplete="email" aria-describedby="ayuda-email">
+          <p class="campo__ayuda" id="ayuda-email" aria-live="polite"></p>
+        </div>
 
         <div class="registro__campo">
           <label class="campo__etiqueta" for="nombre">Nombre</label>
@@ -78,7 +88,7 @@
       </form>
 
       <p class="registro__nota">
-        Utilizaremos estos datos para generar tu código de ingreso al evento.
+        Utilizaremos estos datos para generar tu pasaporte digital para ingresar al evento.
       </p>
 
       <!-- Estrellas decorativas colgadas de la esquina inferior izquierda
