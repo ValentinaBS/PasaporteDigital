@@ -2,11 +2,13 @@
    PANTALLA · REGISTRO
    ------------------------------------------------------------
    Valida el formulario (nombre y DNI), da de alta a la
-   participante y muestra el modal de éxito o de error.
+   participante y, si sale bien, la manda al pasaporte.
 
-   ⚠️ Esta pantalla NO llama a UI.exigirRegistro(): es justamente
-   la pantalla a la que esa función redirige, así que entraría en
-   un bucle consigo misma.
+   No decide por su cuenta si mostrarse: solo registra su
+   inicializador con UI.alMostrar("index", ...). Quién decide qué
+   pantalla va es el router de js/app.js (según haya sesión). Así
+   el mismo código sirve en local (páginas separadas) y en el
+   bundle de una sola página (ver js/ui.js → mostrarPantalla).
    ============================================================ */
 
 (function () {
@@ -20,6 +22,12 @@
      guiones ni espacios. \d{8} con anclas ^...$ rechaza también
      los largos distintos de 8. */
   var FORMATO_DNI = /^\d{8}$/;
+
+  /* Email válido, chequeo pragmático: algo@algo.algo, sin espacios.
+     No intentamos validar el RFC completo (imposible con una regex);
+     alcanza para atajar errores de tipeo. El servidor solo pide que no
+     esté vacío. */
+  var FORMATO_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   /* Íconos (SVG) que van dentro de los modales y sus botones.
      abrirModal inyecta 'icono' y 'texto' como HTML, así que los
@@ -60,8 +68,10 @@
       icono: ICONO_EXITO,
       titulo: TEXTOS.registroParticipanteExitoTitulo,
       texto: TEXTOS.registroParticipanteExitoTexto,
+      /* "Continuar" lleva al pasaporte: en local navega a
+         pasaporte.html; en el bundle muestra la vista de pasaporte. */
       acciones: [
-        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, href: "pasaporte.html" }
+        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, pantalla: "pasaporte" }
       ]
     });
   }
@@ -78,12 +88,18 @@
     });
   }
 
-  /* --- Arranque --- */
-
-  document.addEventListener("DOMContentLoaded", function () {
+  /* --- Inicializador de la pantalla de registro ---
+     Lo corre el router cuando esta pantalla se muestra. Cablea el
+     formulario una sola vez (guard por si se llamara de nuevo). */
+  function initRegistro() {
     var form = UI.$("#form-registro");
-    if (!form) return;
+    if (!form || form.getAttribute("data-listo") === "1") return;
+    form.setAttribute("data-listo", "1");
 
+    var boton = UI.$('button[type="submit"]', form);
+    var textoBoton = boton ? boton.innerHTML : "";
+    var inputEmail = UI.$("#email");
+    var ayudaEmail = UI.$("#ayuda-email");
     var inputNombre = UI.$("#nombre");
     var ayudaNombre = UI.$("#ayuda-nombre");
     var inputDni = UI.$("#dni");
@@ -91,6 +107,9 @@
 
     /* Al tocar un campo con error, lo limpiamos: el mensaje ya
        cumplió su función y molesta si se queda mientras corrige. */
+    inputEmail.addEventListener("input", function () {
+      limpiarError(inputEmail, ayudaEmail);
+    });
     inputNombre.addEventListener("input", function () {
       limpiarError(inputNombre, ayudaNombre);
     });
@@ -103,12 +122,22 @@
       evento.preventDefault();
 
       /* Empezamos en limpio para no acumular mensajes viejos. */
+      limpiarError(inputEmail, ayudaEmail);
       limpiarError(inputNombre, ayudaNombre);
       limpiarError(inputDni, ayudaDni);
 
+      var email = inputEmail.value.trim();
       var nombre = inputNombre.value.trim();
       var dni = inputDni.value.trim();
       var hayError = false;
+
+      if (email === "") {
+        mostrarError(inputEmail, ayudaEmail, TEXTOS.emailVacio);
+        hayError = true;
+      } else if (!FORMATO_EMAIL.test(email)) {
+        mostrarError(inputEmail, ayudaEmail, TEXTOS.emailInvalido);
+        hayError = true;
+      }
 
       if (nombre === "") {
         mostrarError(inputNombre, ayudaNombre, TEXTOS.nombreVacio);
@@ -127,13 +156,27 @@
          y recién ahí cortamos. */
       if (hayError) return;
 
-      var resultado = Datos.registrarParticipante({ nombre: nombre, dni: dni });
-
-      if (resultado.ok) {
-        modalExito();
-      } else {
-        modalError();
+      /* El guardado puede ir al servidor (Apps Script), así que es
+         asíncrono. Bloqueamos el botón mientras esperamos para que no
+         se envíe dos veces. */
+      if (boton) {
+        boton.disabled = true;
+        boton.textContent = "Registrando…";
       }
+
+      Datos.registrarParticipante({ email: email, nombre: nombre, dni: dni }).then(function (res) {
+        if (res.ok) {
+          modalExito();
+        } else {
+          modalError();
+          if (boton) {
+            boton.disabled = false;
+            boton.innerHTML = textoBoton;
+          }
+        }
+      });
     });
-  });
+  }
+
+  UI.alMostrar("index", initRegistro);
 })();

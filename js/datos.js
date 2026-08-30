@@ -72,6 +72,17 @@ window.PUMM.Datos = (function () {
     }
   }
 
+  /* ¿Estamos corriendo dentro de Google Apps Script?
+     google.script.run es la puerta al servidor y SOLO existe cuando la
+     página la sirve Apps Script. En local (Live Server o doble clic) no
+     está, y ahí caemos al modo demo con localStorage. Detectarlo en
+     runtime evita tener que cambiar una "perilla" al empaquetar: el
+     mismo archivo anda en los dos lados. */
+  function hayServidor() {
+    return typeof google !== "undefined" &&
+           google.script && google.script.run;
+  }
+
   /* ---------- API pública ---------- */
   return {
 
@@ -112,12 +123,21 @@ window.PUMM.Datos = (function () {
       return { ok: true, nombre: encontrada.nombre };
     },
 
+    /* --- Sesión de la participante (registro) ---
+       La identidad es el DNI: no generamos un id aparte. Los datos de
+       la sesión activa viven en CLAVE_PARTICIPANTE como { nombre, dni }. */
+
+    obtenerParticipante: function () {
+      return leerJSON(CONFIG.CLAVE_PARTICIPANTE, null);
+    },
+
     obtenerNombre: function () {
-      var codigo = this.obtenerCodigo();
-      var p = window.PUMM.PARTICIPANTES_DEMO.filter(function (x) {
-        return x.codigo === codigo;
-      })[0];
+      var p = this.obtenerParticipante();
       return p ? p.nombre : "";
+    },
+
+    estaRegistrada: function () {
+      return this.obtenerParticipante() !== null;
     },
 
     cerrarSesion: function () {
@@ -126,34 +146,64 @@ window.PUMM.Datos = (function () {
       localStorage.removeItem(CONFIG.CLAVE_PARTICIPANTE);
     },
 
-    /* --- Registro de la participante ---
-       La pantalla de registro (html/index.html) da de alta a la
-       participante con { nombre, dni }. Devuelve { ok: true } o
-       { ok: false }: la pantalla muestra el modal de éxito o el de
-       error según el resultado.
+    /* Da de alta a la participante con { email, nombre, dni }.
+       Devuelve SIEMPRE una Promise que resuelve a:
+         { ok: true }                      · quedó registrada
+         { ok: false, mensaje }            · el servidor rechazó o falló
 
-       ⚠️ DEMO: hoy no hay backend. Para poder probar el modal de
-       error, simulamos una falla del servidor con el DNI 00000000.
-       Cuando exista el backend, esta función pasa a ser asíncrona
-       (async/await) y el { ok: false } lo va a devolver el servidor
-       (DNI duplicado, servicio caído, etc.). La pantalla no cambia:
-       ya sabe reaccionar a los dos resultados. */
+       Es asíncrona porque en Apps Script el guardado va al servidor
+       (Google Sheets) y vuelve por callback. La envolvemos en una
+       Promise para que la pantalla la use con .then() sin conocer los
+       detalles de google.script.run.
+
+       En local (sin servidor) cae al modo demo: guarda en localStorage
+       y, para poder probar el modal de error, simula una falla con el
+       DNI 00000000 (el servidor hace lo mismo, ver Codigo.gs). */
     registrarParticipante: function (datos) {
+      var email = (datos && datos.email) || "";
+      var nombre = (datos && datos.nombre) || "";
       var dni = String((datos && datos.dni) || "");
+      var self = this;
 
-      if (dni === "00000000") {
-        return { ok: false };
+      function guardarLocal() {
+        return guardarJSON(CONFIG.CLAVE_PARTICIPANTE, {
+          email: email,
+          nombre: nombre,
+          dni: dni
+        });
       }
 
-      var guardado = guardarJSON(CONFIG.CLAVE_PARTICIPANTE, {
-        nombre: (datos && datos.nombre) || "",
-        dni: dni
-      });
-      return { ok: guardado };
-    },
+      return new Promise(function (resolve) {
 
-    estaRegistrada: function () {
-      return leerJSON(CONFIG.CLAVE_PARTICIPANTE, null) !== null;
+        /* --- En Apps Script: guardar en Google Sheets --- */
+        if (hayServidor()) {
+          google.script.run
+            .withSuccessHandler(function (res) {
+              if (res && res.status === "success") {
+                guardarLocal();
+                resolve({ ok: true });
+              } else {
+                resolve({
+                  ok: false,
+                  mensaje: (res && res.message) || ""
+                });
+              }
+            })
+            .withFailureHandler(function (err) {
+              console.warn("[PUMM] Falló registrarParticipante", err);
+              resolve({ ok: false, mensaje: "conexion" });
+            })
+            .registrarParticipante({ email: email, nombre: nombre, dni: dni });
+          return;
+        }
+
+        /* --- En local: modo demo con localStorage --- */
+        if (dni === "00000000") {
+          resolve({ ok: false, mensaje: "demo" });
+          return;
+        }
+        resolve({ ok: guardarLocal() });
+      });
     },
 
     /* --- Registros de misión --- */

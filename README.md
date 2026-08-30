@@ -357,13 +357,43 @@ necesitamos con presupuesto cero.
 
 ---
 
+## Persistencia: Google Sheets + Apps Script
+
+Los registros se guardan en una planilla de Google mediante Google Apps Script
+(reemplaza al plugin de WordPress, que no guardaba). El flujo:
+
+- Se desarrolla con la **fuente modular** de siempre (Live Server), con las
+  pantallas como **archivos separados** (`html/index.html`, `html/pasaporte.html`)
+  que navegan entre sí.
+- Para publicar, el build **une todo en un solo `Index.html`**: `node
+  scripts/empaquetar.js` genera `dist/Index.html`, donde cada pantalla pasa a ser
+  una vista que se muestra/oculta (Apps Script sirve un solo archivo), con el CSS,
+  el JS y los assets embebidos en base64. La navegación la abstrae
+  `UI.mostrarPantalla`: navega en local, cambia de vista en el bundle.
+- Ese archivo se pega en un proyecto de Apps Script ligado a la planilla (`doGet`
+  lo sirve). El registro pide **email, nombre y DNI** y llama a
+  `google.script.run.registrarParticipante(...)`; la identidad es el **DNI** (no se
+  duplica).
+- `js/datos.js` detecta solo si corre dentro de Apps Script; en local sigue usando
+  localStorage (modo demo). El mismo bundle anda en los dos lados.
+
+Paso a paso completo (crear la planilla, pegar el código, publicar) y el servidor
+están en **`scripts/apps-script/`** (`google-apps-script.md` y `Codigo.gs`).
+
+Carpetas nuevas: `scripts/` (build + `apps-script/` con el servidor y su
+instructivo) y `dist/` (los HTML empaquetados, generados).
+
+---
+
 ## Cómo entregamos
 
 Según lo que pidió la organización:
 
 1. **Jueves de cada semana:** mostramos los avances en VS Code.
-2. **Cuando toque publicar:** subimos la carpeta completa a Drive.
-3. **Nacho** la sube a la web de CET.
+2. **Cuando toque publicar:** se empaqueta con `node scripts/empaquetar.js` y se
+   sube el `Index.html` a Apps Script (ver `scripts/apps-script/google-apps-script.md`).
+   La fuente modular sigue yendo a Drive como respaldo.
+3. **Nacho** coordina el enlace en la web de CET.
 
 Antes de subir a Drive, chequear:
 
