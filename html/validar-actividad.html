@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Actividad - PUMM 2026</title>
+    <meta name="theme-color" content="#5B0099">
+    <link rel="icon" type="image/svg+xml" href="../assets/iconos/corazon-violeta.svg">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="actividad" data-pagina="validar-actividad">
+
+<main class="contenedor">
+    <header class="actividad__badge">
+        <h1 class="actividad__badge-texto">¡NUEVA MISIÓN DETECTADA!</h1>
+    </header>
+
+    <div class="actividad__tarjeta">
+
+        <div class="actividad__avatar-contenedor">
+            <div class="actividad__avatar-círculo">
+                <svg class="actividad__avatar-icono" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="15" width="60" height="36" rx="18" fill="white" /><circle cx="38" cy="33" r="4.5" fill="#5B0099" /><circle cx="62" cy="33" r="4.5" fill="#5B0099" /><rect x="22" y="56" width="56" height="32" rx="10" fill="white" />
+                </svg>
+            </div>
+            <img class="actividad__avatar-estrella" src="../assets/iconos/estrella-azul.svg" alt="estrella">
+        </div>
+
+        <div class="actividad__mision-box">
+            <div class="actividad__mision-info">
+                <span class="actividad__mision-etiqueta">MISIÓN</span>
+                <span class="actividad__mision-titulo">Taller de Robótica</span>
+            </div>
+            <button id="toggle-btn" class="actividad__checkbox" aria-label="Marcar misión"></button>
+        </div>
+
+        <p id="status-message" class="actividad__alerta">¡No olvides marcar la misión!</p>
+
+        <button class="boton boton--primario">
+            <span>COMPLETAR MISIÓN</span>
+            <img src="../assets/iconos/flecha-der-blanca.svg" alt="">
+        </button>
+
+        <p class="actividad__nota">¡Asegúrate de estar en el lugar correcto!</p>
+    </div>
+</main>
+
+<!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}).
+     Dejalo aunque no lo uses todavía: no se ve hasta que se abre. -->
+<dialog class="modal" id="modal"></dialog>
+
+<script src="../data/participantes.js"></script>
+<script src="../data/misiones.js"></script>
+<script src="../data/insignias.js"></script>
+<script src="../data/textos.js"></script>
+
+<script src="../js/config.js"></script>
+<script src="../js/datos.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/app.js"></script>
+
+<script src="../js/paginas/validar-actividad.js"></script>
+</body>
+</html>
