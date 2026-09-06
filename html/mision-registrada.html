@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión Ya Registrada - PUMM 2026</title>
+    <meta name="theme-color" content="#5B0099">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="actividad" data-pagina="mision-registrada">
+
+<main class="contenedor">
+
+    <img class="centrado" src="../assets/iconos/checklist.svg">
+
+    <div class="actividad__tarjeta actividad__tarjeta--mensaje">
+        <h1 class="actividad__titulo-alerta">MISIÓN YA<br>REGISTRADA</h1>
+        <p class="actividad__descripcion-alerta">
+            Esta experiencia ya forma parte de tu Pasaporte 💜
+        </p>
+    </div>
+
+    <div class="actividad__tarjeta actividad__tarjeta--progreso">
+        <!-- Badge flotante de estrella -->
+        <div class="actividad__badge-estrella">
+            <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+        </div>
+
+        <span class="actividad__subtitulo-magenta">MISIÓN DETECTADA</span>
+
+        <!-- Nombre de la Misión -->
+        <div class="actividad__mision-banner">
+            <span class="actividad__mision-nombre">Taller de Robótica</span>
+        </div>
+
+        <!-- Caja Interna de Nivel de Pasaporte -->
+        <div class="actividad__nivel-caja">
+            <div class="actividad__nivel-encabezado">
+                <span class="actividad__nivel-etiqueta">NIVEL DE PASAPORTE</span>
+                <span class="actividad__nivel-valor">Nivel 4</span>
+            </div>
+
+            <div class="actividad__barra-contenedor">
+                <div class="actividad__barra-relleno" style="width: 75%;"></div>
+            </div>
+
+            <div class="actividad__nivel-pie">
+                <img class="actividad__corazon" src="../assets/img/corazon-rosa.png">
+                <span class="actividad__xp-badge">4/8 XP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Inferior -->
+    <button id="btn-volver" class="boton boton--primario actividad__btn-volver">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>VOLVER AL PASAPORTE</span>
+    </button>
+
+</main>
+
+<script src="../data/participantes.js"></script>
+<script src="../data/misiones.js"></script>
+<script src="../data/textos.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/datos.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
