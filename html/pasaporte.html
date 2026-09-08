@@ -30,17 +30,26 @@
 
   <main class="contenedor con-nav">
 
-    <header class="encabezado">
-      <h1 class="encabezado__titulo" id="pasaporte-saludo"></h1>
-      <p class="encabezado__bajada">¿Lista para tu próxima aventura?</p>
+    <header class="encabezado encabezado--pasaporte">
+      
+      <div class="encabezado-fila-1">
+        <h1 class="encabezado__titulo" id="pasaporte-saludo"></h1>
+        <img class="encabezado__celular" src="../assets/iconos/celular.svg" alt="icono de celular">
+      </div>
+
+      <div class="encabezado-fila-2">
+        <img class="encabezado__corazon" src="../assets/iconos/corazon-violeta-2.svg" alt="icono de corazón">
+        <p class="encabezado__bajada">¿Lista para tu próxima aventura?</p>
+      </div>
+      
     </header>
 
     <!-- Progreso del recorrido: nivel + pista de misiones. -->
     <section class="tarjeta-progreso" aria-label="Tu progreso">
-      <p class="tarjeta-progreso__encabezado">Tu progreso</p>
+      <p class="tarjeta-progreso__encabezado"><span>Tu progreso</span></p>
 
       <div class="tarjeta-progreso__cuerpo">
-        <div class="fila-entre">
+        <div class="tarjeta-progreso__resumen fila-entre">
           <p class="tarjeta-progreso__nivel">
             Nivel <span id="progreso-nivel-numero"></span>
           </p>
@@ -52,30 +61,34 @@
       </div>
     </section>
 
+    <div class="franja-ajedrez--pasaporte" aria-hidden="true"></div>
+
     <!-- Llamado a escanear QR. -->
-    <div class="aviso-qr">
-      <span class="aviso-qr__rayo" aria-hidden="true">⚡</span>
-      <p class="aviso-qr__icono" aria-hidden="true">🔲</p>
+    <div class="aviso-qr aviso-qr--pasaporte">
+      <img class="aviso-qr__rayo" src="../assets/iconos/rayo.svg" alt="icono de rayo">
+      <p class="aviso-qr__icono"><img src="../assets/iconos/qr-negro.svg" alt="Código QR"></p>
       <p class="aviso-qr__texto">
         ¡Buscá los QR y escaneálos para subir de nivel!
       </p>
     </div>
 
-    <!-- Acceso al listado completo de misiones. -->
-    <a class="boton boton--secundario boton--ancho" href="misiones.html">
-      🔍 Buscar misiones
-    </a>
+    <section class="misiones-resumen">
+      <!-- Acceso al listado completo de misiones. -->
+      <a class="boton boton--secundario boton--ancho boton--buscar" href="misiones.html">
+        Buscar misiones
+        <img class="boton__flecha" src="../assets/iconos/flecha-negro.svg" alt="icono de flecha">
+      </a>
 
-    <!-- Misión destacada del momento. Si no hay ninguna cargada,
-         pintarMisionDestacada() le suma .oculto. -->
-    <article class="tarjeta mt-8" id="destacada-tarjeta">
-      <div class="fila-entre">
-        <h2 class="tarjeta__titulo" id="destacada-titulo"></h2>
-        <span class="tarjeta__etiqueta">Destacada</span>
-      </div>
-      <p id="destacada-texto"></p>
-      <p class="tarjeta__meta" id="destacada-lugar"></p>
-    </article>
+      <!-- Misión dummy destacada del momento. -->
+      <article class="tarjeta tarjeta--mision" id="destacada-tarjeta">
+        <div class="fila-entre">
+          <h2 class="tarjeta__titulo" id="destacada-titulo"></h2>
+          <span class="tarjeta__etiqueta">Destacada</span>
+        </div>
+        <p id="destacada-texto"></p>
+        <p class="tarjeta__meta" id="destacada-lugar"></p>
+      </article>
+    </section>
 
   </main>
 
@@ -85,15 +98,15 @@
   -->
   <nav class="nav" aria-label="Secciones principales">
     <a class="nav__item" data-seccion="pasaporte" href="pasaporte.html">
-      <span class="nav__icono" aria-hidden="true">🎫</span>
+      <img class="nav__icono" src="../assets/iconos/pasaporte-blanco.svg" alt="icono de pasaporte">
       Pasaporte
     </a>
     <a class="nav__item" data-seccion="misiones" href="misiones.html">
-      <span class="nav__icono" aria-hidden="true">📍</span>
+      <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="icono de misiones">
       Misiones
     </a>
     <a class="nav__item" data-seccion="logros" href="logros.html">
-      <span class="nav__icono" aria-hidden="true">🏆</span>
+      <img class="nav__icono" src="../assets/iconos/logros-negro.svg" alt="icono de logros">
       Logros
     </a>
   </nav>

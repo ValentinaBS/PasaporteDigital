@@ -73,7 +73,15 @@
 
       var paso = document.createElement("span");
       paso.className = "paso" + (hecha ? " paso--hecho" : "");
-      paso.textContent = hecha ? "✓" : String(indice + 1);
+      if (hecha) {
+        var check = document.createElement("img");
+        check.src = "../assets/iconos/check-blanco.svg";
+        check.alt = "Completada";
+        check.className = "paso__check";
+        paso.appendChild(check);
+      } else {
+        paso.appendChild(document.createTextNode(String(indice + 1)));
+      }
 
       /* Texto para lectores de pantalla: el ✓ o el número solos
          no dicen de qué misión se trata. */
@@ -102,8 +110,9 @@
 
     UI.$("#destacada-titulo").textContent = mision.nombre;
     UI.$("#destacada-texto").textContent = MISION_DESTACADA.descripcion;
-    UI.$("#destacada-lugar").textContent =
-      "📍 " + MISION_DESTACADA.ubicacion + " - " + MISION_DESTACADA.horario;
+    UI.$("#destacada-lugar").innerHTML =
+      '<img src="../assets/iconos/localizacion-violeta.svg" alt="icono lugar">' +
+      MISION_DESTACADA.ubicacion + " - " + MISION_DESTACADA.horario;
   }
 
   function initPasaporte() {

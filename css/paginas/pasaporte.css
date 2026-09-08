@@ -1,138 +1,288 @@
-/* ============================================================
-   PÁGINA · PASAPORTE (Mi Pasaporte)
-   ------------------------------------------------------------
-   Estilos exclusivos de esta pantalla: la tarjeta de progreso
-   con la "pista" de misiones y el aviso para ir a escanear QR.
-   El resto (tarjeta destacada, botón) ya usa componentes que
-   existen: .tarjeta y .boton.
+.encabezado--pasaporte {
+  position: relative;
+  padding: 0 0 var(--espacio-3);
+  margin: var(--espacio-3) 0;
+}
 
-   Viven acá porque hoy solo los usa esta pantalla. Si "Misiones"
-   o "Logros" terminan necesitando la misma pista de pasos, se
-   mudan a css/componentes/ (ver criterio en css/paginas/README.md).
-   ============================================================ */
+.encabezado-fila-1 {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: var(--espacio-12);
+}
 
-/* --- Tarjeta de progreso ---
-   Mismo lenguaje neo-brutalista que el modal y la tarjeta de
-   registro (borde negro + sombra dura): es el bloque más
-   importante de la pantalla, tiene que notarse. */
-.tarjeta-progreso {
+.encabezado__titulo {
+  display: inline-block;
+  padding: var(--espacio-2) var(--espacio-3);
+  background-color: var(--pumm-amarillo);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+  color: var(--pumm-negro);
+  font-size: var(--texto-2xl);
+  transform: rotate(-3deg);
+  margin-top: var(--espacio-4);
+}
+
+.encabezado__celular {
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 60px;
+  height: 60px;
+}
+
+.encabezado-fila-2 {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: var(--espacio-12);
+}
+
+.encabezado__corazon {
+  width: 42px;
+}
+
+.encabezado__bajada {
+  display: inline-block;
+  margin-top: var(--espacio-4);
+  padding: 2px var(--espacio-3);
   background-color: var(--color-superficie);
-  border: 3px solid var(--pumm-negro);
+  border: 1px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+  color: var(--pumm-negro);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
+  text-transform: uppercase;
+  transform: rotate(1deg)
+}
+
+.contenedor.con-nav {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.tarjeta-progreso {
+  overflow: hidden;
+  background-color: var(--pumm-cian);
+  border: 2px solid var(--pumm-negro);
   box-shadow: var(--sombra-dura);
-  overflow: hidden; /* recorta el encabezado contra las esquinas */
 }
 
 .tarjeta-progreso__encabezado {
   margin: 0;
-  padding: var(--espacio-2);
+  padding: var(--espacio-3) var(--espacio-2);
   background-color: var(--pumm-cian);
-  color: var(--pumm-negro);
+  color: var(--pumm-blanco);
   font-family: var(--fuente-titulo);
-  font-size: var(--texto-lg);
+  font-size: var(--texto-xl);
   text-align: center;
   text-transform: uppercase;
+  transform: rotate(-1deg);
+}
+
+.tarjeta-progreso__encabezado span {
+  display: inline-block;
+  padding: 0.1rem var(--espacio-6);
+  background-color: var(--pumm-negro);
 }
 
 .tarjeta-progreso__cuerpo {
-  padding: var(--espacio-4);
+  padding: var(--espacio-1) var(--espacio-3) var(--espacio-3);
+  font-family: var(--fuente-texto);
+  font-weight: 700;
+}
+
+.tarjeta-progreso__resumen {
+  padding: 2px var(--espacio-2);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);;
 }
 
 .tarjeta-progreso__nivel {
-  font-weight: 700;
+  font-size: var(--texto-md);
   text-transform: uppercase;
 }
 
 .tarjeta-progreso__fraccion {
-  font-family: var(--fuente-titulo);
-  font-size: var(--texto-lg);
+  font-size: var(--texto-md);
 }
 
-/* Pista de pasos: una bolita por misión. overflow-x:auto para
-   que el recorrido completo (10 misiones) no rompa el ancho de
-   la tarjeta en un celular chico; se desliza en vez de achicarse
-   hasta ser ilegible. */
 .tarjeta-progreso__pista {
   display: flex;
-  gap: var(--espacio-2);
-  margin-top: var(--espacio-4);
+  gap: 4px;
+  margin-top: var(--espacio-3);
   overflow-x: auto;
   padding-bottom: var(--espacio-1);
 }
 
 .paso {
   flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
   display: grid;
+  width: 34px;
+  height: 30px;
   place-items: center;
-
+  color: var(--pumm-negro);
   font-size: var(--texto-xs);
-  font-weight: 700;
-  color: var(--color-texto-suave);
-
   border: 2px solid var(--pumm-negro);
-  border-radius: var(--radio-full);
-  background-color: var(--gris-200);
+  border-radius: 20px;
+  background-color: var(--pumm-blanco);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
 }
 
 .paso--hecho {
-  background-color: var(--pumm-amarillo);
-  color: var(--pumm-negro);
+  background-color: var(--pumm-violeta);
 }
 
-/* --- Aviso para ir a escanear QR ---
-   Mismo violeta que .pantalla-plena, pero como tarjeta y no
-   pantalla completa: es un llamado a la acción puntual, no un
-   momento fuerte del recorrido como la bienvenida. */
+.paso__check {
+  width: 14px;
+  height: 11px;
+}
+
+.franja-ajedrez--pasaporte {
+  width: 100%;
+  height: 10px;
+  justify-self: center;
+  margin: var(--espacio-4);
+  background-image: url("../../assets/iconos/franja-cuadrille.svg");
+  background-repeat: repeat-x;
+  background-size: auto 10px;
+}
+
 .aviso-qr {
   position: relative;
   overflow: hidden;
-
-  margin-top: var(--espacio-6);
-  padding: var(--espacio-6) var(--espacio-4);
-  text-align: center;
-
+  margin-bottom: 20px;
+  min-height: 116px;
+  padding: var(--espacio-4) var(--espacio-4);
   background-color: var(--color-primario);
   color: var(--pumm-blanco);
-  border: 3px solid var(--pumm-negro);
-  box-shadow: var(--sombra-dura);
+  text-align: left;
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+  transform: rotate(1deg);
 }
 
 .aviso-qr__icono {
-  font-size: 2rem;
-  margin: 0 0 var(--espacio-2);
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 var(--espacio-2) 0 0;
+  place-items: center;
+  vertical-align: middle;
+  background-color: var(--pumm-amarillo);
+  border: 1px solid var(--pumm-negro);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+}
+
+.aviso-qr__icono img {
+  width: 26px;
+  height: 26px;
 }
 
 .aviso-qr__texto {
+  display: inline-block;
+  max-width: calc(100% - 3rem);
   margin: 0;
-  font-family: var(--fuente-titulo);
-  font-size: var(--texto-lg);
-  text-transform: uppercase;
+  padding: var(--espacio-2) var(--espacio-2);
+  background-color: var(--color-superficie);
+  color: var(--pumm-negro);
+  border: 2px solid var(--pumm-negro);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  font-weight: 700;
   line-height: 1.2;
+  text-transform: uppercase;
 }
 
-/* Rayo decorativo, mismo criterio que .registro__corazon: cuelga
-   de la esquina y no interfiere con el toque. */
 .aviso-qr__rayo {
   position: absolute;
-  top: var(--espacio-2);
-  right: var(--espacio-3);
-  font-size: 1.75rem;
-  transform: rotate(15deg);
+  right: -2px;
+  bottom: -12px;
+  width: 42px;
+  height: 52px;
+  transform: rotate(-12deg);
   pointer-events: none;
 }
 
-/* --- Etiqueta "Destacada" sobre la tarjeta de misión --- */
+.misiones-resumen {
+  margin-top: var(--espacio-4);
+  padding: var(--espacio-3);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+}
+
+.boton--buscar {
+  min-height: 42px;
+  margin-top: 0;
+  padding: var(--espacio-1) var(--espacio-3);
+  justify-content: space-between;
+  font-size: var(--texto-xl);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+}
+
+.boton__flecha {
+  width: 16px;
+  height: 16px;
+}
+
+.tarjeta--mision {
+  position: relative;
+  margin-top: var(--espacio-4);
+  padding: var(--espacio-3);
+  border: 2px solid var(--pumm-negro);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+}
+
+.tarjeta--mision .tarjeta__titulo {
+  color: var(--color-primario);
+  font-size: var(--texto-md);
+  text-transform: uppercase;
+}
+
+.tarjeta--mision .tarjeta__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+  color: var(--pumm-negro);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+}
+
+.tarjeta--mision .tarjeta__meta img {
+  width: 16px;
+  height: 20px;
+}
+
 .tarjeta__etiqueta {
+  position: absolute;
+  top: -10px;
+  right: -9px;
+  z-index: 1;
   flex: 0 0 auto;
   align-self: flex-start;
-
-  padding: 2px var(--espacio-2);
+  padding: 4px var(--espacio-2);
+  background-color: var(--pumm-cian);
+  color: var(--pumm-negro);
+  font-family: var(--fuente-titulo);
   font-size: var(--texto-xs);
   font-weight: 700;
   text-transform: uppercase;
-
-  background-color: var(--pumm-amarillo);
-  color: var(--pumm-negro);
   border-radius: var(--radio-sm);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+  transform: rotate(7deg);
+}
+
+.nav__item--activo {
+  margin: 4px;
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+}
+
+.nav__icono {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
