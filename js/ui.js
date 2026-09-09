@@ -84,8 +84,8 @@ window.PUMM.UI = (function () {
 
     /* Abre el modal de la página con el contenido que le pasemos.
        Cada HTML tiene UN <dialog id="modal"> vacío y lo rellenamos
-       desde acá: así los 4 estados (éxito, repetida, inválido, no
-       activado) reusan la misma pieza.
+       desde acá: así los distintos estados (éxito, error, aviso)
+       reusan la misma pieza.
 
        opciones = {
          tipo:    "exito" | "error" | "aviso",
@@ -181,14 +181,9 @@ window.PUMM.UI = (function () {
 
        ⚠️ NO la llames desde html/index.html: es la pantalla a la
        que redirige, así que entraría en un bucle consigo misma.
-
-       ⚠️ Adentro todavía llama a Datos.estaActivado(), que quedó
-       con el vocabulario de cuando existía la pantalla de
-       activación. Renombrarlo es una línea acá y otra en
-       js/datos.js, pero primero hay que definir qué guarda el
-       registro. Ver la nota al final de js/datos.js. */
+     */
     exigirRegistro: function () {
-      if (!window.PUMM.Datos.estaActivado()) {
+      if (!window.PUMM.Datos.estaRegistrada()) {
         window.location.href = "index.html";
         return false;
       }
