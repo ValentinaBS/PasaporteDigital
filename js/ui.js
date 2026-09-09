@@ -128,7 +128,7 @@ window.PUMM.UI = (function () {
        js/datos.js, pero primero hay que definir qué guarda el
        registro. Ver la nota al final de js/datos.js. */
     exigirRegistro: function () {
-      if (!window.PUMM.Datos.estaActivado()) {
+      if (!window.PUMM.Datos.estaRegistrada()) {
         window.location.href = "index.html";
         return false;
       }
