@@ -29,18 +29,11 @@ window.PUMM.CONFIG = {
 
   /* Claves de localStorage. Con prefijo para no chocar con
      nada más que viva en el mismo dominio de la web de CET. */
-  CLAVE_CODIGO: "pumm.codigo",
   CLAVE_REGISTROS: "pumm.registros",
   CLAVE_PARTICIPANTE: "pumm.participante",
 
   /* Nombre del parámetro que llevan los QR.
-     Un QR apunta a:  .../html/nueva-mision.html?mision=labs
+     Un QR apunta a:  .../html/validar-actividad.html?mision=labs
      El valor tiene que coincidir con un id de data/misiones.js */
-  PARAM_QR: "mision",
-
-  /* Formato esperado del código de acreditación.
-     ⚠️ HIPÓTESIS SIN VALIDAR: hay que confirmar con el equipo
-     de acreditación cómo son los códigos reales antes del
-     evento. Si cambia el formato, se cambia acá y nada más. */
-  FORMATO_CODIGO: /^PUMM-2026-[A-Z0-9]{2,6}$/
+  PARAM_QR: "mision"
 };

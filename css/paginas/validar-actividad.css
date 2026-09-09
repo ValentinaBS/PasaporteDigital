@@ -1,0 +1,180 @@
+body.actividad {
+    background: url("../../assets/img/fondo-violeta.webp");
+    font-family: var(--fuente-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh; /* Adapta el alto exacto en navegadores móviles */
+    padding: var(--espacio-4);
+    overflow-x: hidden;
+}
+
+/* Layout pensado para pantalla móvil */
+.actividad__contenedor {
+    position: relative;
+    width: 100%;
+    max-width: var(--ancho-max);
+    margin: auto;
+    padding-top: var(--espacio-6); /* Espacio para que sobresalga el badge superior */
+}
+
+.actividad__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-2);
+    min-height: var(--tap-min);
+    padding: var(--espacio-2) var(--espacio-6);
+
+    /* Centrado horizontal automático */
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* Superposición sobre la tarjeta blanca */
+    position: relative;
+    top: 20px; /* Ajusta según qué tan abajo quieras que pise la tarjeta */
+    z-index: 2;
+
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    text-align: center;
+    text-transform: uppercase;
+
+    /* Bordes y esquinas redondeadas */
+    border: 2px solid var(--pumm-negro);
+    border-radius: 12px;
+    box-shadow: var(--sombra-dura);
+
+    background-color: var(--color-secundario);
+    color: var(--color-secundario-texto);
+}
+
+.actividad__badge-texto {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-1xl);
+    color: var(--color-secundario-texto);
+    text-align: center;
+    text-transform: uppercase;
+
+}
+
+.actividad__tarjeta {
+    background-color: var(--color-superficie);
+    border: 3px solid var(--pumm-negro);
+    border-radius: var(--radio-sm);
+    padding: var(--espacio-12) var(--espacio-4) var(--espacio-6) var(--espacio-4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--sombra-dura);
+}
+
+/* Avatar de Robot */
+/* Contenedor del avatar */
+.actividad__avatar-contenedor {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: var(--espacio-4);
+}
+
+/* Círculo base con sombra neo-brutalista */
+.actividad__avatar-círculo {
+    width: 100%;
+    height: 100%;
+    background-color: var(--pumm-violeta);
+    border: 3px solid var(--pumm-negro);
+    border-radius: var(--radio-full);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 0 var(--pumm-negro);
+}
+
+.actividad__avatar-icono {
+    width: 62px;
+    height: 62px;
+}
+
+/* Imagen de la estrella SVG posicionada abajo a la derecha */
+.actividad__avatar-estrella {
+    position: absolute;
+    bottom: -4px;
+    right: -6px;
+    width: 36px;
+    height: 36px;
+    z-index: 2;
+    /* Evita que interfiera con clics si fuera un botón */
+    pointer-events: none;
+}
+
+/* Recuadro de la Misión */
+.actividad__mision-box {
+    width: 100%;
+    background-color: var(--gris-100);
+    border: 3px solid var(--pumm-negro);
+    padding: var(--espacio-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--sombra-dura-sm);
+}
+
+.actividad__mision-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-1);
+}
+
+.actividad__mision-etiqueta {
+    font-size: var(--texto-sm);
+    font-weight: 700;
+    color: var(--color-texto-suave);
+    letter-spacing: 0.5px;
+}
+
+.actividad__mision-titulo {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    color: var(--color-texto);
+    line-height: 1.1;
+}
+
+.actividad__checkbox {
+    width: var(--tap-min);
+    height: var(--tap-min);
+    flex-shrink: 0;
+    background-color: var(--color-secundario);
+    border: 3px solid var(--pumm-negro);
+    box-shadow: var(--sombra-dura-sm);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--texto-lg);
+    user-select: none;
+    transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.actividad__checkbox:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--pumm-negro);
+}
+
+/* Mensajes y Acciones */
+.actividad__alerta {
+    color: var(--color-error);
+    font-weight: bold;
+    font-size: var(--texto-sm);
+    margin: var(--espacio-3) 0 var(--espacio-4) 0;
+    text-align: center;
+}
+
+.actividad__nota {
+    color: var(--color-texto-suave);
+    font-size: var(--texto-sm);
+    margin-top: var(--espacio-3);
+    text-align: center;
+}

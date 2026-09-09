@@ -1,0 +1,177 @@
+/* Layout y Contenedor */
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--espacio-4) var(--espacio-4) var(--espacio-8);
+    max-width: 420px;
+    margin: 0 auto;
+    gap: var(--espacio-4);
+}
+
+/* Tarjeta 1: Mensaje de Misión Ya Registrada */
+.actividad__tarjeta {
+    width: 100%;
+    background-color: var(--color-fondo);
+    border: 3px solid var(--pumm-negro, #000);
+    box-shadow: var(--sombra-dura, 5px 5px 0 #000);
+    padding: var(--espacio-4);
+    text-align: center;
+    position: relative;
+    border-radius: 4px;
+}
+
+.actividad__tarjeta--mensaje {
+    transform: rotate(-1deg);
+    padding-top: var(--espacio-4);
+}
+
+.actividad__titulo-alerta {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-2xl);
+    line-height: 1.1;
+    color: var(--color-primario, #5B0099);
+    text-transform: uppercase;
+    margin-bottom: var(--espacio-3);
+}
+
+.actividad__descripcion-alerta {
+    font-family: var(--fuente-texto);
+    font-size: var(--texto-md, 1rem);
+    color: var(--pumm-negro, #1A1A1A);
+    margin: 0;
+}
+
+/* Tarjeta 2: Misión Detectada y Progreso */
+.actividad__tarjeta--progreso {
+    transform: rotate(0.8deg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-3);
+    align-items: flex-start;
+    text-align: left;
+}
+
+.actividad__badge-estrella {
+    position: absolute;
+    top: -15px;
+    right: -12px;
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-error, #E6007E);
+    border: 2px solid var(--pumm-negro, #000);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0 #000;
+}
+
+.actividad__badge-estrella svg {
+    width: 20px;
+    height: 20px;
+}
+
+.actividad__subtitulo-magenta {
+    font-family: var(--fuente-titulo);
+    color: var(--color-error, #E6007E);
+    font-size: var(--texto-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.actividad__mision-banner {
+    width: 100%;
+    background-color: var(--color-secundario, #FFCC00);
+    border: 2.5px solid var(--pumm-negro, #000);
+    box-shadow: 3px 3px 0 #000;
+    padding: var(--espacio-3) var(--espacio-4);
+}
+
+.actividad__mision-nombre {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    color: var(--pumm-negro, #000);
+}
+
+/* Caja de Nivel de Pasaporte */
+.actividad__nivel-caja {
+    width: 100%;
+    border: 2px solid var(--pumm-negro, #000);
+    padding: var(--espacio-3);
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+}
+
+.actividad__nivel-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actividad__nivel-etiqueta {
+    font-family: var(--fuente-titulo);
+    color: var(--color-primario, #5B0099);
+    font-size: var(--texto-lg);
+}
+
+.actividad__nivel-valor {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    color: var(--pumm-negro, #000);
+}
+
+/* Barra de Progreso */
+.actividad__barra-contenedor {
+    width: 100%;
+    height: 22px;
+    border: 2px solid var(--pumm-negro, #000);
+    background-color: var(--color-fondo);
+    overflow: hidden;
+}
+
+.actividad__barra-relleno {
+    height: 100%;
+    background-color: var(--color-error, #E6007E);
+    border-right: 2px solid var(--pumm-negro, #000);
+}
+
+.actividad__nivel-pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--espacio-1);
+}
+
+.actividad__corazon {
+    font-size: 1.4rem;
+}
+
+.actividad__xp-badge {
+    background-color: var(--color-secundario, #FFCC00);
+    border: 2px solid var(--pumm-negro, #000);
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-lg);
+    padding: 2px 8px;
+    box-shadow: 2px 2px 0 #000;
+}
+
+/* Botón Volver al Pasaporte */
+.actividad__btn-volver {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-2);
+    padding: var(--espacio-3) var(--espacio-4);
+    background-color: var(--color-secundario, #FFCC00);
+    color: var(--pumm-negro, #000);
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    border: 3px solid var(--pumm-negro, #000);
+    box-shadow: var(--sombra-dura, 4px 4px 0 #000);
+    cursor: pointer;
+    margin-top: var(--espacio-2);
+}

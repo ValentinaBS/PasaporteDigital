@@ -80,11 +80,6 @@ HTML reales son siete:
 | `html/mision-ya-registrada.html` | Repetición de misiones | falta |
 | `html/completado.html` | Recorrido completado | falta |
 
-> **Cambio de requerimientos:** la pantalla de activación (código de
-> acreditación) salió del flujo. Ahora se entra directo por el registro. Si
-> encontrás "activación" mencionada en algún archivo, es una referencia vieja
-> — avisá y la limpiamos.
-
 > **Cuidado con la palabra "registro":** en este proyecto significa dos cosas.
 > El registro **de la participante** es `html/index.html`, la pantalla inicial.
 > El registro **de una misión** es la pantalla del QR, que por eso conviene
@@ -175,7 +170,9 @@ PUMM.UI.abrirModal({ ... })         // abrir un modal
 PUMM.UI.formatearHora(iso)          // "2026-08-10T14:32:00Z" → "14:32"
 PUMM.UI.exigirRegistro()            // redirigir si todavía no tiene pasaporte
 
-PUMM.Datos.activar(codigo)          // ⚠️ nombre viejo, ver abajo
+PUMM.Datos.registrarParticipante({email, nombre, dni})  // Promise → { ok } | { ok:false, mensaje }
+PUMM.Datos.estaRegistrada()         // ¿ya se registró en este equipo?
+PUMM.Datos.obtenerParticipante()    // { email, nombre, dni } | null
 PUMM.Datos.registrarMision(id)      // "ok" | "repetida" | "desconocida"
 PUMM.Datos.obtenerProgreso()        // { hechas, meta, porcentaje, completo }
 PUMM.Datos.obtenerRegistros()       // las misiones registradas
@@ -183,16 +180,8 @@ PUMM.Datos.obtenerInsignias()       // todas, con .desbloqueada
 PUMM.Datos.cerrarSesion()           // borrar todo (útil para probar)
 ```
 
-⚠️ `js/datos.js` todavía habla de "activar" (`activar()`, `estaActivado()`,
-`CLAVE_CODIGO`, `FORMATO_CODIGO`) porque venía de la pantalla de activación.
-No lo renombramos todavía a propósito: el nombre correcto depende de qué pide
-el registro, y eso es una decisión de producto que falta. Cuando esté, el
-cambio es barato justamente por esa capa — se tocan esas funciones y nada más.
-La nota completa está arriba de `js/datos.js`.
-
-Para probar, los códigos de acreditación de desarrollo son `PUMM-2026-A1` y
-`PUMM-2026-B2` (están en `data/participantes.js`). Cualquier otro tiene que
-disparar el modal de código inválido.
+Para probar el modal de error del registro, usá el DNI `00000000`: está
+reservado como disparador de error (mismo criterio en local y en el servidor).
 
 ---
 
@@ -342,8 +331,6 @@ exactamente qué tocar.
 
 | Hipótesis | Dónde impacta |
 |---|---|
-| **Qué datos pide el registro** ahora que no hay activación | `js/datos.js` → `activar()` / `estaActivado()`, `js/config.js` → `FORMATO_CODIGO`, `data/textos.js` |
-| Cada participante recibe un código único en la acreditación | `js/config.js` → `FORMATO_CODIGO` |
 | Salesforce puede exportar los registros confirmados | La exportación del panel organizador |
 | Hay conectividad suficiente en todas las zonas | Todo el flujo de registro por QR |
 | Cada espacio puede exhibir un QR visible | Todo el flujo de registro por QR |
