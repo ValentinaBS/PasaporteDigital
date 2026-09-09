@@ -13,6 +13,11 @@ window.PUMM = window.PUMM || {};
 window.PUMM.UI = (function () {
   "use strict";
 
+  /* Inicializadores por pantalla. Cada pantalla registra el suyo con
+     alMostrar("clave", fn); mostrarPantalla lo ejecuta cuando esa
+     pantalla se vuelve visible. Ver la explicación en mostrarPantalla. */
+  var inits = {};
+
   return {
 
     /* Atajo para no escribir document.querySelector en todos lados. */
@@ -35,6 +40,46 @@ window.PUMM.UI = (function () {
     leerParametro: function (nombre) {
       var params = new URLSearchParams(window.location.search);
       return params.get(nombre);
+    },
+
+    /* --- Navegación entre pantallas (local vs bundle) ---
+       El proyecto tiene DOS modos y este helper esconde la diferencia:
+
+       · LOCAL: cada pantalla es un .html separado (index.html,
+         pasaporte.html). "Ir a otra pantalla" es navegar de verdad.
+       · BUNDLE: el build une todo en un solo Index.html donde cada
+         pantalla es un div con atributo data-vista que se muestra u
+         oculta. "Ir a otra pantalla" es mostrar una y ocultar las otras.
+
+       Cada pantalla registra su inicializador con alMostrar(clave, fn)
+       y mostrarPantalla(clave) lo ejecuta al mostrarla. Así el mismo
+       código sirve para los dos modos sin cambiar nada. */
+
+    alMostrar: function (clave, fn) {
+      inits[clave] = fn;
+    },
+
+    mostrarPantalla: function (clave) {
+      var vistas = this.$$("[data-vista]");
+
+      /* Modo BUNDLE: hay vistas en el DOM → mostrar/ocultar. */
+      if (vistas.length) {
+        vistas.forEach(function (v) {
+          v.classList.toggle("oculto", v.getAttribute("data-vista") !== clave);
+        });
+        if (inits[clave]) inits[clave]();
+        return;
+      }
+
+      /* Modo LOCAL: páginas separadas. Si ya estamos en la pantalla
+         pedida, solo inicializamos; si no, navegamos al archivo. */
+      var actual = document.body.getAttribute("data-pagina");
+      if (actual === clave) {
+        if (inits[clave]) inits[clave]();
+        return;
+      }
+      var archivo = clave === "index" ? "index.html" : clave + ".html";
+      (window.top || window).location.replace(archivo);
     },
 
     /* Abre el modal de la página con el contenido que le pasemos.
@@ -64,6 +109,13 @@ window.PUMM.UI = (function () {
 
       var htmlAcciones = acciones.map(function (a) {
         var clase = a.secundario ? "boton boton--fantasma" : "boton boton--primario";
+        /* Ir a otra pantalla del flujo (registro/pasaporte): se resuelve
+           con mostrarPantalla, que navega en local y cambia de vista en
+           el bundle. Cierra el modal antes de moverse. */
+        if (a.pantalla) {
+          return '<button class="' + clase + ' boton--ancho" data-ir-pantalla="' +
+                 a.pantalla + '">' + a.texto + "</button>";
+        }
         if (a.href) {
           return '<a class="' + clase + ' boton--ancho" href="' + a.href + '">' +
                  a.texto + "</a>";
@@ -86,6 +138,14 @@ window.PUMM.UI = (function () {
       this.$$("[data-cerrar-modal]", dialogo).forEach(function (boton) {
         boton.addEventListener("click", function () {
           dialogo.close();
+        });
+      });
+
+      var self = this;
+      this.$$("[data-ir-pantalla]", dialogo).forEach(function (boton) {
+        boton.addEventListener("click", function () {
+          dialogo.close();
+          self.mostrarPantalla(boton.getAttribute("data-ir-pantalla"));
         });
       });
     },

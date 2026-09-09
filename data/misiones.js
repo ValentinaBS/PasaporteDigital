@@ -25,55 +25,26 @@
    existe todavía, y lo reutiliza si ya lo creó otro archivo. */
 window.PUMM = window.PUMM || {};
 
+/* Las 10 misiones del recorrido. El `id` (slug) es la clave EXACTA
+   que viaja en el QR (?mision=slug) y que el JS envía al servidor;
+   no se cambia una vez impresos los QR. Los nombres son los que ve la
+   participante.
+
+   ⚠️ `insignia` queda en null por ahora: el sistema de insignias
+   (data/insignias.js) todavía apunta a los ids viejos y hay que
+   rehacerlo cuando se arme el flujo de misiones. Ninguna pantalla
+   actual lo usa. */
 window.PUMM.MISIONES = [
-  {
-    id: "labs",                          // Va en el QR. No cambiar una vez impreso.
-    nombre: "PUMM Labs",
-    espacio: "Salón principal",
-    descripcion: "Probá herramientas y armá tu primer prototipo.",
-    icono: "💻",
-    insignia: "creadora"                 // id de data/insignias.js
-  },
-  {
-    id: "coworks",
-    nombre: "Coworks",
-    espacio: "Patio central",
-    descripcion: "Trabajá tu idea junto a otras chicas.",
-    icono: "🤝",
-    insignia: "equipo"
-  },
-  {
-    id: "hackaton",
-    nombre: "Hackatón",
-    espacio: "Auditorio",
-    descripcion: "Resolvé un desafío real contra reloj.",
-    icono: "⚡",
-    insignia: "desafio"
-  },
-  {
-    id: "curiosa",
-    nombre: "Zona Curiosa",
-    espacio: "Hall de entrada",
-    descripcion: "Charlas cortas de mujeres que ya están en tecnología.",
-    icono: "🎧",
-    insignia: "curiosa"
-  },
-  {
-    id: "desafios",
-    nombre: "Desafíos",
-    espacio: "Sala 2",
-    descripcion: "Retos rápidos para ganar insignias extra.",
-    icono: "🎯",
-    insignia: null
-  },
-  {
-    id: "comunidad",
-    nombre: "Comunidad y diversión",
-    espacio: "Terraza",
-    descripcion: "Conocé a la comunidad de Chicas en Tecnología.",
-    icono: "💜",
-    insignia: "comunidad"
-  }
+  { id: "robotica",      nombre: "Taller de Robótica",       icono: "🤖", insignia: null },
+  { id: "vr",            nombre: "Lab de Realidad Virtual",  icono: "🥽", insignia: null },
+  { id: "programacion",  nombre: "Programación Web",         icono: "💻", insignia: null },
+  { id: "diseno-ux",     nombre: "Diseño UX/UI",             icono: "🎨", insignia: null },
+  { id: "ciencia-datos", nombre: "Análisis de Datos",        icono: "📊", insignia: null },
+  { id: "ciberseguridad",nombre: "Ciberseguridad",           icono: "🛡️", insignia: null },
+  { id: "biotecnologia", nombre: "Biotecnología",            icono: "🧬", insignia: null },
+  { id: "videojuegos",   nombre: "Zona Gamer",               icono: "🎮", insignia: null },
+  { id: "ia",            nombre: "Lab de IA",                icono: "✨", insignia: null },
+  { id: "redes",         nombre: "Infraestructura y Redes",  icono: "🌐", insignia: null }
 ];
 
 /* Cuántas misiones hacen falta para completar el recorrido.

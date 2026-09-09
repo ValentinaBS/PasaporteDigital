@@ -60,11 +60,11 @@
      El evento se vive con el teléfono en la mano, no hay desktop. */
   --texto-xs:  0.75rem;   /* 12px · metadatos, timestamps */
   --texto-sm:  0.875rem;  /* 14px · texto secundario */
-  --texto-md:  1rem;      /* 16px · cuerpo. NUNCA menos en inputs:
-                             abajo de 16px iOS hace zoom solo al tocar. */
+  --texto-md:  1rem;      /* 16px · cuerpo. NUNCA menos en inputs: abajo de 16px iOS hace zoom solo al tocar. */
   --texto-lg:  1.25rem;   /* 20px · subtítulos */
-  --texto-xl:  1.75rem;   /* 28px · títulos de pantalla */
-  --texto-2xl: 2.5rem;    /* 40px · números grandes de progreso */
+  --texto-xl:  1.75rem;   /* 28px · títulos de pantalla, botones principales */
+  --texto-1xl: 2rem;   /* 32px · botones principales */
+  --texto-2xl: 3rem;    /* 48px · números grandes de progreso */
 
   /* ---------- Espaciado ----------
      Escala de 4px. Usar siempre múltiplos de esta escala para que
@@ -85,6 +85,12 @@
 
   --sombra-sm: 0 1px 3px rgba(15, 15, 15, 0.10);
   --sombra-md: 0 4px 16px rgba(15, 15, 15, 0.12);
+
+  /* Sombra dura desplazada, sin difuminar. Es el recurso neo-brutalista
+     del manual PUMM 2026: la tarjeta, los inputs, los botones y los
+     modales "flotan" sobre un bloque negro corrido en diagonal. */
+  --sombra-dura:    6px 6px 0 var(--pumm-negro);
+  --sombra-dura-sm: 4px 4px 0 var(--pumm-negro);
 
   /* ---------- Layout ----------
      El ancho máximo mantiene la app legible si alguien la abre

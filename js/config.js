@@ -31,6 +31,7 @@ window.PUMM.CONFIG = {
      nada más que viva en el mismo dominio de la web de CET. */
   CLAVE_CODIGO: "pumm.codigo",
   CLAVE_REGISTROS: "pumm.registros",
+  CLAVE_PARTICIPANTE: "pumm.participante",
 
   /* Nombre del parámetro que llevan los QR.
      Un QR apunta a:  .../html/nueva-mision.html?mision=labs

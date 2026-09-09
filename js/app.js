@@ -29,19 +29,43 @@
     }
   }
 
-  /* Cierra cualquier modal al tocar afuera del cuadro.
-     <dialog> no lo trae de fábrica. */
-  function cerrarModalAlTocarAfuera() {
+  /* Impide cerrar el modal salvo por sus botones.
+     El <dialog> nativo se cierra con Escape; lo bloqueamos con el
+     evento "cancel". Y NO agregamos el cierre por click en el fondo
+     (el <dialog> tampoco lo trae de fábrica), así que tocar afuera no
+     hace nada. Los únicos que cierran son los botones del modal
+     (Continuar / Volver a intentar / Entendido), ya cableados en
+     js/ui.js → abrirModal. */
+  function blindarModal() {
     var dialogo = UI.$("#modal");
     if (!dialogo) return;
 
-    dialogo.addEventListener("click", function (evento) {
-      /* Si el click cayó en el <dialog> mismo y no en su
-         contenido, fue en el fondo oscuro. */
-      if (evento.target === dialogo) {
-        dialogo.close();
-      }
+    dialogo.addEventListener("cancel", function (evento) {
+      evento.preventDefault();
     });
+  }
+
+  /* Decide qué pantalla del flujo registro/pasaporte mostrar según la
+     sesión, y lo hace UNA sola vez. Las pantallas solo registran su
+     inicializador (UI.alMostrar); acá decidimos cuál corre.
+
+     · Con sesión  → pasaporte
+     · Sin sesión  → registro (index)
+
+     mostrarPantalla resuelve el resto: en local navega al .html que
+     corresponda; en el bundle muestra la vista y corre su init. Por eso
+     el mismo código funciona en los dos modos.
+
+     Solo actúa en las pantallas de este flujo (evita tocar otras que se
+     agreguen en el futuro). */
+  function rutearFlujo() {
+    var Datos = window.PUMM.Datos;
+    var pagina = document.body.getAttribute("data-pagina");
+    var enFlujo = UI.$$("[data-vista]").length > 0 ||
+                  pagina === "index" || pagina === "pasaporte";
+    if (!enFlujo || !Datos) return;
+
+    UI.mostrarPantalla(Datos.estaRegistrada() ? "pasaporte" : "index");
   }
 
   /* DOMContentLoaded espera a que el HTML esté armado.
@@ -49,6 +73,7 @@
      los elementos y devuelven null. */
   document.addEventListener("DOMContentLoaded", function () {
     marcarNavegacionActiva();
-    cerrarModalAlTocarAfuera();
+    blindarModal();
+    rutearFlujo();
   });
 })();
