@@ -199,7 +199,7 @@
 
 .misiones-resumen {
   margin-top: var(--espacio-4);
-  padding: var(--espacio-3);
+  padding: var(--espacio-4);
   background-color: var(--color-superficie);
   border: 2px solid var(--pumm-negro);
   box-shadow: 4px 4px 0 var(--pumm-negro);
@@ -210,7 +210,7 @@
   margin-top: 0;
   padding: var(--espacio-1) var(--espacio-3);
   justify-content: space-between;
-  font-size: var(--texto-xl);
+  font-size: var(--texto-1xl);
   box-shadow: 3px 3px 0 var(--pumm-negro);
 }
 
@@ -225,22 +225,26 @@
   padding: var(--espacio-3);
   border: 2px solid var(--pumm-negro);
   border-radius: 0;
-  box-shadow: 4px 4px 0 var(--pumm-negro);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+  overflow-wrap: anywhere;
 }
 
 .tarjeta--mision .tarjeta__titulo {
   color: var(--color-primario);
   font-size: var(--texto-md);
   text-transform: uppercase;
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  margin-bottom: var(--espacio-2);
 }
 
 .tarjeta--mision .tarjeta__meta {
   display: flex;
   align-items: center;
   gap: var(--espacio-2);
-  margin-top: var(--espacio-2);
+  margin-top: var(--espacio-4);
   color: var(--pumm-negro);
-  font-size: var(--texto-xs);
+  font-size: var(--texto-md);
   font-weight: 700;
 }
 
@@ -251,7 +255,7 @@
 
 .tarjeta__etiqueta {
   position: absolute;
-  top: -10px;
+  top: -9px;
   right: -9px;
   z-index: 1;
   flex: 0 0 auto;
@@ -259,13 +263,12 @@
   padding: 4px var(--espacio-2);
   background-color: var(--pumm-cian);
   color: var(--pumm-negro);
-  font-family: var(--fuente-titulo);
+  font-family: var(--fuente-texto);
   font-size: var(--texto-xs);
   font-weight: 700;
   text-transform: uppercase;
-  border-radius: var(--radio-sm);
   box-shadow: 3px 3px 0 var(--pumm-negro);
-  transform: rotate(7deg);
+  transform: rotate(8deg);
 }
 
 .nav__item--activo {

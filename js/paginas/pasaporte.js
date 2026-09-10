@@ -48,8 +48,7 @@
     ubicacion: "Stand Zona A",
     horario: "13:00hs",
     descripcion:
-      "Aprendé sobre los distintos usos de la IA en la vida " +
-      "cotidiana. Preparate para armar tu propio chatbot."
+      "Aprendé sobre los distintos usos de la IA en la vida cotidiana. Preparate para armar tu propio chatbot."
   };
 
   function pintarSaludo(participante) {
