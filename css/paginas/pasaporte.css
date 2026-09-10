@@ -38,7 +38,8 @@
 }
 
 .encabezado__corazon {
-  width: 42px;
+  align-self: flex-end;
+  width: 45px;
 }
 
 .encabezado__bajada {
@@ -164,6 +165,7 @@
   border: 1px solid var(--pumm-negro);
   box-shadow: 3px 3px 0 var(--pumm-negro);
   transform: rotate(-2deg);
+  border: 2px solid var(--pumm-negro);
 }
 
 .aviso-qr__icono img {
@@ -267,7 +269,8 @@
   font-size: var(--texto-xs);
   font-weight: 700;
   text-transform: uppercase;
-  box-shadow: 3px 3px 0 var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+  border: 2px solid var(--pumm-negro);
   transform: rotate(8deg);
 }
 

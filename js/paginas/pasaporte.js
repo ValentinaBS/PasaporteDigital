@@ -18,14 +18,8 @@
   var Datos = window.PUMM.Datos;
   var TEXTOS = window.PUMM.TEXTOS;
 
-  /* ⚠️ HIPÓTESIS SIN VALIDAR: "nivel" es un concepto del diseño
-     (Figma) que todavía no existe en data/misiones.js ni en
-     Datos.obtenerProgreso(). Hasta que Producto defina la regla
-     real (¿cada cuántas misiones se sube? ¿todos los niveles
-     valen lo mismo?), lo derivamos acá con un número fijo.
-     Cuando exista la regla de verdad, esto se reemplaza por lo
-     que devuelva Datos — ninguna otra pantalla depende de esto. */
-  var MISIONES_POR_NIVEL = 3;
+  const MISIONES_POR_NIVEL = 8;
+  const TOTAL_NIVELES = 3;
 
   function calcularNivel(misionesHechas) {
     return Math.floor(misionesHechas / MISIONES_POR_NIVEL) + 1;
