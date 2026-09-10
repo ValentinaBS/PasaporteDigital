@@ -106,6 +106,7 @@
 
 .tarjeta-progreso__fraccion {
   font-size: var(--texto-md);
+  color: var(--color-texto);
 }
 
 .tarjeta-progreso__pista {
@@ -123,7 +124,7 @@
   height: 30px;
   place-items: center;
   color: var(--pumm-negro);
-  font-size: var(--texto-xs);
+  font-size: var(--texto-sm);
   border: 2px solid var(--pumm-negro);
   border-radius: 20px;
   background-color: var(--pumm-blanco);
@@ -272,16 +273,4 @@
   box-shadow: 2px 2px 0 var(--pumm-negro);
   border: 2px solid var(--pumm-negro);
   transform: rotate(8deg);
-}
-
-.nav__item--activo {
-  margin: 4px;
-  background-color: var(--color-primario);
-  color: var(--pumm-blanco);
-}
-
-.nav__icono {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
 }

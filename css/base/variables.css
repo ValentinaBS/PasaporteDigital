@@ -96,7 +96,7 @@
      El ancho máximo mantiene la app legible si alguien la abre
      en una tablet o en la compu del stand de ayuda. */
   --ancho-max: 480px;
-  --alto-nav: 64px;
+  --alto-nav: 80px;
 
   /* Área táctil mínima. Las participantes usan la app paradas,
      con una mano, a veces con el celu en la mochila. 48px es el
