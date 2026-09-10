@@ -138,16 +138,6 @@
   height: 11px;
 }
 
-.franja-ajedrez--pasaporte {
-  width: 100%;
-  height: 10px;
-  justify-self: center;
-  margin: var(--espacio-4);
-  background-image: url("../../assets/iconos/franja-cuadrille.svg");
-  background-repeat: repeat-x;
-  background-size: auto 10px;
-}
-
 .aviso-qr {
   position: relative;
   overflow: hidden;
