@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mis Logros - PUMM 2026</title>
+
+    <!-- CSS Base y Componentes del proyecto -->
+    <link rel="stylesheet" href="../css/main.css" />
+  </head>
+  <body data-pagina="logros">
+    <main class="contenedor con-nav">
+      <!-- Encabezado de la pantalla -->
+      <header class="encabezado centrado">
+        <div class="cartel-titulo">
+          <h1 class="cartel-titulo__texto">MIS LOGROS</h1>
+        </div>
+      </header>
+
+      <!-- Tarjeta Principal de Progreso -->
+      <section class="tarjeta-progreso">
+        <p id="mensaje-progreso" class="tarjeta-progreso__mensaje">
+          Cargando progreso...
+        </p>
+
+        <div class="tarjeta-progreso__meta">
+          <span class="tarjeta-progreso__label">PROGRESO TOTAL</span>
+          <span id="porcentaje-texto" class="tarjeta-progreso__porcentaje"
+            >(0%)</span
+          >
+        </div>
+
+        <!-- Barra de progreso -->
+        <div
+          class="barra-progreso"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          id="barra-progreso"
+        >
+          <div
+            id="barra-relleno"
+            class="barra-progreso__relleno"
+            style="width: 0%"
+          ></div>
+        </div>
+
+        <!-- Contenedor para el botón final de felicitaciones (aparece al 100%) -->
+        <div id="contenedor-felicitaciones" class="mt-4 oculto">
+          <a href="felicitaciones.html" class="boton-felicitaciones">
+            ¡CONOCÉ TU RECOMPENSA! 🚀
+          </a>
+        </div>
+      </section>
+
+      <!-- Lista Dinámica de Insignias/Tarjetas -->
+      <section
+        id="lista-insignias"
+        class="pila mt-8"
+        aria-label="Listado de insignias"
+      >
+        <!-- Se renderiza dinámicamente desde JavaScript -->
+      </section>
+    </main>
+
+    <!-- Navegación Inferior -->
+    <nav class="nav">
+      <a href="pasaporte.html" class="nav__item">
+        <span class="nav__icono">🎫</span>
+        <span>Pasaporte</span>
+      </a>
+      <a href="misiones.html" class="nav__item">
+        <span class="nav__icono">📋</span>
+        <span>Misiones</span>
+      </a>
+      <a href="mislogros.html" class="nav__item nav__item--activo">
+        <span class="nav__icono">🏆</span>
+        <span>Logros</span>
+      </a>
+    </nav>
+
+    <!-- Scripts del Proyecto -->
+    <script src="data/insignias.js"></script>
+    <script src="paginas/datos.js"></script>
+    <script src="paginas/logros.js"></script>
+  </body>
+</html>

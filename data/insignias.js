@@ -16,31 +16,31 @@ window.PUMM.INSIGNIAS = [
     id: "creadora",
     nombre: "Modo creadora ON",
     icono: "🚀",
-    descripcion: "Pasaste de usar tecnología a crearla."
+    descripcion: "Pasaste de usar tecnología a crearla.",
   },
   {
     id: "equipo",
     nombre: "En equipo",
     icono: "🤝",
-    descripcion: "Trabajaste tu idea con otras chicas."
+    descripcion: "Trabajaste tu idea con otras chicas.",
   },
   {
     id: "desafio",
     nombre: "Sin miedo al desafío",
     icono: "⚡",
-    descripcion: "Le entraste a un problema real."
+    descripcion: "Le entraste a un problema real.",
   },
   {
     id: "curiosa",
     nombre: "Curiosa",
     icono: "🔍",
-    descripcion: "Fuiste a escuchar y preguntar."
+    descripcion: "Fuiste a escuchar y preguntar.",
   },
   {
     id: "comunidad",
     nombre: "Comunidad",
     icono: "💜",
-    descripcion: "Sos parte de Chicas en Tecnología."
+    descripcion: "Sos parte de Chicas en Tecnología.",
   },
   {
     id: "recorrido",
@@ -49,6 +49,6 @@ window.PUMM.INSIGNIAS = [
     descripcion: "Completaste el recorrido PUMM 2026.",
     /* Esta no viene de una misión puntual: se otorga al
        llegar a MISIONES_PARA_COMPLETAR. */
-    porCantidad: true
-  }
+    porCantidad: true,
+  },
 ];

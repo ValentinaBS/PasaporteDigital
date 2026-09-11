@@ -1,0 +1,352 @@
+/* ============================================================
+   PÁGINA · MIS LOGROS
+   ============================================================ */
+
+/* Cartel Amarillo con inclinación del Título */
+.cartel-titulo {
+  display: inline-block;
+  background-color: var(--pumm-amarillo);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-3) var(--espacio-6);
+  transform: rotate(-2deg);
+  margin-bottom: var(--espacio-4);
+}
+
+.cartel-titulo__texto {
+  color: var(--pumm-negro);
+  margin: 0;
+  line-height: 1;
+}
+
+/* Tarjeta Principal de Progreso */
+.tarjeta-progreso {
+  background-color: var(--pumm-blanco);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-6);
+  transform: rotate(1deg);
+  text-align: center;
+}
+
+.tarjeta-progreso__mensaje {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  color: var(--pumm-negro);
+  margin-bottom: var(--espacio-4);
+}
+
+.tarjeta-progreso__meta {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: var(--texto-sm);
+  margin-bottom: var(--espacio-2);
+}
+
+.barra-progreso {
+  width: 100%;
+  height: 28px;
+  background-color: var(--gris-200);
+  border: 3px solid var(--pumm-negro);
+  overflow: hidden;
+}
+
+.barra-progreso__relleno {
+  height: 100%;
+  background-color: var(--pumm-violeta);
+  border-right: 3px solid var(--pumm-negro);
+  transition: width 0.4s ease-out;
+}
+
+/* Botón especial para cuando se alcanza el 100% */
+.boton-felicitaciones {
+  display: inline-block;
+  width: 100%;
+  background-color: var(--pumm-fucsia);
+  color: var(--pumm-blanco);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
+  text-align: center;
+  padding: var(--espacio-3);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
+  text-transform: uppercase;
+  transition: transform var(--transicion);
+}
+
+.boton-felicitaciones:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* --- Tarjetas de Insignias/Logros (Estilo según captura) --- */
+.tarjeta-insignia {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  background-color: var(--pumm-blanco);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-4);
+  position: relative;
+}
+
+/* Estado Desbloqueado */
+.tarjeta-insignia--desbloqueada {
+  background-color: #f3e8ff; /* Fondo lila claro */
+}
+
+/* Estado Bloqueado */
+.tarjeta-insignia--bloqueada {
+  background-color: var(--gris-100);
+  opacity: 0.85;
+}
+
+.tarjeta-insignia__icono-contenedor {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radio-full);
+  border: 3px solid var(--pumm-negro);
+  background-color: var(--pumm-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  box-shadow: var(--sombra-dura-sm);
+}
+
+.tarjeta-insignia--bloqueada .tarjeta-insignia__icono-contenedor {
+  filter: grayscale(1);
+  background-color: var(--gris-200);
+}
+
+.tarjeta-insignia__info {
+  flex: 1;
+  text-align: left;
+}
+
+.tarjeta-insignia__titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  color: var(--pumm-violeta);
+  margin: 0 0 var(--espacio-1) 0;
+  line-height: 1;
+}
+
+.tarjeta-insignia--bloqueada .tarjeta-insignia__titulo {
+  color: var(--gris-600);
+}
+
+.tarjeta-insignia__descripcion {
+  font-size: var(--texto-sm);
+  color: var(--pumm-negro);
+  margin: 0;
+}
+
+.tarjeta-insignia__check {
+  width: 28px;
+  height: 28px;
+  background-color: var(--pumm-cian);
+  border: 2px solid var(--pumm-negro);
+  border-radius: var(--radio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: var(--texto-sm);
+}
+
+.tarjeta-insignia__candado {
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   PÁGINA · MIS LOGROS (Neo-brutalismo PUMM 2026)
+   ============================================================ */
+
+/* Cartel Amarillo Titular */
+.cartel-titulo {
+  display: inline-block;
+  background-color: var(--pumm-amarillo);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-2) var(--espacio-6);
+  transform: rotate(-2deg);
+  margin-bottom: var(--espacio-4);
+}
+
+.cartel-titulo__texto {
+  color: var(--pumm-negro);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-2xl);
+  margin: 0;
+  line-height: 1;
+}
+
+/* Tarjeta Principal de Progreso */
+.tarjeta-progreso {
+  background-color: var(--pumm-blanco);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-6);
+  transform: rotate(0.5deg);
+  text-align: center;
+}
+
+.tarjeta-progreso__mensaje {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  font-weight: 700;
+  color: var(--pumm-negro);
+  margin-bottom: var(--espacio-4);
+  line-height: 1.35;
+}
+
+.tarjeta-progreso__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: var(--texto-xs);
+  margin-bottom: var(--espacio-2);
+  color: var(--pumm-negro);
+  letter-spacing: 0.05em;
+}
+
+.barra-progreso {
+  width: 100%;
+  height: 24px;
+  background-color: var(--gris-200);
+  border: 3px solid var(--pumm-negro);
+  overflow: hidden;
+}
+
+.barra-progreso__relleno {
+  height: 100%;
+  background-color: var(--pumm-violeta);
+  border-right: 3px solid var(--pumm-negro);
+  transition: width 0.4s ease-in-out;
+}
+
+/* Botón de Recompensa al llegar al 100% */
+.boton-felicitaciones {
+  display: block;
+  width: 100%;
+  background-color: var(--pumm-fucsia);
+  color: var(--pumm-blanco);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  text-align: center;
+  padding: var(--espacio-3);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
+  text-transform: uppercase;
+  transition:
+    transform var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.boton-felicitaciones:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+/* Listado de Tarjetas de Logros */
+.lista-logros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.tarjeta-logro {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  background-color: var(--pumm-blanco);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  padding: var(--espacio-4);
+  position: relative;
+}
+
+/* Variación según el tipo o ID de insignia */
+.tarjeta-logro--desbloqueada {
+  background-color: #f3e8ff; /* Tono violeta claro de la primera tarjeta */
+}
+
+/* Variante amarilla para tarjetas secundarias activas */
+.tarjeta-logro--amarilla {
+  background-color: #ffe680;
+}
+
+.tarjeta-logro--bloqueada {
+  background-color: var(--gris-100);
+  opacity: 0.85;
+}
+
+/* Círculo del Ícono */
+.tarjeta-logro__icono-box {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radio-full);
+  border: 3px solid var(--pumm-negro);
+  background-color: var(--pumm-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  box-shadow: var(--sombra-dura-sm);
+}
+
+.tarjeta-logro--bloqueada .tarjeta-logro__icono-box {
+  filter: grayscale(1);
+  background-color: var(--gris-200);
+  box-shadow: none;
+}
+
+.tarjeta-logro__contenido {
+  flex: 1;
+}
+
+.tarjeta-logro__titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  color: var(--pumm-violeta);
+  margin: 0 0 var(--espacio-1) 0;
+  line-height: 1;
+}
+
+.tarjeta-logro--bloqueada .tarjeta-logro__titulo {
+  color: var(--gris-600);
+}
+
+.tarjeta-logro__desc {
+  font-size: var(--texto-sm);
+  color: var(--pumm-negro);
+  margin: 0;
+}
+
+/* Insignias de Estado (Check o Candado) */
+.tarjeta-logro__check {
+  width: 32px;
+  height: 32px;
+  background-color: var(--pumm-cian);
+  border: 2px solid var(--pumm-negro);
+  border-radius: var(--radio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--texto-md);
+  color: var(--pumm-negro);
+}
+
+.tarjeta-logro__candado {
+  font-size: 1.5rem;
+  color: var(--gris-600);
+}

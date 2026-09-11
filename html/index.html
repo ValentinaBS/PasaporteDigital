@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
   ============================================================
   PANTALLA · REGISTRO
@@ -23,86 +23,122 @@
   ============================================================
 -->
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pasaporte Digital - PUMM 2026</title>
-  <meta name="description" content="Tu recorrido por PUMM 2026.">
-  <meta name="theme-color" content="#5B0099">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pasaporte Digital - PUMM 2026</title>
+    <meta name="description" content="Tu recorrido por PUMM 2026." />
+    <meta name="theme-color" content="#5B0099" />
 
-  <link rel="icon" type="image/svg+xml" href="../assets/iconos/corazon-violeta.svg">
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../assets/iconos/corazon-violeta.svg"
+    />
 
-  <link rel="stylesheet" href="../css/main.css">
-</head>
+    <link rel="stylesheet" href="../css/main.css" />
+  </head>
 
-<body data-pagina="index">
+  <body data-pagina="index">
+    <main class="registro">
+      <div class="registro__card">
+        <img
+          class="registro__logo"
+          src="../assets/img/logo-pumm.webp"
+          alt="PUMM"
+        />
 
-  <main class="registro">
+        <h1 class="registro__titulo">Pasaporte Digital</h1>
 
-    <div class="registro__card">
+        <p class="registro__slogan">
+          ¡No te pierdas este festival!
+          <img
+            class="registro__corazon"
+            src="../assets/img/corazon-amarillo.webp"
+            alt=""
+            aria-hidden="true"
+          />
+        </p>
 
-      <img class="registro__logo" src="../assets/img/logo-pumm.webp" alt="PUMM">
-
-      <h1 class="registro__titulo">Pasaporte Digital</h1>
-
-      <p class="registro__slogan">
-        ¡No te pierdas este festival!
-        <img class="registro__corazon" src="../assets/img/corazon-amarillo.webp"
-             alt="" aria-hidden="true">
-      </p>
-
-      <!-- novalidate: apagamos los globos nativos del navegador para
+        <!-- novalidate: apagamos los globos nativos del navegador para
            usar nuestros propios mensajes bajo cada campo (registro.js). -->
-      <form id="form-registro" novalidate>
+        <form id="form-registro" novalidate>
+          <div class="registro__campo">
+            <label class="campo__etiqueta" for="email">Email</label>
+            <input
+              class="campo"
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              placeholder="tunombre@mail.com"
+              autocomplete="email"
+              aria-describedby="ayuda-email"
+            />
+            <p class="campo__ayuda" id="ayuda-email" aria-live="polite"></p>
+          </div>
 
-        <div class="registro__campo">
-          <label class="campo__etiqueta" for="email">Email</label>
-          <input class="campo" id="email" name="email" type="email"
-                 inputmode="email" placeholder="tunombre@mail.com"
-                 autocomplete="email" aria-describedby="ayuda-email">
-          <p class="campo__ayuda" id="ayuda-email" aria-live="polite"></p>
-        </div>
+          <div class="registro__campo">
+            <label class="campo__etiqueta" for="nombre">Nombre</label>
+            <input
+              class="campo"
+              id="nombre"
+              name="nombre"
+              type="text"
+              placeholder="Tu nombre"
+              autocomplete="given-name"
+              aria-describedby="ayuda-nombre"
+            />
+            <p class="campo__ayuda" id="ayuda-nombre" aria-live="polite"></p>
+          </div>
 
-        <div class="registro__campo">
-          <label class="campo__etiqueta" for="nombre">Nombre</label>
-          <input class="campo" id="nombre" name="nombre" type="text"
-                 placeholder="Tu nombre" autocomplete="given-name"
-                 aria-describedby="ayuda-nombre">
-          <p class="campo__ayuda" id="ayuda-nombre" aria-live="polite"></p>
-        </div>
+          <div class="registro__campo">
+            <label class="campo__etiqueta" for="dni">DNI</label>
+            <input
+              class="campo"
+              id="dni"
+              name="dni"
+              type="text"
+              inputmode="numeric"
+              maxlength="8"
+              placeholder="12345678"
+              autocomplete="off"
+              aria-describedby="ayuda-dni"
+            />
+            <p class="campo__ayuda" id="ayuda-dni" aria-live="polite"></p>
+          </div>
 
-        <div class="registro__campo">
-          <label class="campo__etiqueta" for="dni">DNI</label>
-          <input class="campo" id="dni" name="dni" type="text"
-                 inputmode="numeric" maxlength="8" placeholder="12345678"
-                 autocomplete="off" aria-describedby="ayuda-dni">
-          <p class="campo__ayuda" id="ayuda-dni" aria-live="polite"></p>
-        </div>
+          <button class="boton boton--primario boton--ancho" type="submit">
+            Registrarme
+            <img
+              class="boton__icono"
+              src="../assets/iconos/flecha-der-blanca.svg"
+              alt=""
+              aria-hidden="true"
+            />
+          </button>
+        </form>
 
-        <button class="boton boton--primario boton--ancho" type="submit">
-          Registrarme
-          <img class="boton__icono" src="../assets/iconos/flecha-der-blanca.svg"
-               alt="" aria-hidden="true">
-        </button>
+        <p class="registro__nota">
+          Utilizaremos estos datos para generar tu pasaporte digital para
+          ingresar al evento.
+        </p>
 
-      </form>
-
-      <p class="registro__nota">
-        Utilizaremos estos datos para generar tu pasaporte digital para ingresar al evento.
-      </p>
-
-      <!-- Estrellas decorativas colgadas de la esquina inferior izquierda
+        <!-- Estrellas decorativas colgadas de la esquina inferior izquierda
            de la tarjeta. aria-hidden: no las lee un lector de pantalla. -->
-      <img class="registro__estrellas" src="../assets/img/estrellas.webp"
-           alt="" aria-hidden="true">
+        <img
+          class="registro__estrellas"
+          src="../assets/img/estrellas.webp"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+    </main>
 
-    </div>
-  </main>
+    <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}). -->
+    <dialog class="modal" id="modal"></dialog>
 
-  <!-- Modal vacío. Lo rellena js/ui.js con PUMM.UI.abrirModal({...}). -->
-  <dialog class="modal" id="modal"></dialog>
-
-  <!--
+    <!--
     ORDEN DE LOS SCRIPTS — importa y no es arbitrario:
       1. data/    los arrays de datos
       2. config   las constantes
@@ -112,16 +148,16 @@
       6. paginas/ la lógica de ESTA pantalla
     Si invertís 2 y 3, datos.js no encuentra CONFIG y todo rompe.
   -->
-  <script src="../data/participantes.js"></script>
-  <script src="../data/misiones.js"></script>
-  <script src="../data/insignias.js"></script>
-  <script src="../data/textos.js"></script>
+    <script src="../data/participantes.js"></script>
+    <script src="../data/misiones.js"></script>
+    <script src="../data/insignias.js"></script>
+    <script src="../data/textos.js"></script>
 
-  <script src="../js/config.js"></script>
-  <script src="../js/datos.js"></script>
-  <script src="../js/ui.js"></script>
-  <script src="../js/app.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/datos.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/app.js"></script>
 
-  <script src="../js/paginas/registro.js"></script>
-</body>
+    <script src="../js/paginas/registro.js"></script>
+  </body>
 </html>
