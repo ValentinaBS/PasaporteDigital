@@ -108,18 +108,24 @@
       MISION_DESTACADA.ubicacion + " - " + MISION_DESTACADA.horario;
   }
 
-  function initPasaporte() {
+    /* Inicializa la pantalla: pinta el saludo, sincroniza el progreso
+    con la planilla y pinta el nivel, la fracción y la pista. */
+    function initPasaporte() {
     var participante = Datos.obtenerParticipante();
-
     /* Defensa: si llegara sin sesión, al registro. */
     if (!participante || !participante.nombre) {
       UI.mostrarPantalla("index");
       return;
     }
-
     pintarSaludo(participante);
-    pintarProgreso();
-    pintarMisionDestacada();
+    /* sincronizarProgreso pregunta a la planilla cuántas misiones
+       tiene esta participante. Recién con esa respuesta pintamos
+       el nivel, la fracción y la pista: si pintáramos antes,
+       mostraríamos el valor viejo (o vacío) un instante. */
+    Datos.sincronizarProgreso().then(function () {
+      pintarProgreso();
+      pintarMisionDestacada();
+    });
   }
 
   UI.alMostrar("pasaporte", initPasaporte);

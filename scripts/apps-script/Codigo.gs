@@ -171,5 +171,42 @@ function buscarFilaPorDni_(hoja, dni, colDni) {
   return 0;
 }
 
+/* ---------- Consultar el estado de la participante ----------
+   payload = { dni }.
+   Le permite al cliente preguntar "¿cuántas misiones tiene este
+   DNI ya registradas?" en vez de confiar en lo que guardó en su
+   celular. Es la pieza que faltaba para que la planilla sea la
+   fuente de verdad del progreso, no el localStorage.
+
+   Devuelve { status: "success", numeroMisiones, misiones } o
+   { status: "error", message }. */
+function obtenerEstadoParticipante(payload) {
+  try {
+    var dni = String((payload && payload.dni) || "").trim();
+
+    if (!/^\d{8}$/.test(dni)) {
+      return { status: "error", message: "DNI inválido." };
+    }
+
+    var hoja = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
+    var fila = buscarFilaPorDni_(hoja, dni, COL_DNI_PARTICIPANTES);
+
+    if (!fila) {
+      return { status: "error", message: "La participante no está registrada." };
+    }
+
+    /* Columnas: email=1, nombre=2, dni=3, fecha=4,
+       numero_misiones_completadas=5, nombres_misiones_completadas=6. */
+    var numeroMisiones = Number(hoja.getRange(fila, 5).getValue()) || 0;
+    var crudo = String(hoja.getRange(fila, 6).getValue() || "");
+    var misiones = crudo.split(",").map(recortar_).filter(noVacio_);
+
+    return { status: "success", numeroMisiones: numeroMisiones, misiones: misiones };
+
+  } catch (err) {
+    return { status: "error", message: String(err) };
+  }
+}
+
 function recortar_(s) { return String(s).trim(); }
 function noVacio_(s) { return s !== ""; }
