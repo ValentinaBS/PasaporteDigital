@@ -1,0 +1,82 @@
+.encabezado__misiones {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--espacio-2) var(--espacio-6);
+  margin-top: var(--espacio-4);
+  background-color: var(--color-secundario);
+
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-2xl);
+  text-align: center;
+  text-transform: uppercase;
+
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+}
+
+.encabezado__titulo{
+  color: var(--color-secundario-texto);
+}
+
+.campo {
+  margin-top: var(--espacio-8);
+}
+
+.campo--buscador {
+  /* El ícono va como background-image
+   en vez de un <svg> aparte: así no hace falta envolver el
+   input en un div extra solo para poder posicionarlo. */
+.campo--buscador {
+  padding-left: calc(var(--espacio-4) * 2 + 20px);
+  background-repeat: no-repeat;
+  background-position: var(--espacio-4) center;
+  background-size: 20px;
+
+  /* ⚠️ El color de la lupa está escrito a mano en hexa (#6B6377)
+     porque un background-image en data-URI no puede leer variables
+     CSS. Es el mismo valor que --gris-600 en variables.css — si
+     ese color cambia algún día, hay que actualizarlo acá también
+     a mano. Es la única excepción a "todo sale de variables.css". */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6377' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='16.65' y1='16.65' x2='21' y2='21'/%3E%3C/svg%3E");
+}
+}
+
+
+.tarjeta__imagen {
+  display: block;
+  width: calc(100% + var(--espacio-4) * 2);
+  margin: calc(var(--espacio-4) * -1) calc(var(--espacio-4) * -1) var(--espacio-3);
+  border-radius: var(--radio-md) var(--radio-md) 0 0;
+}
+
+.tarjeta__horario {
+  font-size: var(--texto-sm);
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.tarjeta--destacada .tarjeta__horario {
+  color: var(--pumm-blanco);
+}
+
+.tarjeta__descripcion {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  margin: var(--espacio-2) 0;
+}
+
+.tarjeta--destacada .tarjeta__descripcion {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tarjeta__ubicacion {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  font-size: var(--texto-sm);
+  font-weight: 700;
+}
