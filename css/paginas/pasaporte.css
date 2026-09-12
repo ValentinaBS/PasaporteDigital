@@ -132,6 +132,10 @@
 }
 
 .paso--hecho {
+  background-color: var(--pumm-amarillo);
+}
+
+.paso--actual {
   background-color: var(--pumm-violeta);
 }
 

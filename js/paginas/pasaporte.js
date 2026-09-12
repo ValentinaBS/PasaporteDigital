@@ -50,42 +50,75 @@
       TEXTOS.pasaporteSaludo + ", " + participante.nombre + "!";
   }
 
-  /* Pinta el nivel, la fracción (hechas/meta) y la pista de
-     pasos: un círculo por misión, tildado si ya la registró. */
-  function pintarProgreso() {
-    var progreso = Datos.obtenerProgreso();
+    /* Dado el total acumulado de misiones hechas, calcula en qué
+     nivel está la participante y cuántas lleva DENTRO de ese
+     nivel (no el total). Es la pieza que faltaba: antes se
+     calculaba el nivel bien, pero la fracción y la pista seguían
+     mirando el total acumulado en vez de "cuánto llevás de este
+     nivel", por eso la fracción no volvía a 0 al subir de nivel. */
+  function calcularProgresoDeNivel(misionesHechas) {
+    var nivel = Math.min(
+      TOTAL_NIVELES,
+      Math.floor(misionesHechas / MISIONES_POR_NIVEL) + 1
+    );
 
-    UI.$("#progreso-nivel-numero").textContent = calcularNivel(progreso.hechas);
-    UI.$("#progreso-fraccion").textContent = progreso.hechas + "/" + progreso.meta;
+    var hechasEnNivel = misionesHechas - (nivel - 1) * MISIONES_POR_NIVEL;
+    hechasEnNivel = Math.max(0, Math.min(MISIONES_POR_NIVEL, hechasEnNivel));
+
+    return { nivel: nivel, hechasEnNivel: hechasEnNivel, meta: MISIONES_POR_NIVEL };
+  }
+
+  /* Pinta el nivel, la fracción (hechas EN EL NIVEL/meta del
+     nivel) y la pista de casilleros del nivel actual.
+
+     ⚠️ Los 8 casilleros no representan 8 misiones puntuales de
+     data/misiones.js: son un cupo genérico por nivel (todavía no
+     hay una regla de qué misiones cuentan para cada nivel). Por
+     eso NO se recorre window.PUMM.MISIONES ni se usa
+     Datos.yaRegistro(id) acá — eso mira si UNA misión puntual
+     está en el registro local, que es otra cosa. Lo que importa
+     acá es solo el CONTEO total que ya viene sincronizado de la
+     planilla (Datos.obtenerProgreso().hechas). */
+  function pintarProgreso() {
+    var progresoTotal = Datos.obtenerProgreso();
+    var progreso = calcularProgresoDeNivel(progresoTotal.hechas);
+
+    UI.$("#progreso-nivel-numero").textContent = progreso.nivel;
+    UI.$("#progreso-fraccion").textContent =
+      progreso.hechasEnNivel + "/" + progreso.meta;
 
     var pista = UI.$("#progreso-pista");
     pista.innerHTML = ""; // por si initPasaporte corriera dos veces
 
-    window.PUMM.MISIONES.forEach(function (mision, indice) {
-      var hecha = Datos.yaRegistro(mision.id);
+    for (var i = 1; i <= progreso.meta; i++) {
+      var esHecho = i < progreso.hechasEnNivel;
+      var esActual = i === progreso.hechasEnNivel && progreso.hechasEnNivel > 0;
 
       var paso = document.createElement("span");
-      paso.className = "paso" + (hecha ? " paso--hecho" : "");
-      if (hecha) {
-        var check = document.createElement("img");
-        check.src = "../assets/iconos/check-blanco.svg";
-        check.alt = "Completada";
-        check.className = "paso__check";
-        paso.appendChild(check);
-      } else {
-        paso.appendChild(document.createTextNode(String(indice + 1)));
-      }
+      paso.className = "paso" +
+        (esHecho ? " paso--hecho" : "") +
+        (esActual ? " paso--actual" : "");
 
-      /* Texto para lectores de pantalla: el ✓ o el número solos
-         no dicen de qué misión se trata. */
       var etiqueta = document.createElement("span");
       etiqueta.className = "solo-lectores";
-      etiqueta.textContent =
-        (hecha ? "Misión completada: " : "Misión pendiente: ") + mision.nombre;
-      paso.appendChild(etiqueta);
 
+      if (esActual) {
+        var check = document.createElement("img");
+        check.src = "../assets/iconos/check-blanco.svg";
+        check.alt = "";
+        check.className = "paso__check";
+        paso.appendChild(check);
+        etiqueta.textContent = "Misión " + i + " completada (la más reciente) del nivel " + progreso.nivel;
+      } else {
+        paso.appendChild(document.createTextNode(String(i)));
+        etiqueta.textContent =
+          (esHecho ? "Misión " + i + " completada" : "Falta la misión " + i) +
+          " del nivel " + progreso.nivel;
+      }
+
+      paso.appendChild(etiqueta);
       pista.appendChild(paso);
-    });
+    }
   }
 
   /* Pinta la tarjeta de la misión destacada. Si el id de
