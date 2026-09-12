@@ -59,7 +59,7 @@
 /* Franja ajedrezada del manual de marca. Es decorativa:
    siempre con aria-hidden="true" en el HTML. */
 .franja-ajedrez {
-  height: 12px;
+  height: 16px;
   background-image:
     linear-gradient(45deg,  var(--pumm-negro) 25%, transparent 25%),
     linear-gradient(-45deg, var(--pumm-negro) 25%, transparent 25%),

@@ -33,10 +33,11 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-
-  font-size: var(--texto-xs);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
   color: var(--color-texto-suave);
   transition: color var(--transicion);
+  text-transform: uppercase;
 }
 
 .nav__icono {
@@ -47,8 +48,11 @@
 /* La sección actual. La marca app.js leyendo data-pagina del <body>,
    así no hay que acordarse de poner la clase a mano en cada HTML. */
 .nav__item--activo {
-  color: var(--color-primario);
-  font-weight: 700;
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+  margin: var(--espacio-2) var(--espacio-12);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
 }
 
 /* Encabezado de pantalla. */
