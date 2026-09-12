@@ -93,10 +93,10 @@
 }
 
 .tarjeta-progreso__resumen {
-  padding: 2px var(--espacio-2);
+  padding: var(--espacio-1) var(--espacio-3);
   background-color: var(--color-superficie);
   border: 2px solid var(--pumm-negro);
-  box-shadow: 2px 2px 0 var(--pumm-negro);;
+  box-shadow: 2px 2px 0 var(--pumm-negro);
 }
 
 .tarjeta-progreso__nivel {
@@ -111,7 +111,7 @@
 
 .tarjeta-progreso__pista {
   display: flex;
-  gap: 4px;
+  justify-content: space-evenly;
   margin-top: var(--espacio-3);
   overflow-x: auto;
   padding-bottom: var(--espacio-1);
@@ -120,8 +120,8 @@
 .paso {
   flex: 0 0 auto;
   display: grid;
-  width: 34px;
-  height: 30px;
+  width: 37px;
+  height: 33px;
   place-items: center;
   color: var(--pumm-negro);
   font-size: var(--texto-sm);
@@ -163,6 +163,7 @@
   display: inline-grid;
   width: var(--espacio-12);
   height: var(--espacio-12);
+  flex-shrink: 0;
   margin: 0 var(--espacio-4) 0 0;
   place-items: center;
   align-self: center;

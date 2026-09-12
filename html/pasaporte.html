@@ -70,7 +70,7 @@
       <div class="aviso-qr">
         <p class="aviso-qr__icono"><img src="../assets/iconos/qr-negro.svg" alt="Ícono de código QR"></p>
         <p class="aviso-qr__texto">
-          ¡Buscá los QR y escaneálos<br>para subir de nivel!
+          ¡Buscá los QR y escanealos para subir de nivel!
         </p>
         <img class="aviso-qr__rayo" src="../assets/iconos/rayo.svg" alt="Ícono de rayo">
       </div>
@@ -95,14 +95,12 @@
       </article>
     </section>
 
-  </main>
-
-  <!--
+    <!--
     NAVEGACIÓN — igual que en html/_plantilla.html.
     ⚠️ Duplicada a propósito, ver README → "Lo que sabemos que duele".
   -->
   <nav class="nav" aria-label="Secciones principales">
-    <a class="nav__item" data-seccion="pasaporte" href="pasaporte.html">
+    <a class="nav__item nav__item--activo" data-seccion="pasaporte" href="pasaporte.html">
       <img class="nav__icono" src="../assets/iconos/pasaporte-blanco.svg" alt="Ícono de pasaporte">
       Pasaporte
     </a>
@@ -115,6 +113,8 @@
       Logros
     </a>
   </nav>
+
+  </main>
 
   <!-- Modal vacío (lo usa PUMM.UI.abrirModal si hiciera falta). -->
   <dialog class="modal" id="modal"></dialog>
