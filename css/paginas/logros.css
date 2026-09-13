@@ -1,0 +1,189 @@
+/* ============================================================
+   PÁGINA · LOGROS
+   ------------------------------------------------------------
+   Estilos propios de la pantalla de Logros. Reusan los tokens
+   de css/base/variables.css y no tocan los componentes
+   compartidos: acá solo se resuelven las piezas que el mockup
+   pide y que no existen como componente (banner, barra sobre
+   tarjeta blanca, tarjeta-fila de logro).
+
+   Estilo neo-brutalista del manual: todo cuadrado (sin radios),
+   borde negro y sombra dura. Ver .boton para el mismo criterio.
+   ============================================================ */
+
+/* --- Fondo de la pantalla ---
+   Va en .logros-fondo (un elemento DENTRO de <main>), no en <body>:
+   el bundle comparte un solo <body> pero conserva el <main> de cada
+   vista, así el fondo viaja con la pantalla. Mismo patrón que
+   .registro. Se deja el color del tema como fallback si la textura
+   no carga (wifi saturado del evento). */
+.logros-fondo {
+  min-height: 100dvh;
+  background-color: var(--color-fondo);
+  background-image: url("../../assets/img/fondo-blanco.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- Banner "Mis Logros" --- */
+.logros-banner {
+  margin: var(--espacio-4) auto var(--espacio-8);
+  padding: var(--espacio-3) var(--espacio-6);
+  background-color: var(--pumm-amarillo);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  transform: rotate(-2deg);
+  max-width: 13.1rem;
+}
+
+.logros-banner__titulo {
+  margin: 0;
+  color: var(--pumm-negro);
+  font-size: var(--texto-2xl);
+}
+
+/* --- Tarjeta de progreso total --- */
+.logros-total {
+  margin-bottom: var(--espacio-8);
+  text-align: center;
+  transform: rotate(1deg);
+}
+
+.logros-total__mensaje {
+  margin: 0 0 var(--espacio-4);
+  font-weight: 700;
+}
+
+.logros-total__etiqueta {
+  margin: 0 0 var(--espacio-2);
+  font-size: var(--texto-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+/* --- Barra de carga total ---
+   El componente .progreso la hace redondeada y translúcida
+   (pensada para tarjeta violeta). Acá va cuadrada, con contorno
+   negro, pista gris y relleno violeta. */
+.logros-total__barra {
+  border: 3px solid var(--pumm-negro);
+  background-color: var(--gris-200);
+  height: 2rem;
+}
+
+.logros-total__barra .progreso__relleno {
+  background-color: var(--color-primario);
+}
+
+/* --- Botones de certificado ---
+   .boton ya trae borde negro + sombra dura (sin radios). */
+
+/* El margen superior solo aparece cuando hay al menos un botón
+   visible. Los botones ocultos llevan .oculto (display:none), así
+   que sin botones el contenedor no deja un hueco de más. */
+.logros-acciones:has(.boton:not(.oculto)) {
+  margin-top: var(--espacio-6);
+}
+
+/* .boton trae margin-top propio; dentro de la pila lo anulamos
+   para que el gap de .pila mande. */
+.logros-acciones .boton {
+  margin-top: 0;
+}
+
+/* --- Lista de logros (tarjetas-fila) --- */
+.logro-card {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+}
+
+/* Bloqueado: apagado en gris. */
+.logro-card--bloqueada {
+  background-color: var(--gris-100);
+}
+
+/* Acento de dificultad (data/logros.js): SOLO el borde izquierdo se
+   colorea y va más grueso. El resto del recuadro queda negro. */
+.logro-card--facil {
+  border-left: 6px solid var(--color-primario);
+}
+
+.logro-card--media {
+  border-left: 6px solid var(--pumm-amarillo);
+}
+
+.logro-card--dificil {
+  border-left: 6px solid var(--pumm-fucsia);
+}
+
+/* Círculo del ícono: redondo (es un círculo), pero con el mismo
+   borde negro + sombra dura que el recuadro. */
+.logro-card__circulo {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radio-full);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
+  font-size: var(--texto-1xl);
+  line-height: 1;
+}
+
+.logro-card__cuerpo {
+  flex: 1;
+  min-width: 0;  /* deja que el texto se acomode sin desbordar */
+}
+
+.logro-card__nombre {
+  margin: 0 0 var(--espacio-1);
+  font-size: var(--texto-xl);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--color-texto);
+}
+
+.logro-card__desc {
+  margin: 0;
+  font-size: var(--texto-sm);
+}
+
+/* Avance numérico del logro bloqueado (ej: "2/5"). */
+.logro-card__avance {
+  margin: var(--espacio-2) 0 0;
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
+  line-height: 1;
+  color: var(--color-primario);
+}
+
+/* Estado a la derecha: check (desbloqueado) o candado (bloqueado). */
+.logro-card__estado {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: var(--texto-lg);
+  line-height: 1;
+}
+
+/* El check redondo mantiene su forma, pero con borde negro para
+   cerrar contra el resto del estilo. */
+.logro-card__estado--ok {
+  border-radius: var(--radio-full);
+  border: 2px solid var(--pumm-negro);
+  background-color: var(--color-acento);
+  color: var(--pumm-negro);
+  font-size: var(--texto-md);
+  font-weight: 700;
+}

@@ -7,10 +7,9 @@
 
 .tarjeta {
   background-color: var(--color-superficie);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-md);
+  border: 2px solid var(--pumm-negro);
   padding: var(--espacio-4);
-  box-shadow: var(--sombra-sm);
+  box-shadow: var(--sombra-dura);
 }
 
 .tarjeta__titulo {

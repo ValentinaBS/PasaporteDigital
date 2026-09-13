@@ -191,7 +191,7 @@ window.PUMM.Datos = (function () {
       return "ok";
     },
 
-    /* --- Progreso e insignias --- */
+    /* --- Progreso y logros --- */
 
     /* Le pregunta a la planilla (en modo Apps Script) cuántas
        misiones tiene la participante activa, y guarda la
@@ -247,31 +247,46 @@ window.PUMM.Datos = (function () {
       };
     },
 
-    /* Devuelve todas las insignias con un campo extra
-       "desbloqueada". Mandamos también las bloqueadas porque la
-       pantalla de Logros las muestra en gris: ver lo que falta
-       es parte del incentivo. */
-    obtenerInsignias: function () {
-      var registros = this.obtenerRegistros();
+    /* Devuelve todos los logros con campos extra para pintarlos:
+         desbloqueada · true/false según su condición
+         meta         · umbral de misiones (null si es por registro)
+         avance       · misiones hechas hacia esa meta (null si por registro)
+       Se manda también los bloqueados: la pantalla los muestra en
+       gris con su mini-barra, porque ver lo que falta es incentivo. */
+    obtenerLogros: function () {
       var progreso = this.obtenerProgreso();
+      var registrada = this.estaRegistrada();
 
-      /* ids de las insignias ganadas por misión */
-      var ganadas = registros.map(function (r) {
-        var mision = window.PUMM.MISIONES.filter(function (a) {
-          return a.id === r.misionId;
-        })[0];
-        return mision ? mision.insignia : null;
-      });
-
-      return window.PUMM.INSIGNIAS.map(function (insignia) {
-        var desbloqueada = insignia.porCantidad
-          ? progreso.completo
-          : ganadas.indexOf(insignia.id) !== -1;
+      return window.PUMM.LOGROS.map(function (logro) {
+        var meta = logro.porRegistro ? null : logro.misiones;
+        var desbloqueada = logro.porRegistro
+          ? registrada
+          : progreso.hechas >= meta;
 
         /* Object.assign copia las propiedades en un objeto nuevo,
            así no modificamos el array original de data/. */
-        return Object.assign({}, insignia, { desbloqueada: desbloqueada });
+        return Object.assign({}, logro, {
+          desbloqueada: desbloqueada,
+          avance: meta ? Math.min(progreso.hechas, meta) : null,
+          meta: meta
+        });
       });
+    },
+
+    /* Progreso global de logros: alimenta la barra "PROGRESO TOTAL",
+       el mensaje variable de arriba y el botón de certificado al 100%. */
+    obtenerProgresoLogros: function () {
+      var logros = this.obtenerLogros();
+      var desbloqueados = logros.filter(function (l) {
+        return l.desbloqueada;
+      }).length;
+      var total = logros.length;
+      return {
+        desbloqueados: desbloqueados,
+        total: total,
+        porcentaje: total ? Math.round((desbloqueados / total) * 100) : 0,
+        completo: total > 0 && desbloqueados === total
+      };
     }
   };
 })();

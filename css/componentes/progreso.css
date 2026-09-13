@@ -30,7 +30,6 @@
 
 .progreso__barra {
   height: 12px;
-  border-radius: var(--radio-full);
   background-color: rgba(255, 255, 255, 0.25);
   overflow: hidden;
 }
@@ -39,6 +38,5 @@
   height: 100%;
   width: 0%;  /* Lo setea el JS. */
   background-color: var(--color-secundario);
-  border-radius: var(--radio-full);
   transition: width 400ms ease-out;
 }

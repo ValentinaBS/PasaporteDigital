@@ -2,7 +2,7 @@
 
 Web app que acompaña el recorrido de las participantes por el evento PUMM.
 Escanean el QR de cada espacio, se les registra la misión, ven su progreso
-y desbloquean insignias. En paralelo, le da al equipo organizador datos de
+y desbloquean logros. En paralelo, le da al equipo organizador datos de
 participación sin carga manual.
 
 **Chicas en Tecnología** · HTML, CSS y JavaScript, sin frameworks ni
@@ -75,7 +75,7 @@ HTML reales son siete:
 | `html/index.html` | Registro de la participante | creada, vacía |
 | `html/pasaporte.html` | Mi Pasaporte (pantalla principal) | falta |
 | `html/misiones.html` | Listado de misiones | falta |
-| `html/logros.html` | Insignias | falta |
+| `html/logros.html` | Logros | creada |
 | `html/nueva-mision.html` | Adonde apuntan los QR | falta |
 | `html/mision-ya-registrada.html` | Repetición de misiones | falta |
 | `html/completado.html` | Recorrido completado | falta |
@@ -106,7 +106,7 @@ PasaporteDigital/
 │   ├── main.css            ← el único que se linkea; importa todo lo demás
 │   ├── base/                   reset, variables, tipografía, utilidades
 │   ├── componentes/            botón, campo, tarjeta, modal, navegación,
-│   │                           pantalla plena, progreso, insignia
+│   │                           pantalla plena, progreso, logro
 │   └── paginas/                (vacía — un archivo por pantalla)
 │
 ├── js/
@@ -117,7 +117,7 @@ PasaporteDigital/
 │   └── paginas/
 │       └── _plantilla.js   ← copiar para la lógica de cada pantalla
 │
-├── data/                   ← arrays de datos (misiones, insignias, textos)
+├── data/                   ← arrays de datos (misiones, logros, textos)
 │
 └── assets/                 ← imágenes, íconos y fuentes
 ```
@@ -155,7 +155,7 @@ estético acá.
 En `css/componentes/`, listos para usar desde el HTML:
 
 `.boton` · `.campo` · `.tarjeta` · `.modal` · `.nav` · `.pantalla-plena` ·
-`.progreso` · `.insignia`
+`.progreso` · `.logro`
 
 Y en `css/base/utilidades.css`: `.contenedor` `.pila` `.fila` `.fila-entre`
 `.centrado` `.oculto` `.texto-suave` `.solo-lectores` `.franja-ajedrez`
@@ -176,7 +176,8 @@ PUMM.Datos.obtenerParticipante()    // { email, nombre, dni } | null
 PUMM.Datos.registrarMision(id)      // "ok" | "repetida" | "desconocida"
 PUMM.Datos.obtenerProgreso()        // { hechas, meta, porcentaje, completo }
 PUMM.Datos.obtenerRegistros()       // las misiones registradas
-PUMM.Datos.obtenerInsignias()       // todas, con .desbloqueada
+PUMM.Datos.obtenerLogros()          // todos, con .desbloqueada, .avance y .meta
+PUMM.Datos.obtenerProgresoLogros()  // { desbloqueados, total, porcentaje, completo }
 PUMM.Datos.cerrarSesion()           // borrar todo (útil para probar)
 ```
 

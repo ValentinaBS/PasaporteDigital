@@ -17,10 +17,12 @@
   z-index: 10;
 
   display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
   height: var(--alto-nav);
 
   background-color: var(--color-superficie);
-  border-top: 1px solid var(--color-borde);
+  border-top: 3px solid var(--pumm-negro);
 
   /* Respeta la barra de gestos del iPhone. */
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -50,9 +52,10 @@
 .nav__item--activo {
   background-color: var(--color-primario);
   color: var(--pumm-blanco);
-  margin: var(--espacio-2) var(--espacio-12);
+  padding-top: 8px;
+  margin: var(--espacio-2) 0;
   border: 2px solid var(--pumm-negro);
-  box-shadow: 2px 2px 0 var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
 }
 
 /* Encabezado de pantalla. */

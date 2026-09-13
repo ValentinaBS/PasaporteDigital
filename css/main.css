@@ -41,7 +41,7 @@
 @import url("componentes/navegacion.css");
 @import url("componentes/pantalla-plena.css");
 @import url("componentes/progreso.css");
-@import url("componentes/insignia.css");
+@import url("componentes/logro.css");
 
 /* 3 · Páginas ----------------------------------------------
     Todavía no hay ninguna: las pantallas se crean copiando
@@ -57,6 +57,7 @@
         @import url("paginas/admin.css");
    ---------------------------------------------------------- */
 @import url("paginas/registro.css");
+@import url("paginas/logros.css");
 @import url("paginas/nueva-mision.css");
 @import url("paginas/mision-registrada.css");
 @import url("paginas/completado.css");

@@ -29,6 +29,23 @@
     }
   }
 
+  /* Cablea la navegación entre pantallas.
+     En LOCAL (páginas separadas) los href de la nav navegan solos, así
+     que no hacemos nada. En el BUNDLE las otras pantallas no existen
+     como archivos (romperían el href), así que interceptamos el click
+     y cambiamos de vista con mostrarPantalla. Detectamos el bundle por
+     la presencia de [data-vista]. */
+  function cablearNavegacion() {
+    if (!UI.$$("[data-vista]").length) return;
+
+    UI.$$(".nav__item").forEach(function (item) {
+      item.addEventListener("click", function (evento) {
+        evento.preventDefault();
+        UI.mostrarPantalla(item.getAttribute("data-seccion"));
+      });
+    });
+  }
+
   /* Impide cerrar el modal salvo por sus botones.
      El <dialog> nativo se cierra con Escape; lo bloqueamos con el
      evento "cancel". Y NO agregamos el cierre por click en el fondo
@@ -73,6 +90,7 @@
      los elementos y devuelven null. */
   document.addEventListener("DOMContentLoaded", function () {
     marcarNavegacionActiva();
+    cablearNavegacion();
     blindarModal();
     rutearFlujo();
   });

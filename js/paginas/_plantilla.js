@@ -38,7 +38,7 @@
     //                             icono: "✅", titulo: "...", texto: "..." })
     // Progreso:                 Datos.obtenerProgreso()
     // Registros:                Datos.obtenerRegistros()
-    // Insignias:                Datos.obtenerInsignias()
+    // Logros:                   Datos.obtenerLogros()
   }
 
   /* DOMContentLoaded espera a que el HTML esté armado. Sin esto,

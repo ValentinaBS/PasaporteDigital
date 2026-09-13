@@ -36,5 +36,12 @@ window.PUMM.CONFIG = {
   /* Nombre del parámetro que llevan los QR.
      Un QR apunta a:  .../html/validar-actividad.html?mision=labs
      El valor tiene que coincidir con un id de data/misiones.js */
-  PARAM_QR: "mision"
+  PARAM_QR: "mision",
+
+  /* El certificado de participación se habilita recién a esta
+     fecha y hora (hora de Argentina, UTC-3). Antes, el botón de
+     la pantalla de Logros queda oculto.
+     ⚠️ Formato ISO: mes y día SIEMPRE con dos dígitos ("08", no "8"),
+     si no new Date() lo lee como Invalid Date y el botón no aparece. */
+  FECHA_CERTIFICADO: "2026-10-14T16:00:00-03:00"
 };

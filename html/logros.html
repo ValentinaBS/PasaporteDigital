@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PANTALLA · LOGROS
+  ------------------------------------------------------------
+  Tercera pestaña de la navegación. Muestra el progreso total
+  de logros (barra + mensaje variable), la lista de logros
+  (desbloqueados / bloqueados) y, cuando corresponde, los
+  botones de certificado.
+
+  El contenido dinámico lo pinta js/paginas/logros.js con los
+  datos de js/datos.js (obtenerLogros / obtenerProgresoLogros).
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Logros - PUMM 2026</title>
+  <meta name="description" content="Tus logros del recorrido PUMM 2026.">
+  <meta name="theme-color" content="#5B0099">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/iconos/corazon-violeta.svg">
+
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body data-pagina="logros">
+
+  <!-- .logros-fondo lleva la imagen de fondo. Va dentro del main y no
+       en el body a propósito: el bundle conserva el main de cada vista
+       pero comparte un solo body, así que el fondo tiene que viajar con
+       la pantalla. Mismo patrón que .registro (ver css/paginas/registro.css). -->
+  <main class="logros-fondo con-nav">
+
+    <div class="contenedor">
+
+      <!-- Banner de la pantalla (reemplaza al encabezado violeta). -->
+      <header class="logros-banner">
+        <h1 class="logros-banner__titulo">Mis Logros</h1>
+      </header>
+
+      <!-- Progreso total: mensaje variable + barra. -->
+      <section class="tarjeta logros-total">
+        <p class="logros-total__mensaje" id="logros-mensaje"></p>
+        <p class="logros-total__etiqueta">
+          PROGRESO TOTAL (<span id="logros-porcentaje">0</span>%)
+        </p>
+        <div class="progreso__barra logros-total__barra">
+          <div class="progreso__relleno" id="logros-relleno" style="width: 0%"></div>
+        </div>
+
+        <!-- Certificados: ocultos hasta que se cumpla su condición.
+             Apuntan a completado.html (todavía no existe). -->
+        <div class="pila logros-acciones" id="logros-acciones">
+          <a class="boton boton--secundario boton--ancho oculto"
+              id="logros-cert-secundario" href="completado.html">
+            Certificado de participación
+          </a>
+          <a class="boton boton--primario boton--ancho oculto"
+             id="logros-cert-logros" href="completado.html">
+            Certificado de logros
+          </a>
+        </div>
+      </section>
+
+      <!-- Lista de logros: la rellena logros.js. -->
+      <section class="pila logros-lista" id="logros-lista" aria-live="polite"></section>
+
+    </div>
+
+    <!--
+      NAVEGACIÓN — va DENTRO del main a propósito: el bundle solo
+      conserva el main de cada pantalla, así que afuera se perdería.
+      Como es position:fixed, su lugar en el DOM no cambia dónde se ve.
+      Los href sirven en local (páginas separadas); en el bundle,
+      js/app.js intercepta el click y cambia de vista.
+    -->
+    <nav class="nav" aria-label="Secciones principales">
+      <a class="nav__item" data-seccion="pasaporte" href="pasaporte.html">
+        <img class="nav__icono" src="../assets/iconos/pasaporte-negro.svg" alt="Ícono de pasaporte">
+        Pasaporte
+      </a>
+      <a class="nav__item" data-seccion="misiones" href="misiones.html">
+        <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="Ícono de misiones">
+        Misiones
+      </a>
+      <a class="nav__item nav__item--activo" data-seccion="logros" href="logros.html">
+        <img class="nav__icono" src="../assets/iconos/logros-blanco.svg" alt="Ícono de logros">
+        Logros
+      </a>
+    </nav>
+
+  </main>
+
+  <dialog class="modal" id="modal"></dialog>
+
+  <!-- Orden de scripts (ver _plantilla.html). Logros usa misiones
+       (para la meta), logros y textos. -->
+  <script src="../data/misiones.js"></script>
+  <script src="../data/logros.js"></script>
+  <script src="../data/textos.js"></script>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/datos.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script src="../js/paginas/logros.js"></script>
+</body>
+</html>

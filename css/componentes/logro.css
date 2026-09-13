@@ -1,17 +1,17 @@
 /* ============================================================
-   COMPONENTE · INSIGNIA
+   COMPONENTE · LOGRO
    ------------------------------------------------------------
-   Las insignias bloqueadas se muestran igual, en gris. Ver lo
+   Los logros bloqueados se muestran igual, en gris. Ver lo
    que falta es parte del incentivo del recorrido.
    ============================================================ */
 
-.insignias {
+.logros {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: var(--espacio-4);
 }
 
-.insignia {
+.logro {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@
   text-align: center;
 }
 
-.insignia__circulo {
+.logro__circulo {
   display: grid;
   place-items: center;
   width: 72px;
@@ -30,19 +30,27 @@
   line-height: 1;
 }
 
-.insignia__nombre {
+.logro__nombre {
   font-size: var(--texto-xs);
   font-weight: 700;
   line-height: 1.25;
 }
 
-.insignia--bloqueada .insignia__circulo {
+.logro-card--bloqueada .logro-card__circulo {
   background-color: var(--gris-200);
   filter: grayscale(1);
   opacity: 0.6;
 }
 
-.insignia--bloqueada .insignia__nombre {
+.logro-card--bloqueada .logro-card__estado--bloqueado {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+
+.logro-card--bloqueada .logro-card__nombre,
+.logro-card--bloqueada .logro-card__desc,
+.logro-card--bloqueada .logro-card__avance,
+.logro-card--bloqueada .logro-card__estado--bloqueado {
   color: var(--color-texto-suave);
   font-weight: 400;
 }
