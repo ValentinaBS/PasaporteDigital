@@ -18,32 +18,11 @@
   var Datos = window.PUMM.Datos;
   var TEXTOS = window.PUMM.TEXTOS;
 
-  const MISIONES_POR_NIVEL = 8;
-  const TOTAL_NIVELES = 3;
-
-  function calcularNivel(misionesHechas) {
-    return Math.floor(misionesHechas / MISIONES_POR_NIVEL) + 1;
-  }
-
-  /* ⚠️ HIPÓTESIS SIN VALIDAR: la "misión destacada" tampoco tiene
-     todavía un lugar en los datos (¿la elige el equipo a mano?
-     ¿depende del horario? ¿es la próxima sin registrar?). Se deja
-     hardcodeada acá como placeholder para no bloquear la pantalla.
-
-     El mockup la llama "Taller de IA"; el id más parecido en
-     data/misiones.js es "ia" → "Lab de IA". Usamos el nombre real
-     de los datos (ver pintarMisionDestacada) en vez de escribirlo
-     de nuevo acá, así no quedan dos nombres distintos para la
-     misma misión. Si el nombre definitivo es "Taller de IA", el
-     cambio es una palabra en data/misiones.js y no hace falta
-     tocar este archivo. */
-  var MISION_DESTACADA = {
-    id: "ia",
-    ubicacion: "Stand Zona A",
-    horario: "13:00hs",
-    descripcion:
-      "Aprendé sobre los distintos usos de la IA en la vida cotidiana. Preparate para armar tu propio chatbot."
-  };
+  /* Las constantes de nivel viven en data/misiones.js (un solo lugar
+     para todas las variables de misiones). Se leen acá como alias
+     para no cambiar el resto del archivo. */
+  var MISIONES_POR_NIVEL = window.PUMM.MISIONES_POR_NIVEL;
+  var TOTAL_NIVELES = window.PUMM.TOTAL_NIVELES;
 
   function pintarSaludo(participante) {
     UI.$("#pasaporte-saludo").textContent =
@@ -121,24 +100,49 @@
     }
   }
 
-  /* Pinta la tarjeta de la misión destacada. Si el id de
-     MISION_DESTACADA no existe más en data/misiones.js (cambió
-     el slug, por ejemplo), no rompe la pantalla: se esconde la
-     tarjeta y listo. */
+  /* "HH:MM" → minutos desde medianoche, para comparar horarios. */
+  function horarioAMinutos(horario) {
+    var p = String(horario || "").split(":");
+    return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0);
+  }
+
+  /* La misión destacada es la actividad más cercana a la hora actual
+     que TODAVÍA no empezó (la próxima). Compara por hora del día
+     porque el evento es de un solo día. Si ya pasaron todas, null. */
+  function elegirMisionDestacada() {
+    var ahora = new Date();
+    var minutos = ahora.getHours() * 60 + ahora.getMinutes();
+
+    return window.PUMM.MISIONES
+      .filter(function (m) {
+        return m.horario && horarioAMinutos(m.horario) >= minutos;
+      })
+      .sort(function (a, b) {
+        return horarioAMinutos(a.horario) - horarioAMinutos(b.horario);
+      })[0] || null;
+  }
+
+  /* Pinta la tarjeta de la misión destacada con la próxima actividad.
+     Si ya pasaron todas las del día, la tarjeta NO se oculta: muestra
+     un agradecimiento por participar (sin ubicación/horario). */
   function pintarMisionDestacada() {
-    var tarjeta = UI.$("#destacada-tarjeta");
-    var mision = UI.buscarMision(MISION_DESTACADA.id);
+    var mision = elegirMisionDestacada();
+    var etiqueta = UI.$("#destacada-tarjeta .tarjeta__etiqueta");
 
     if (!mision) {
-      tarjeta.classList.add("oculto");
+      if (etiqueta) etiqueta.classList.add("oculto");
+      UI.$("#destacada-titulo").textContent = TEXTOS.destacadaFinTitulo;
+      UI.$("#destacada-texto").textContent = TEXTOS.destacadaFinTexto;
+      UI.$("#destacada-lugar").textContent = "";
       return;
     }
 
+    if (etiqueta) etiqueta.classList.remove("oculto");
     UI.$("#destacada-titulo").textContent = mision.nombre;
-    UI.$("#destacada-texto").textContent = MISION_DESTACADA.descripcion;
+    UI.$("#destacada-texto").textContent = mision.descripcion;
     UI.$("#destacada-lugar").innerHTML =
       '<img src="../assets/iconos/localizacion-violeta.svg" alt="icono lugar">' +
-      MISION_DESTACADA.ubicacion + " - " + MISION_DESTACADA.horario;
+      mision.ubicacion + " - " + mision.horario + " hs";
   }
 
     /* Inicializa la pantalla: pinta el saludo, sincroniza el progreso
