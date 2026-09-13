@@ -39,6 +39,13 @@ window.PUMM.TEXTOS = {
   pasaporteSaludo: "¡Hola",   // se completa en JS: "¡Hola, {nombre}! 💜"
   pasaporteBienvenida: "Este es tu Pasaporte Digital de PUMM 2026.",
 
+  /* Misión destacada, cuando ya pasaron todas las actividades del día:
+     la tarjeta no desaparece, agradece por participar. */
+  destacadaFinTitulo: "¡Gracias por venir!",
+  destacadaFinTexto:
+    "Recorriste el PUMM 2026 con nosotras. Esperamos que te lleves un " +
+    "montón de ideas nuevas. 💜",
+
   /* --- Registro de misión --- */
   registroExitoTitulo: "¡Listo! Quedó registrado",
   registroExitoTexto: "Ya podés seguir disfrutando la misión.",
