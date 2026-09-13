@@ -1,0 +1,281 @@
+.encabezado--pasaporte {
+  position: relative;
+  padding: 0 0 var(--espacio-3);
+  margin: var(--espacio-3) 0;
+}
+
+.encabezado-fila-1 {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: var(--espacio-12);
+}
+
+.encabezado__titulo {
+  display: inline-block;
+  padding: var(--espacio-2) var(--espacio-3);
+  background-color: var(--pumm-amarillo);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+  color: var(--pumm-negro);
+  font-size: var(--texto-2xl);
+  transform: rotate(-3deg);
+  margin-top: var(--espacio-4);
+}
+
+.encabezado__celular {
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 60px;
+  height: 60px;
+}
+
+.encabezado-fila-2 {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: var(--espacio-12);
+}
+
+.encabezado__corazon {
+  align-self: flex-end;
+  width: 45px;
+}
+
+.encabezado__bajada {
+  display: inline-block;
+  margin-top: var(--espacio-4);
+  padding: 2px var(--espacio-3);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+  color: var(--pumm-negro);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
+  text-transform: uppercase;
+  transform: rotate(1deg)
+}
+
+.contenedor.con-nav {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.tarjeta-progreso {
+  overflow: hidden;
+  background-color: var(--pumm-cian);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+}
+
+.tarjeta-progreso__encabezado {
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-2);
+  background-color: var(--pumm-cian);
+  color: var(--pumm-blanco);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-1deg);
+}
+
+.tarjeta-progreso__encabezado span {
+  display: inline-block;
+  padding: 0.1rem var(--espacio-6);
+  background-color: var(--pumm-negro);
+}
+
+.tarjeta-progreso__cuerpo {
+  padding: var(--espacio-1) var(--espacio-3) var(--espacio-3);
+  font-family: var(--fuente-texto);
+  font-weight: 700;
+}
+
+.tarjeta-progreso__resumen {
+  padding: var(--espacio-1) var(--espacio-3);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+}
+
+.tarjeta-progreso__nivel {
+  font-size: var(--texto-md);
+  text-transform: uppercase;
+}
+
+.tarjeta-progreso__fraccion {
+  font-size: var(--texto-md);
+  color: var(--color-texto);
+}
+
+.tarjeta-progreso__pista {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: var(--espacio-3);
+  overflow-x: auto;
+  padding-bottom: var(--espacio-1);
+}
+
+.paso {
+  flex: 0 0 auto;
+  display: grid;
+  width: 37px;
+  height: 33px;
+  place-items: center;
+  color: var(--pumm-negro);
+  font-size: var(--texto-sm);
+  border: 2px solid var(--pumm-negro);
+  border-radius: 20px;
+  background-color: var(--pumm-blanco);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+}
+
+.paso--hecho {
+  background-color: var(--pumm-amarillo);
+}
+
+.paso--actual {
+  background-color: var(--pumm-violeta);
+}
+
+.paso__check {
+  width: 14px;
+  height: 11px;
+}
+
+.aviso-qr {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--espacio-6);
+  min-height: 116px;
+  padding: var(--espacio-8) var(--espacio-6);
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+  text-align: left;
+  align-content: center;
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+  transform: rotate(1deg);
+}
+
+.aviso-qr__icono {
+  display: inline-grid;
+  width: var(--espacio-12);
+  height: var(--espacio-12);
+  flex-shrink: 0;
+  margin: 0 var(--espacio-4) 0 0;
+  place-items: center;
+  align-self: center;
+  background-color: var(--pumm-amarillo);
+  border: 1px solid var(--pumm-negro);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+  transform: rotate(-2deg);
+  border: 2px solid var(--pumm-negro);
+}
+
+.aviso-qr__icono img {
+  width: 28px;
+  height: 28px;
+}
+
+.aviso-qr__texto {
+  display: inline-block;
+  align-content:center;
+  max-width: calc(100% - 3rem);
+  margin: 0;
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  color: var(--pumm-negro);
+  border: 2px solid var(--pumm-negro);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.aviso-qr__rayo {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 70px;
+  height: 80px;
+  transform: rotate(60deg) translate(40%, -0%);
+  pointer-events: none;
+}
+
+.misiones-resumen {
+  margin-top: var(--espacio-4);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 4px 4px 0 var(--pumm-negro);
+}
+
+.boton--buscar {
+  min-height: 42px;
+  margin-top: 0;
+  padding: var(--espacio-1) var(--espacio-3);
+  justify-content: space-between;
+  font-size: var(--texto-1xl);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+}
+
+.boton__flecha {
+  width: 16px;
+  height: 16px;
+}
+
+.tarjeta--mision {
+  position: relative;
+  margin-top: var(--espacio-4);
+  padding: var(--espacio-3);
+  border: 2px solid var(--pumm-negro);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+  overflow-wrap: anywhere;
+}
+
+.tarjeta--mision .tarjeta__titulo {
+  color: var(--color-primario);
+  font-size: var(--texto-md);
+  text-transform: uppercase;
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  margin-bottom: var(--espacio-2);
+}
+
+.tarjeta--mision .tarjeta__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+  color: var(--pumm-negro);
+  font-size: var(--texto-md);
+  font-weight: 700;
+}
+
+.tarjeta--mision .tarjeta__meta img {
+  width: 16px;
+  height: 20px;
+}
+
+.tarjeta__etiqueta {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  z-index: 1;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  padding: 4px var(--espacio-2);
+  background-color: var(--pumm-cian);
+  color: var(--pumm-negro);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+  border: 2px solid var(--pumm-negro);
+  transform: rotate(8deg);
+}

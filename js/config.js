@@ -32,6 +32,7 @@ window.PUMM.CONFIG = {
   CLAVE_CODIGO: "pumm.codigo",
   CLAVE_REGISTROS: "pumm.registros",
   CLAVE_PARTICIPANTE: "pumm.participante",
+   CLAVE_PROGRESO: "pumm.progreso",
 
   /* Nombre del parámetro que llevan los QR.
      Un QR apunta a:  .../html/nueva-mision.html?mision=labs
