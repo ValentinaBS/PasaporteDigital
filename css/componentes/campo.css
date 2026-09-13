@@ -1,9 +1,9 @@
 /* ============================================================
    COMPONENTE · CAMPO DE FORMULARIO
    ------------------------------------------------------------
-   El MVP tiene un solo formulario (el código de acreditación),
-   pero el campo vive acá y no en una pantalla porque el panel
-   organizador va a necesitar filtros y búsqueda.
+   Lo usa el formulario de registro (email, nombre y DNI). Vive
+   acá y no en una pantalla porque el panel organizador va a
+   necesitar filtros y búsqueda con el mismo estilo de campo.
    ============================================================ */
 
 .campo {
@@ -32,15 +32,6 @@
 
 .campo--error {
   border-color: var(--color-error);
-}
-
-/* Variante para el código de acreditación: grande, centrado y
-   espaciado, para que se lea mientras se tipea a mano parada. */
-.campo--codigo {
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
 }
 
 /* Sobre fondo violeta el borde gris no se ve. */

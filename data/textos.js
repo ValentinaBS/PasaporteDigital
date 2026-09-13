@@ -39,12 +39,12 @@ window.PUMM.TEXTOS = {
   pasaporteSaludo: "¡Hola",   // se completa en JS: "¡Hola, {nombre}! 💜"
   pasaporteBienvenida: "Este es tu Pasaporte Digital de PUMM 2026.",
 
-  /* --- Activación --- */
-  codigoInvalidoTitulo: "Ese código no nos suena",
-  codigoInvalidoTexto:
-    "Revisá que esté igual al de tu acreditación. Si sigue sin andar, " +
-    "acercate al stand de ayuda y lo resolvemos.",
-  codigoVacio: "Escribí tu código para empezar.",
+  /* Misión destacada, cuando ya pasaron todas las actividades del día:
+     la tarjeta no desaparece, agradece por participar. */
+  destacadaFinTitulo: "¡Gracias por venir!",
+  destacadaFinTexto:
+    "Recorriste el PUMM 2026 con nosotras. Esperamos que te lleves un " +
+    "montón de ideas nuevas. 💜",
 
   /* --- Registro de misión --- */
   registroExitoTitulo: "¡Listo! Quedó registrado",
@@ -53,10 +53,6 @@ window.PUMM.TEXTOS = {
   yaRegistradaTitulo: "Esta ya la tenías",
   yaRegistradaTexto:
     "Registraste esta misión hace un rato. Está guardada en tu pasaporte.",
-
-  noActivadoTitulo: "Todavía no activaste tu pasaporte",
-  noActivadoTexto:
-    "Activalo con el código de tu acreditación y volvé a escanear el QR.",
 
   misionDesconocidaTitulo: "No encontramos esa misión",
   misionDesconocidaTexto:
@@ -86,7 +82,6 @@ window.PUMM.TEXTOS = {
     "¡Increíble! Desbloqueaste todos los logros del PUMM 2026.",
 
   /* --- Botones --- */
-  botonActivar: "Activar mi pasaporte",
   botonCerrar: "Entendido",
   botonVerPasaporte: "Ver mi pasaporte",
   botonVerMisiones: "Ver misiones",

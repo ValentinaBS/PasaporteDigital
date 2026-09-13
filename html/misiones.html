@@ -41,15 +41,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✏️ Cambiar por el nombre de tu pantalla -->
-  <title>Nombre de la pantalla - PUMM 2026</title>
-
+  <title>Misiones - PUMM 2026</title>
   <!-- Color de la barra del navegador en el celular. -->
   <meta name="theme-color" content="#5B0099">
-
-  <!-- Un solo CSS: main.css importa todo lo demás. No agregues
-       más <link> acá, agregá el @import en main.css. -->
+  <!-- Link CSS principal -->
   <link rel="stylesheet" href="../css/main.css">
 </head>
 
@@ -57,32 +52,54 @@
      en la barra de navegación. Tiene que coincidir con el
      data-seccion de la nav: "pasaporte", "misiones" o "logros".
      Si tu pantalla no está en la nav, poné el nombre igual. -->
-<body data-pagina="nombre-de-tu-pantalla">
+<body data-pagina="misiones">
 
   <!-- .contenedor centra y limita el ancho.
        .con-nav deja lugar abajo para que la barra fija no tape
        el último elemento. Sacala si tu pantalla no lleva nav. -->
   <main class="contenedor con-nav">
 
-    <header class="encabezado">
-      <h1 class="encabezado__titulo">Título de la pantalla</h1>
-      <p class="encabezado__bajada">Una línea de contexto, si hace falta.</p>
-    </header>
+  <header class="encabezado encabezado__misiones">
+    <h1 class="encabezado__titulo">Misiones a explorar</h1>
+  </header>
 
-    <!-- ✏️ Tu contenido va acá.
+  <div class="campo-buscador">
+  <!-- <svg class="campo-buscador__icono" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+    <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2"/>
+  </svg> -->
+  <input
+    type="search"
+    id="buscador-misiones"
+    class="campo campo--con-icono"
+    placeholder="Encuentra tu próxima aventura...">
+  </div>
+  <button type="button" class="boton boton--secundario boton--ancho" id="btn-filtros">
+    Filtros
+  </button>
 
-         Componentes disponibles (ver css/componentes/):
-           .tarjeta            bloque de contenido
-           .boton--primario    acción principal (una por pantalla)
-           .boton--fantasma    acción alternativa
-           .progreso           barra de avance
-           .logro              logro del recorrido
+  <div class="panel-filtros oculto" id="panel-filtros">
+    <label class="campo__etiqueta" for="filtro-hora">Empiezan después de</label>
+    <input type="time" id="filtro-hora" class="campo">
 
-         Utilidades (ver css/base/utilidades.css):
-           .pila .fila .fila-entre .centrado .oculto .texto-suave
-    -->
+    <label class="campo__etiqueta" for="filtro-zona">Ubicación</label>
+    <select id="filtro-zona" class="campo">
+      <option value="">Todas las zonas</option>
+      <!-- opciones generadas por JS -->
+    </select>
 
-  </main>
+    <label class="campo__etiqueta" for="filtro-orden">Ordenar</label>
+    <select id="filtro-orden" class="campo">
+      <option value="">Como vienen</option>
+      <option value="alfabetico">Alfabético (A-Z)</option>
+    </select>
+  </div>
+
+  <div class="pila" id="lista-misiones">
+    <!-- tarjetas generadas por misiones.js -->
+  </div>
+
+</main>
 
   <!--
     NAVEGACIÓN — borrala si tu pantalla no la lleva (bienvenida,
@@ -124,8 +141,9 @@
     Podés sacar los data/ que tu pantalla no use, pero si tenés
     dudas dejalos: son archivos chicos y el costo es cero.
   -->
+  <script src="../data/participantes.js"></script>
   <script src="../data/misiones.js"></script>
-  <script src="../data/logros.js"></script>
+  <script src="../data/insignias.js"></script>
   <script src="../data/textos.js"></script>
 
   <script src="../js/config.js"></script>
@@ -134,6 +152,6 @@
   <script src="../js/app.js"></script>
 
   <!-- ✏️ Descomentá y apuntá al JS de tu pantalla -->
-  <!-- <script src="../js/paginas/tu-pantalla.js"></script> -->
+  <script src="../js/paginas/misiones.js"></script>
 </body>
 </html>

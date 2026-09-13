@@ -18,24 +18,10 @@
      evita esa tarde perdida.
 
    ------------------------------------------------------------
-   ⚠️ VOCABULARIO PENDIENTE — la pantalla de activación salió del
-   flujo y ahora la primera pantalla es la de registro, pero este
-   archivo todavía habla de "activar":
-
-       activar(codigo)   estaActivado()   cerrarSesion()
-       CONFIG.CLAVE_CODIGO   CONFIG.FORMATO_CODIGO
-
-   No los renombramos todavía a propósito: el nombre correcto
-   depende de qué pide el registro (¿sigue habiendo un código de
-   acreditación? ¿se piden nombre y DNI?), y eso es una decisión
-   de producto que todavía no está.
-
-   Cuando esté, el cambio es barato justamente por esta capa:
-   se reescriben estas funciones y nada más. Ojo con un detalle
-   al elegir los nombres: registrarMision() ya existe y es
-   otra cosa. Si el registro de la participante pasa a llamarse
-   registrar(), las dos se van a confundir. Mejor algo como
-   registrarParticipante() / estaRegistrada().
+   La identidad de la participante es el DNI. La sesión se da de
+   alta con registrarParticipante() y se consulta con
+   estaRegistrada() / obtenerParticipante(). El progreso de
+   misiones va aparte, con registrarMision() y obtenerRegistros().
    ============================================================ */
 
 window.PUMM = window.PUMM || {};
@@ -86,43 +72,6 @@ window.PUMM.Datos = (function () {
   /* ---------- API pública ---------- */
   return {
 
-    /* --- Sesión --- */
-
-    /* Devuelve el código activo, o null si el pasaporte no está
-       activado. Las pantallas lo usan para decidir si redirigen. */
-    obtenerCodigo: function () {
-      return localStorage.getItem(CONFIG.CLAVE_CODIGO);
-    },
-
-    estaActivado: function () {
-      return this.obtenerCodigo() !== null;
-    },
-
-    /* Valida el código y activa el pasaporte.
-       Devuelve { ok: true, nombre } o { ok: false }.
-
-       ⚠️ En modo demo valida contra data/participantes.js.
-       En modo api va a ser una llamada al backend, y esta
-       función va a pasar a ser asíncrona (async/await). */
-    activar: function (codigo) {
-      var limpio = String(codigo || "").trim().toUpperCase();
-
-      if (!CONFIG.FORMATO_CODIGO.test(limpio)) {
-        return { ok: false };
-      }
-
-      var encontrada = window.PUMM.PARTICIPANTES_DEMO.filter(function (p) {
-        return p.codigo === limpio;
-      })[0];
-
-      if (!encontrada) {
-        return { ok: false };
-      }
-
-      localStorage.setItem(CONFIG.CLAVE_CODIGO, limpio);
-      return { ok: true, nombre: encontrada.nombre };
-    },
-
     /* --- Sesión de la participante (registro) ---
        La identidad es el DNI: no generamos un id aparte. Los datos de
        la sesión activa viven en CLAVE_PARTICIPANTE como { nombre, dni }. */
@@ -141,9 +90,9 @@ window.PUMM.Datos = (function () {
     },
 
     cerrarSesion: function () {
-      localStorage.removeItem(CONFIG.CLAVE_CODIGO);
       localStorage.removeItem(CONFIG.CLAVE_REGISTROS);
       localStorage.removeItem(CONFIG.CLAVE_PARTICIPANTE);
+      localStorage.removeItem(CONFIG.CLAVE_PROGRESO);
     },
 
     /* Da de alta a la participante con { email, nombre, dni }.
@@ -244,8 +193,51 @@ window.PUMM.Datos = (function () {
 
     /* --- Progreso y logros --- */
 
+    /* Le pregunta a la planilla (en modo Apps Script) cuántas
+       misiones tiene la participante activa, y guarda la
+       respuesta en localStorage como caché. Devuelve SIEMPRE una
+       Promise, se resuelva bien o mal, para que la pantalla no
+       tenga que distinguir los casos: si falla, sigue mostrando
+       el último valor cacheado en vez de romper la UI.
+
+       En modo demo (sin servidor) no hace nada: ahí el progreso
+       YA vive en localStorage vía registrarMision(), no hay nada
+       que sincronizar. */
+    sincronizarProgreso: function () {
+      var participante = this.obtenerParticipante();
+
+      return new Promise(function (resolve) {
+        if (!hayServidor() || !participante) {
+          resolve();
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(function (res) {
+            if (res && res.status === "success") {
+              guardarJSON(CONFIG.CLAVE_PROGRESO, {
+                hechas: res.numeroMisiones,
+                misiones: res.misiones || []
+              });
+            }
+            resolve();
+          })
+          .withFailureHandler(function (err) {
+            console.warn("[PUMM] Falló sincronizarProgreso", err);
+            resolve(); // seguimos con el último valor cacheado
+          })
+          .obtenerEstadoParticipante({ dni: participante.dni });
+      });
+    },
+
     obtenerProgreso: function () {
-      var hechas = this.obtenerRegistros().length;
+      /* Si ya sincronizamos con el servidor, ESE es el número real
+         (viene de la planilla). Si no (recién entramos y todavía
+         no corrió sincronizarProgreso, o estamos en modo demo),
+         caemos al conteo local de siempre. */
+      var remoto = leerJSON(CONFIG.CLAVE_PROGRESO, null);
+      var hechas = remoto ? remoto.hechas : this.obtenerRegistros().length;
+
       var meta = window.PUMM.MISIONES_PARA_COMPLETAR;
       return {
         hechas: hechas,

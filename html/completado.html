@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completado - PUMM 2026</title>
+    <meta name="theme-color" content="#5B0099">
+    <link rel="icon" type="image/svg+xml" href="../assets/iconos/corazon-violeta.svg">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="felicitaciones" data-pagina="completado">
+
+<main class="contenedor felicitaciones__contenedor">
+    <div class="franja-ajedrez franja-ajedrez--cian felicitaciones__franja" aria-hidden="true"></div>
+
+    <h1 class="felicitaciones__titulo">¡FELICITACIONES!</h1>
+
+    <div class="felicitaciones__tarjeta">
+        <img class="felicitaciones__estrella felicitaciones__estrella--top" src="../assets/img/estrella-amarrilla.png" alt="" aria-hidden="true">
+
+        <p class="felicitaciones__texto">
+            Has completado todas las actividades del <strong>PUMM 2026</strong>.
+        </p>
+
+        <div class="felicitaciones__destacado">
+            <span>¡Sos una verdadera creadora tecnológica!</span>
+        </div>
+
+        <img class="felicitaciones__estrella felicitaciones__estrella--bottom" src="../assets/iconos/estrella-azul.svg" alt="" aria-hidden="true">
+    </div>
+
+    <div class="felicitaciones__acciones">
+        <button id="btn-compartir" class="boton boton--primario">
+            <span>COMPARTIR LOGRO</span>
+            <img src="../assets/iconos/compartir-blanco.svg" alt="" aria-hidden="true">
+        </button>
+
+        <button id="btn-inicio" class="boton boton--secundario" style="background-color: var(--color-secundario)">
+            <img src="../assets/iconos/home.svg" alt="" aria-hidden="true">
+            <span style="color: #4A3700">VOLVER AL INICIO</span>
+        </button>
+    </div>
+
+    <div class="franja-ajedrez franja-ajedrez--cian felicitaciones__franja" aria-hidden="true"></div>
+</main>
+
+<dialog class="modal" id="modal"></dialog>
+
+<script src="../data/misiones.js"></script>
+<script src="../data/insignias.js"></script>
+<script src="../data/textos.js"></script>
+
+<script src="../js/config.js"></script>
+<script src="../js/datos.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/app.js"></script>
+
+<script src="../js/paginas/completado.js"></script>
+</body>
+</html>
