@@ -7,6 +7,9 @@
 
     var isChecked = false;
     var misionActual = null;
+    /* Los listeners se cablean una sola vez aunque la vista se muestre
+       varias veces (en el bundle initNuevaMision puede correr de nuevo). */
+    var cableado = false;
 
     function obtenerMisionActual() {
         var idMision = UI && typeof UI.leerParametro === "function"
@@ -78,7 +81,10 @@
             });
         }
 
-        var botonCompletarMision = UI ? UI.$(".boton--primario") : document.querySelector(".boton--primario");
+        /* Por id (no por .boton--primario): en el bundle hay varios
+           .boton--primario en distintas vistas y UI.$ agarraría el
+           equivocado, dejando este botón sin handler. */
+        var botonCompletarMision = UI ? UI.$("#btn-completar") : document.getElementById("btn-completar");
         if (botonCompletarMision) {
             botonCompletarMision.addEventListener("click", function () {
                 if (!isChecked) {
@@ -106,11 +112,37 @@
         }
     }
 
+    /* Vuelve al estado inicial (por si se muestra la vista de nuevo en
+       el bundle tras haber marcado el toggle en una visita anterior). */
+    function resetear() {
+        isChecked = false;
+        var toggleBtn = UI.$("#toggle-btn");
+        if (toggleBtn) {
+            toggleBtn.style.background = "";
+            toggleBtn.textContent = "";
+        }
+        var statusMessage = UI.$("#status-message");
+        if (statusMessage) statusMessage.textContent = "";
+    }
+
+    function initNuevaMision() {
+        resetear();
+        renderizarMision();
+        if (cableado) return;
+        cableado = true;
+        inicializarEventos();
+    }
+
+    /* BUNDLE: el router corre initNuevaMision al mostrar la vista. */
+    UI.alMostrar("nueva-mision", initNuevaMision);
+
+    /* LOCAL: se inicializa sola. En el bundle hay [data-vista] y manda
+       el router, así que salimos (evita disparar exigirRegistro, que
+       redirige a index.html y saca al usuario de la app). */
     document.addEventListener("DOMContentLoaded", function () {
+        if (document.querySelector("[data-vista]")) return;
         if (UI && typeof UI.exigirRegistro === "function")
             if (!UI.exigirRegistro()) return;
-
-        renderizarMision();
-        inicializarEventos();
+        initNuevaMision();
     });
 })();

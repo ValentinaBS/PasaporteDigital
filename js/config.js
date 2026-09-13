@@ -31,10 +31,12 @@ window.PUMM.CONFIG = {
      nada más que viva en el mismo dominio de la web de CET. */
   CLAVE_REGISTROS: "pumm.registros",
   CLAVE_PARTICIPANTE: "pumm.participante",
-   CLAVE_PROGRESO: "pumm.progreso",
+  CLAVE_PROGRESO: "pumm.progreso",
 
   /* Nombre del parámetro que llevan los QR.
-     Un QR apunta a:  .../html/validar-actividad.html?mision=labs
+     En local el QR apunta a:  .../html/nueva-mision.html?mision=robotica
+     En el bundle (Apps Script) apunta a la URL de la app con ?mision=…,
+     y js/app.js → rutearFlujo abre la vista nueva-mision con ese id.
      El valor tiene que coincidir con un id de data/misiones.js */
   PARAM_QR: "mision",
 

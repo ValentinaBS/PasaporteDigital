@@ -30,18 +30,22 @@
   }
 
   /* Cablea la navegación entre pantallas.
-     En LOCAL (páginas separadas) los href de la nav navegan solos, así
-     que no hacemos nada. En el BUNDLE las otras pantallas no existen
-     como archivos (romperían el href), así que interceptamos el click
-     y cambiamos de vista con mostrarPantalla. Detectamos el bundle por
-     la presencia de [data-vista]. */
+     En LOCAL (páginas separadas) los href navegan solos, así que no
+     hacemos nada. En el BUNDLE las otras pantallas no existen como
+     archivos (romperían el href), así que interceptamos el click de
+     CUALQUIER link interno a un .html (nav, "Buscar misiones", los
+     botones de certificado, etc.) y cambiamos de vista con
+     mostrarPantalla. Detectamos el bundle por la presencia de [data-vista]. */
   function cablearNavegacion() {
     if (!UI.$$("[data-vista]").length) return;
 
-    UI.$$(".nav__item").forEach(function (item) {
-      item.addEventListener("click", function (evento) {
+    UI.$$('a[href*=".html"]').forEach(function (enlace) {
+      enlace.addEventListener("click", function (evento) {
         evento.preventDefault();
-        UI.mostrarPantalla(item.getAttribute("data-seccion"));
+        var href = enlace.getAttribute("href") || "";
+        /* "pasaporte.html" → "pasaporte"; "nueva-mision.html?x=1" → "nueva-mision" */
+        var clave = href.replace(/^.*\//, "").replace(/\.html.*$/, "");
+        UI.mostrarPantalla(clave);
       });
     });
   }
@@ -82,7 +86,17 @@
                   pagina === "index" || pagina === "pasaporte";
     if (!enFlujo || !Datos) return;
 
-    UI.mostrarPantalla(Datos.estaRegistrada() ? "pasaporte" : "index");
+    if (!Datos.estaRegistrada()) {
+      UI.mostrarPantalla("index");
+      return;
+    }
+
+    /* Si se entró por un QR (…?mision=id), abrir la validación de esa
+       actividad; si no, el pasaporte. En el bundle el QR apunta a la URL
+       de la app con ?mision=…; en local el QR va directo a
+       nueva-mision.html, así que esto casi siempre da "pasaporte". */
+    var mision = UI.leerParametro(window.PUMM.CONFIG.PARAM_QR);
+    UI.mostrarPantalla(mision ? "nueva-mision" : "pasaporte");
   }
 
   /* DOMContentLoaded espera a que el HTML esté armado.

@@ -1,4 +1,7 @@
-body.actividad {
+/* .actividad va en el <body> en local y en el <div data-vista> en el
+   bundle (ver scripts/empaquetar.js): por eso se estila por clase y no
+   por body, así el fondo/layout viaja con la pantalla en los dos modos. */
+.actividad {
     background: url("../../assets/img/fondo-violeta.webp");
     font-family: var(--fuente-texto);
     display: flex;

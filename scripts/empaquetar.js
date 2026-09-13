@@ -37,7 +37,11 @@ var ROOT = path.resolve(__dirname, "..");
 var PAGINAS = [
   { archivo: "html/index.html", vista: "index" },
   { archivo: "html/pasaporte.html", vista: "pasaporte" },
-  { archivo: "html/logros.html", vista: "logros" }
+  { archivo: "html/misiones.html", vista: "misiones" },
+  { archivo: "html/logros.html", vista: "logros" },
+  { archivo: "html/nueva-mision.html", vista: "nueva-mision" },
+  { archivo: "html/mision-ya-registrada.html", vista: "mision-ya-registrada" },
+  { archivo: "html/completado.html", vista: "completado" }
 ];
 
 /* Extensión → tipo MIME para los data URI. */
@@ -142,11 +146,22 @@ function construirCombinado() {
 
   /* Cada pantalla: su <main> envuelto en <div data-vista="clave">.
      La primera queda visible; el resto arrancan ocultas (el router
-     de js/app.js corrige según la sesión). */
+     de js/app.js corrige según la sesión).
+     Se copia la clase del <body> de cada página a su vista: como el
+     bundle comparte un solo <body> (el del molde), los estilos que
+     cuelgan de esa clase (ej. .actividad, .felicitaciones) tienen que
+     viajar en la vista para seguir aplicando. */
   var vistas = PAGINAS.map(function (p, i) {
-    var main = extraerMain(leer(path.join(ROOT, p.archivo)));
-    var clase = i === 0 ? "" : ' class="oculto"';
-    return '<div data-vista="' + p.vista + '"' + clase + ">\n" + main + "\n</div>";
+    var htmlPagina = leer(path.join(ROOT, p.archivo));
+    var main = extraerMain(htmlPagina);
+    var claseBody = (htmlPagina.match(/<body[^>]*\bclass=["']([^"']+)["']/i) || [])[1] || "";
+
+    var clases = [];
+    if (claseBody) clases.push(claseBody);
+    if (i !== 0) clases.push("oculto");
+    var attrClase = clases.length ? ' class="' + clases.join(" ") + '"' : "";
+
+    return '<div data-vista="' + p.vista + '"' + attrClase + ">\n" + main + "\n</div>";
   }).join("\n");
 
   /* Reemplazamos el <main> del molde por todas las vistas. */

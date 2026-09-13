@@ -1,4 +1,7 @@
-body.felicitaciones {
+/* .felicitaciones va en el <body> en local y en el <div data-vista> en
+   el bundle (ver scripts/empaquetar.js): se estila por clase, no por
+   body, para que el fondo aplique en los dos modos. */
+.felicitaciones {
     background: url("../../assets/img/fondo-violeta.webp");
     color: var(--color-superficie);
     min-height: 100vh;

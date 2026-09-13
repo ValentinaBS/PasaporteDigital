@@ -61,14 +61,22 @@
         }
 
         var btnVolver = UI ? UI.$("#btn-volver") : document.getElementById("btn-volver");
-        if (btnVolver) {
+        /* dataset como guardia: cablea el botón una sola vez aunque la
+           vista se muestre de nuevo en el bundle. */
+        if (btnVolver && !btnVolver.dataset.cableado) {
+            btnVolver.dataset.cableado = "1";
             btnVolver.addEventListener("click", function () {
                 UI.mostrarPantalla("pasaporte");
             });
         }
     }
 
+    /* BUNDLE: el router corre pintar al mostrar la vista. */
+    UI.alMostrar("mision-ya-registrada", pintar);
+
+    /* LOCAL: se inicializa sola; en el bundle manda el router. */
     document.addEventListener("DOMContentLoaded", function () {
+        if (document.querySelector("[data-vista]")) return;
         if (UI && typeof UI.exigirRegistro === "function") {
             if (!UI.exigirRegistro()) return;
         }
