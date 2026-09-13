@@ -125,14 +125,15 @@ body.actividad {
 .actividad__mision-info {
     display: flex;
     flex-direction: column;
-    gap: var(--espacio-1);
+    align-items: flex-start; /* Alinea los hijos al borde izquierdo */
+    text-align: left;
 }
 
 .actividad__mision-etiqueta {
-    font-size: var(--texto-sm);
-    font-weight: 700;
-    color: var(--color-texto-suave);
-    letter-spacing: 0.5px;
+    display: block;
+    text-align: left;
+    margin: 0;
+    padding: 0;
 }
 
 .actividad__mision-titulo {
