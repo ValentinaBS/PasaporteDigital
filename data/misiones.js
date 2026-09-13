@@ -30,21 +30,20 @@ window.PUMM = window.PUMM || {};
    no se cambia una vez impresos los QR. Los nombres son los que ve la
    participante.
 
-   ⚠️ `insignia` queda en null por ahora: el sistema de insignias
-   (data/insignias.js) todavía apunta a los ids viejos y hay que
-   rehacerlo cuando se arme el flujo de misiones. Ninguna pantalla
-   actual lo usa. */
+   Los logros ya no se mapean misión por misión: se desbloquean por
+   cantidad de misiones registradas (ver data/logros.js), así que acá
+   no hace falta ningún campo extra. */
 window.PUMM.MISIONES = [
-  { id: "robotica",      nombre: "Taller de Robótica",       icono: "🤖", insignia: null },
-  { id: "vr",            nombre: "Lab de Realidad Virtual",  icono: "🥽", insignia: null },
-  { id: "programacion",  nombre: "Programación Web",         icono: "💻", insignia: null },
-  { id: "diseno-ux",     nombre: "Diseño UX/UI",             icono: "🎨", insignia: null },
-  { id: "ciencia-datos", nombre: "Análisis de Datos",        icono: "📊", insignia: null },
-  { id: "ciberseguridad",nombre: "Ciberseguridad",           icono: "🛡️", insignia: null },
-  { id: "biotecnologia", nombre: "Biotecnología",            icono: "🧬", insignia: null },
-  { id: "videojuegos",   nombre: "Zona Gamer",               icono: "🎮", insignia: null },
-  { id: "ia",            nombre: "Lab de IA",                icono: "✨", insignia: null },
-  { id: "redes",         nombre: "Infraestructura y Redes",  icono: "🌐", insignia: null }
+  { id: "robotica",      nombre: "Taller de Robótica",       icono: "🤖" },
+  { id: "vr",            nombre: "Lab de Realidad Virtual",  icono: "🥽" },
+  { id: "programacion",  nombre: "Programación Web",         icono: "💻" },
+  { id: "diseno-ux",     nombre: "Diseño UX/UI",             icono: "🎨" },
+  { id: "ciencia-datos", nombre: "Análisis de Datos",        icono: "📊" },
+  { id: "ciberseguridad",nombre: "Ciberseguridad",           icono: "🛡️" },
+  { id: "biotecnologia", nombre: "Biotecnología",            icono: "🧬" },
+  { id: "videojuegos",   nombre: "Zona Gamer",               icono: "🎮" },
+  { id: "ia",            nombre: "Lab de IA",                icono: "✨" },
+  { id: "redes",         nombre: "Infraestructura y Redes",  icono: "🌐" }
 ];
 
 /* Cuántas misiones hacen falta para completar el recorrido.

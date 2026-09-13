@@ -70,8 +70,20 @@ window.PUMM.TEXTOS = {
   sinMisiones:
     "Todavía no registraste ninguna misión. Escaneá el QR del primer " +
     "espacio al que entres y arrancamos.",
-  sinInsignias:
-    "Tus insignias van a aparecer acá a medida que recorras el evento.",
+  sinLogros:
+    "Tus logros van a aparecer acá a medida que recorras el evento.",
+
+  /* --- Logros: mensaje arriba de la barra ---
+     El JS elige uno según el % de logros desbloqueados. */
+  logrosMensajeInicio:
+    "¡Arrancaste! Seguí recorriendo para desbloquear más logros.",
+  logrosMensajeMedio:
+    "¡Seguí así! Estás a mitad de camino para desbloquear todas las " +
+    "recompensas especiales del PUMM 2026.",
+  logrosMensajeCasi:
+    "¡Ya casi! Te faltan poquitos para completarlos todos.",
+  logrosMensajeCompleto:
+    "¡Increíble! Desbloqueaste todos los logros del PUMM 2026.",
 
   /* --- Botones --- */
   botonActivar: "Activar mi pasaporte",
@@ -80,5 +92,7 @@ window.PUMM.TEXTOS = {
   botonVerMisiones: "Ver misiones",
   botonRegistrarme: "Registrarme",
   botonReintentar: "Volver a intentar",
-  botonContinuar: "Continuar"
+  botonContinuar: "Continuar",
+  botonCertificadoParticipacion: "Certificado de participación",
+  botonCertificadoLogros: "Certificado de logros"
 };

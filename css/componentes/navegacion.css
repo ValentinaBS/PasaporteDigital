@@ -17,10 +17,12 @@
   z-index: 10;
 
   display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
   height: var(--alto-nav);
 
   background-color: var(--color-superficie);
-  border-top: 1px solid var(--color-borde);
+  border-top: 3px solid var(--pumm-negro);
 
   /* Respeta la barra de gestos del iPhone. */
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -33,10 +35,11 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-
-  font-size: var(--texto-xs);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
   color: var(--color-texto-suave);
   transition: color var(--transicion);
+  text-transform: uppercase;
 }
 
 .nav__icono {
@@ -47,8 +50,12 @@
 /* La sección actual. La marca app.js leyendo data-pagina del <body>,
    así no hay que acordarse de poner la clase a mano en cada HTML. */
 .nav__item--activo {
-  color: var(--color-primario);
-  font-weight: 700;
+  background-color: var(--color-primario);
+  color: var(--pumm-blanco);
+  padding-top: 8px;
+  margin: var(--espacio-2) 0;
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
 }
 
 /* Encabezado de pantalla. */

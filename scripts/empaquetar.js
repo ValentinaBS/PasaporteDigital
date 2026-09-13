@@ -36,7 +36,8 @@ var ROOT = path.resolve(__dirname, "..");
    Para sumar una pantalla nueva: agregala acá y creá su html/JS. */
 var PAGINAS = [
   { archivo: "html/index.html", vista: "index" },
-  { archivo: "html/pasaporte.html", vista: "pasaporte" }
+  { archivo: "html/pasaporte.html", vista: "pasaporte" },
+  { archivo: "html/logros.html", vista: "logros" }
 ];
 
 /* Extensión → tipo MIME para los data URI. */

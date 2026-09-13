@@ -42,5 +42,12 @@ window.PUMM.CONFIG = {
      ⚠️ HIPÓTESIS SIN VALIDAR: hay que confirmar con el equipo
      de acreditación cómo son los códigos reales antes del
      evento. Si cambia el formato, se cambia acá y nada más. */
-  FORMATO_CODIGO: /^PUMM-2026-[A-Z0-9]{2,6}$/
+  FORMATO_CODIGO: /^PUMM-2026-[A-Z0-9]{2,6}$/,
+
+  /* El certificado de participación se habilita recién a esta
+     fecha y hora (hora de Argentina, UTC-3). Antes, el botón de
+     la pantalla de Logros queda oculto.
+     ⚠️ Formato ISO: mes y día SIEMPRE con dos dígitos ("08", no "8"),
+     si no new Date() lo lee como Invalid Date y el botón no aparece. */
+  FECHA_CERTIFICADO: "2026-10-14T16:00:00-03:00"
 };
