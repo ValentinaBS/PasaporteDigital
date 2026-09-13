@@ -78,6 +78,23 @@
     Filtros
   </button>
 
+  <div class="panel-filtros oculto" id="panel-filtros">
+    <label class="campo__etiqueta" for="filtro-hora">Empiezan después de</label>
+    <input type="time" id="filtro-hora" class="campo">
+
+    <label class="campo__etiqueta" for="filtro-zona">Ubicación</label>
+    <select id="filtro-zona" class="campo">
+      <option value="">Todas las zonas</option>
+      <!-- opciones generadas por JS -->
+    </select>
+
+    <label class="campo__etiqueta" for="filtro-orden">Ordenar</label>
+    <select id="filtro-orden" class="campo">
+      <option value="">Como vienen</option>
+      <option value="alfabetico">Alfabético (A-Z)</option>
+    </select>
+  </div>
+
   <div class="pila" id="lista-misiones">
     <!-- tarjetas generadas por misiones.js -->
   </div>

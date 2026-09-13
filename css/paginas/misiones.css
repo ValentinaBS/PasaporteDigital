@@ -45,38 +45,104 @@
 }
 }
 
+.tarjeta {
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+  border-radius: 0;
+}
 
 .tarjeta__imagen {
   display: block;
   width: calc(100% + var(--espacio-4) * 2);
+  max-width: none;
+  height: 12.5rem;
+  object-fit: cover;
+  object-position: center;
   margin: calc(var(--espacio-4) * -1) calc(var(--espacio-4) * -1) var(--espacio-3);
   border-radius: var(--radio-md) var(--radio-md) 0 0;
 }
 
+.tarjeta__titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-1xl);
+  font-weight: 400;
+  color: var(--color-primario);
+}
+
 .tarjeta__horario {
-  font-size: var(--texto-sm);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-md);
   font-weight: 700;
   color: var(--color-primario);
 }
 
 .tarjeta--destacada .tarjeta__horario {
-  color: var(--pumm-blanco);
+  color: var(--color-texto);
+  font-size: var(--texto-lg);
+  font-weight: 700;
+
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-1) var(--espacio-2);
+  background-color: var(--color-secundario);
+
+  text-align: center;
+  text-transform: uppercase;
+
+  border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+}
+
+.tarjeta--destacada .tarjeta__titulo {
+  color: var(--color-primario-texto);
+  font-size: var(--texto-2xl);
+  font-weight: 400;
+}
+
+.tarjeta--destacada .tarjeta__icono-ubicacion {
+  color: var(--pumm-amarillo);
 }
 
 .tarjeta__descripcion {
-  font-size: var(--texto-sm);
-  color: var(--color-texto-suave);
-  margin: var(--espacio-2) 0;
+  font-size: var(--texto-md);
+  font-weight: 400;
+  margin-top: var(--espacio-4)
 }
 
 .tarjeta--destacada .tarjeta__descripcion {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-primario-texto);
 }
 
 .tarjeta__ubicacion {
   display: flex;
   align-items: center;
   gap: var(--espacio-1);
-  font-size: var(--texto-sm);
+  font-size: var(--texto-md);
   font-weight: 700;
+  margin-top: var(--espacio-4)
+}
+
+.panel-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  margin-bottom: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+}
+
+#lista-misiones {
+  margin-top: var(--espacio-8);
+}
+
+.tarjeta__icono-ubicacion {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primario);
+}
+
+.tarjeta--destacada .tarjeta__icono-ubicacion {
+  color: var(--color-secundario);
 }
