@@ -100,6 +100,18 @@ function inlinarTodo(html, htmlDir) {
     html = html.replace(/<head>/i, '<head>\n  <base target="_top">');
   }
 
+  /* Puente del QR para Apps Script: el ?mision=… del /exec llega al
+     servidor (doGet), no al cliente. doGet lo pone en el template como
+     misionQR y este scriptlet lo deja en un global que lee
+     js/ui.js → leerParametro. En local (o sirviendo el dist directo) el
+     <?= … ?> queda sin evaluar; leerParametro lo ignora por el "<". */
+  if (!/MISION_QR/.test(html)) {
+    html = html.replace(
+      /<head>/i,
+      '<head>\n  <script>window.PUMM = window.PUMM || {}; window.PUMM.MISION_QR = "<?= misionQR ?>";</script>'
+    );
+  }
+
   /* CSS: el <link rel=stylesheet> → un <style> con todo inlineado. */
   html = html.replace(
     /<link\b[^>]*rel=["']stylesheet["'][^>]*>/i,

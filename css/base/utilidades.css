@@ -57,8 +57,13 @@
 }
 
 /* Franja ajedrezada del manual de marca. Es decorativa:
-   siempre con aria-hidden="true" en el HTML. */
+   siempre con aria-hidden="true" en el HTML.
+   Es un <div> vacío: sin width explícito, en un contenedor que
+   encoja a su contenido (algo que pasa en el iframe de Apps Script)
+   colapsaría a 0 y "desaparecería". width:100% + display:block lo evita. */
 .franja-ajedrez {
+  display: block;
+  width: 100%;
   height: 16px;
   background-image:
     linear-gradient(45deg,  var(--pumm-negro) 25%, transparent 25%),

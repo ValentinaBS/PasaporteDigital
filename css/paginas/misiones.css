@@ -22,7 +22,10 @@
   color: var(--color-secundario-texto);
 }
 
-.campo {
+/* Separa el buscador del encabezado. Scopeado a .campo-buscador (solo
+   existe en misiones) para NO empujar los .campo de otras pantallas
+   (ej. los inputs del registro). */
+.campo-buscador {
   margin-top: var(--espacio-8);
 }
 

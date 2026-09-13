@@ -36,10 +36,24 @@ window.PUMM.UI = (function () {
 
     /* Lee un parámetro de la URL.
        Ej: en nueva-mision.html?mision=labs
-           leerParametro("mision")  →  "labs" */
+           leerParametro("mision")  →  "labs"
+
+       Fallback Apps Script: ahí el ?mision=… del /exec no llega a
+       window.location (la app corre en un iframe sandbox), así que el
+       servidor inyecta el id del QR en window.PUMM.MISION_QR (ver
+       scripts/apps-script/Codigo.gs → doGet y scripts/empaquetar.js).
+       Solo aplica al parámetro del QR y se ignora si el template quedó
+       sin evaluar (en ese caso el valor contiene un "<"). */
     leerParametro: function (nombre) {
-      var params = new URLSearchParams(window.location.search);
-      return params.get(nombre);
+      var valor = new URLSearchParams(window.location.search).get(nombre);
+      if (valor) return valor;
+
+      var paramQR = (window.PUMM.CONFIG || {}).PARAM_QR;
+      var inyectado = window.PUMM.MISION_QR;
+      if (nombre === paramQR && inyectado && inyectado.indexOf("<") === -1) {
+        return inyectado;
+      }
+      return null;
     },
 
     /* --- Navegación entre pantallas (local vs bundle) ---

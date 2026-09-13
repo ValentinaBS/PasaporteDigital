@@ -40,12 +40,22 @@ var COL_HISTORIAL = ["nombre", "dni", "mision_completada", "fecha_hora"];
 
 /* ---------- Servir la página ----------
    Toda la app es UN solo HTML (registro y pasaporte son vistas que se
-   muestran/ocultan por JS). createHtmlOutputFromFile("Index") busca el
-   archivo HTML llamado "Index" en este proyecto (ahí se pega el
-   contenido de dist/Index.html).
+   muestran/ocultan por JS). El archivo HTML "Index" (ahí se pega el
+   contenido de dist/Index.html) es un TEMPLATE: lleva un
+   <?= misionQR ?> que el empaquetador inyecta en el <head>.
+
+   Por qué template y no createHtmlOutputFromFile: el ?mision=… que viaja
+   en el QR (…/exec?mision=ia) lo recibe ACÁ el servidor en e.parameter,
+   NO el cliente (la app corre en un iframe sandbox cuya URL no lleva el
+   query). Así que lo pasamos a la página por el template y el cliente lo
+   lee en window.PUMM.MISION_QR (ver js/ui.js → leerParametro).
+
    ALLOWALL permite embeberlo en un iframe (ej. el WordPress de CET). */
 function doGet(e) {
-  return HtmlService.createHtmlOutputFromFile("Index")
+  var plantilla = HtmlService.createTemplateFromFile("Index");
+  plantilla.misionQR = (e && e.parameter && e.parameter.mision) || "";
+
+  return plantilla.evaluate()
     .setTitle("Pasaporte Digital - PUMM 2026")
     .addMetaTag("viewport", "width=device-width, initial-scale=1.0")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);

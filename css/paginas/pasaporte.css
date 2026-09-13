@@ -59,6 +59,9 @@
 .contenedor.con-nav {
   padding-right: 10px;
   padding-left: 10px;
+  /* Contiene los adornos que "asoman" (ej. el rayo del aviso QR con
+     translate) para que no generen scroll horizontal en mobile. */
+  overflow-x: hidden;
 }
 
 .tarjeta-progreso {

@@ -1,5 +1,9 @@
-/* Layout y Contenedor */
-.contenedor {
+/* Layout y Contenedor.
+   Clase PROPIA (no el .contenedor global) para no filtrar este flex/gap
+   a otras pantallas que también usan .contenedor (ej. pasaporte, donde
+   agregaba gap de más y su padding pisaba al de .con-nav, dejando que el
+   nav tapara el contenido). */
+.mision-registrada {
     display: flex;
     flex-direction: column;
     align-items: center;
