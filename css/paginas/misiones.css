@@ -1,3 +1,4 @@
+/* Encabezado */
 .encabezado__misiones {
   display: inline-flex;
   align-items: center;
@@ -14,46 +15,70 @@
   text-align: center;
   text-transform: uppercase;
 
-  border: 2px solid var(--pumm-negro);
+  border: 3px solid var(--pumm-negro);
   box-shadow: var(--sombra-dura);
 }
-
-.encabezado__titulo{
+.encabezado__titulo-misiones{
   color: var(--color-secundario-texto);
 }
 
-/* Separa el buscador del encabezado. Scopeado a .campo-buscador (solo
-   existe en misiones) para NO empujar los .campo de otras pantallas
-   (ej. los inputs del registro). */
-.campo-buscador {
-  margin-top: var(--espacio-8);
-}
 
-.campo--buscador {
-  /* El ícono va como background-image
-   en vez de un <svg> aparte: así no hace falta envolver el
-   input en un div extra solo para poder posicionarlo. */
+/* Buscador */
+.campo-buscador {  /* Separa el buscador del encabezado (solo existe en misiones) */
+  margin-top: var(--espacio-8);
+  position: relative;
+  box-shadow: var(--sombra-dura);
+}
+.campo-buscador__icono {
+  position: absolute;
+  left: var(--espacio-4);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--gris-600);
+  pointer-events: none;
+}
 .campo--buscador {
   padding-left: calc(var(--espacio-4) * 2 + 20px);
-  background-repeat: no-repeat;
-  background-position: var(--espacio-4) center;
-  background-size: 20px;
-
-  /* ⚠️ El color de la lupa está escrito a mano en hexa (#6B6377)
-     porque un background-image en data-URI no puede leer variables
-     CSS. Es el mismo valor que --gris-600 en variables.css — si
-     ese color cambia algún día, hay que actualizarlo acá también
-     a mano. Es la única excepción a "todo sale de variables.css". */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6377' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='16.65' y1='16.65' x2='21' y2='21'/%3E%3C/svg%3E");
-}
+  border: 0.1px solid var(--gris-600);
 }
 
-.tarjeta {
+
+/* Filtros */
+.boton {
+  border: 3px solid var(--pumm-negro);
+}
+.boton--sin-sombra {
+  box-shadow: 6px 0 0 var(--pumm-negro);
+}
+.panel-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  margin-bottom: var(--espacio-4);
+  background-color: var(--color-superficie);
   border: 2px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+}
+.campo__etiqueta {
+  margin-bottom: 0;
+}
+.campo{
+  box-shadow: none;
+}
+
+
+/* Tarjetas */
+#lista-misiones {  /* Separa las tarjetas del panel de filtros */
+  margin-top: var(--espacio-8);
+}
+.tarjeta {
+  border: 3px solid var(--pumm-negro);
   box-shadow: var(--sombra-dura);
   border-radius: 0;
 }
-
 .tarjeta__imagen {
   display: block;
   width: calc(100% + var(--espacio-4) * 2);
@@ -64,59 +89,30 @@
   margin: calc(var(--espacio-4) * -1) calc(var(--espacio-4) * -1) var(--espacio-3);
   border-radius: var(--radio-md) var(--radio-md) 0 0;
 }
-
 .tarjeta__titulo {
   font-family: var(--fuente-titulo);
-  font-size: var(--texto-1xl);
-  font-weight: 400;
-  color: var(--color-primario);
-}
-
-.tarjeta__horario {
-  font-family: var(--fuente-titulo);
-  font-size: var(--texto-md);
-  font-weight: 700;
-  color: var(--color-primario);
-}
-
-.tarjeta--destacada .tarjeta__horario {
-  color: var(--color-texto);
-  font-size: var(--texto-lg);
-  font-weight: 700;
-
-  align-items: center;
-  justify-content: center;
-  gap: var(--espacio-2);
-  padding: var(--espacio-1) var(--espacio-2);
-  background-color: var(--color-secundario);
-
-  text-align: center;
-  text-transform: uppercase;
-
-  border: 2px solid var(--pumm-negro);
-  box-shadow: var(--sombra-dura);
-}
-
-.tarjeta--destacada .tarjeta__titulo {
-  color: var(--color-primario-texto);
   font-size: var(--texto-2xl);
   font-weight: 400;
 }
-
-.tarjeta--destacada .tarjeta__icono-ubicacion {
-  color: var(--pumm-amarillo);
-}
-
-.tarjeta__descripcion {
+.tarjeta__horario {
+  font-family: var(--fuente-texto);
   font-size: var(--texto-md);
+  font-weight: 700;
+  color: var(--pumm-negro);
+  
+  transform: rotate(-3deg);
+  background-color: var(--color-acento);
+  padding: var(--espacio-1) var(--espacio-2);
+  border: 3px solid var(--pumm-negro);
+}
+.tarjeta__descripcion {
+  border-left: 3px solid var(--color-acento);
+  padding-left: var(--espacio-4);
+  
+  font-size: var(--texto-lg);
   font-weight: 400;
   margin-top: var(--espacio-4)
 }
-
-.tarjeta--destacada .tarjeta__descripcion {
-  color: var(--color-primario-texto);
-}
-
 .tarjeta__ubicacion {
   display: flex;
   align-items: center;
@@ -125,27 +121,48 @@
   font-weight: 700;
   margin-top: var(--espacio-4)
 }
-
-.panel-filtros {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-3);
-  padding: var(--espacio-4);
-  margin-bottom: var(--espacio-4);
-  background-color: var(--color-superficie);
-  border: 2px solid var(--pumm-negro);
-}
-
-#lista-misiones {
-  margin-top: var(--espacio-8);
-}
-
 .tarjeta__icono-ubicacion {
   width: 24px;
   height: 24px;
-  color: var(--color-primario);
+  color: var(--color-acento);
 }
 
-.tarjeta--destacada .tarjeta__icono-ubicacion {
-  color: var(--color-secundario);
+/* ---------- Variantes de color de fondo ----------
+  4 colores en total. "Blanco" es el fondo default de .tarjeta (var(--color-superficie)), así que no necesita clase propia. */
+.tarjeta--cian     { background-color: var(--pumm-cian); }
+.tarjeta--amarillo { background-color: var(--pumm-amarillo); }
+.tarjeta--violeta  { background-color: var(--pumm-violeta); color: var(--pumm-blanco);}
+
+/* ---------- Tarjeta violeta: fondo violeta + acentos amarillos ---------- */
+.tarjeta--violeta .tarjeta__icono-ubicacion {
+  color: var(--pumm-amarillo);
+}
+.tarjeta--violeta .tarjeta__descripcion {
+  border-left: 3px solid var(--pumm-amarillo);
+}
+.tarjeta--violeta .tarjeta__horario {
+  background-color: var(--pumm-amarillo);
+}
+
+/* ---------- Tarjeta cian: fondo cian + acentos violeta ---------- */
+.tarjeta--cian .tarjeta__icono-ubicacion {
+  color: var(--pumm-blanco);
+}
+.tarjeta--cian .tarjeta__descripcion {
+  border-left: 3px solid var(--pumm-blanco);
+}
+.tarjeta--cian .tarjeta__horario {
+  background-color: var(--pumm-blanco);
+}
+
+/* ---------- Tarjeta amarilla: fondo amarillo + acentos violeta ---------- */
+.tarjeta--amarillo .tarjeta__icono-ubicacion {
+  color: var(--pumm-violeta);
+}
+.tarjeta--amarillo .tarjeta__descripcion {
+  border-left: 3px solid var(--pumm-violeta);
+}
+.tarjeta--amarillo .tarjeta__horario {
+  background-color: var(--pumm-violeta);
+  color: var(--pumm-blanco);
 }
