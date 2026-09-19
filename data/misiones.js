@@ -45,36 +45,16 @@ window.PUMM = window.PUMM || {};
    rehacerlo cuando se arme el flujo de misiones. Ninguna pantalla
    actual lo usa. */
 window.PUMM.MISIONES = [
-  { id: "robotica",      nombre: "Taller de Robótica",       icono: "🤖", insignia: null,
-    ubicacion: "Stand Zona A", horario: "10:30",
-    descripcion: "Armá y programá un robot que sigue la línea con sensores." },
-  { id: "vr",            nombre: "Lab de Realidad Virtual",  icono: "🥽", insignia: null,
-    ubicacion: "Stand Zona B", horario: "11:00",
-    descripcion: "Ponete los lentes y explorá mundos en 360° hechos por chicas." },
-  { id: "programacion",  nombre: "Programación Web",         icono: "💻", insignia: null,
-    ubicacion: "Aula 1", horario: "11:30",
-    descripcion: "Escribí tu primera página web y publicala en el momento." },
-  { id: "diseno-ux",     nombre: "Diseño UX/UI",             icono: "🎨", insignia: null,
-    ubicacion: "Aula 2", horario: "12:15",
-    descripcion: "Diseñá una app pensando en quién la va a usar de verdad." },
-  { id: "ciencia-datos", nombre: "Análisis de Datos",        icono: "📊", insignia: null,
-    ubicacion: "Stand Zona C", horario: "13:00",
-    descripcion: "Convertí un montón de datos en un gráfico que cuenta una historia." },
-  { id: "ciberseguridad",nombre: "Ciberseguridad",           icono: "🛡️", insignia: null,
-    ubicacion: "Aula 3", horario: "13:45",
-    descripcion: "Aprendé a cuidar tus cuentas y a pensar como quien las protege." },
-  { id: "biotecnologia", nombre: "Biotecnología",            icono: "🧬", insignia: null,
-    ubicacion: "Laboratorio", horario: "14:30",
-    descripcion: "Meté las manos en experimentos que unen biología y tecnología." },
-  { id: "videojuegos",   nombre: "Zona Gamer",               icono: "🎮", insignia: null,
-    ubicacion: "Stand Zona D", horario: "15:15",
-    descripcion: "Diseñá el nivel de un videojuego y jugalo con el resto." },
-  { id: "ia",            nombre: "Lab de IA",                icono: "✨", insignia: null,
-    ubicacion: "Stand Zona A", horario: "16:00",
-    descripcion: "Descubrí los usos de la IA en el día a día y armá tu propio chatbot." },
-  { id: "redes",         nombre: "Infraestructura y Redes",  icono: "🌐", insignia: null,
-    ubicacion: "Aula 1", horario: "16:45",
-    descripcion: "Entendé cómo viaja la información y armá una red que funcione." }
+  { id: "programacion",  nombre: "Programación Web",         icono: "💻", insignia: null, ubicacion: "Aula 1", horario: "11:30", descripcion: "Escribí tu primera página web y publicala en el momento." },
+  { id: "robotica",      nombre: "Taller de Robótica",       icono: "🤖", insignia: null, ubicacion: "Stand Zona A", horario: "10:30", descripcion: "Armá y programá un robot que sigue la línea con sensores." },
+  { id: "vr",            nombre: "Lab de Realidad Virtual",  icono: "🥽", insignia: null, ubicacion: "Stand Zona B", horario: "11:00", descripcion: "Ponete los lentes y explorá mundos en 360° hechos por chicas." },
+  { id: "ciberseguridad",nombre: "Ciberseguridad",           icono: "🛡️", insignia: null, ubicacion: "Aula 3", horario: "13:45", descripcion: "Aprendé a cuidar tus cuentas y a pensar como quien las protege." },
+  { id: "diseno-ux",     nombre: "Diseño UX/UI",             icono: "🎨", insignia: null, ubicacion: "Aula 2", horario: "12:15", descripcion: "Diseñá una app pensando en quién la va a usar de verdad." },
+  { id: "biotecnologia", nombre: "Biotecnología",            icono: "🧬", insignia: null, ubicacion: "Laboratorio", horario: "14:30", descripcion: "Meté las manos en experimentos que unen biología y tecnología." },
+  { id: "ciencia-datos", nombre: "Análisis de Datos",        icono: "📊", insignia: null, ubicacion: "Stand Zona C", horario: "13:00", descripcion: "Convertí un montón de datos en un gráfico que cuenta una historia." },
+  { id: "ia",            nombre: "Lab de IA",                icono: "✨", insignia: null, ubicacion: "Stand Zona A", horario: "16:00", descripcion: "Descubrí los usos de la IA en el día a día y armá tu propio chatbot." },
+  { id: "videojuegos",   nombre: "Zona Gamer",               icono: "🎮", insignia: null, ubicacion: "Stand Zona D", horario: "15:15", descripcion: "Diseñá el nivel de un videojuego y jugalo con el resto." },
+  { id: "redes",         nombre: "Infraestructura y Redes",  icono: "🌐", insignia: null, ubicacion: "Aula 1", horario: "16:45", descripcion: "Entendé cómo viaja la información y armá una red que funcione." }
 ];
 
 /* Cuántas misiones hacen falta para completar el recorrido.
