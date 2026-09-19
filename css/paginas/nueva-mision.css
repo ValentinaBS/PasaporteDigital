@@ -80,6 +80,9 @@
     position: relative;
     width: 110px;
     height: 110px;
+    /* Aire entre el badge superior (que pisa la tarjeta) y el círculo,
+       como en el diseño de Figma. */
+    margin-top: var(--espacio-6);
     margin-bottom: var(--espacio-4);
 }
 
@@ -115,7 +118,7 @@
 
 /* Recuadro de la Misión */
 .actividad__mision-box {
-    width: 100%;
+    width: 95%;
     background-color: var(--gris-100);
     border: 3px solid var(--pumm-negro);
     padding: var(--espacio-3);

@@ -25,8 +25,13 @@
   var TOTAL_NIVELES = window.PUMM.TOTAL_NIVELES;
 
   function pintarSaludo(participante) {
+    /* Solo el primer nombre: si el registro trae "Ana María Pérez",
+       en el pasaporte saludamos "Ana". El nombre completo se guarda
+       igual (registro.js / datos.js no se tocan). */
+    var primerNombre =
+      (participante.nombre || "").trim().split(/\s+/)[0] || participante.nombre;
     UI.$("#pasaporte-saludo").textContent =
-      TEXTOS.pasaporteSaludo + ", " + participante.nombre + "!";
+      TEXTOS.pasaporteSaludo + ", " + primerNombre + "!";
   }
 
     /* Dado el total acumulado de misiones hechas, calcula en qué

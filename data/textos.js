@@ -50,6 +50,12 @@ window.PUMM.TEXTOS = {
   registroExitoTitulo: "¡Listo! Quedó registrado",
   registroExitoTexto: "Ya podés seguir disfrutando la misión.",
 
+  /* Modal que se muestra al completar una misión por primera vez. */
+  misionCompletadaTitulo: "¡Misión completada!",
+  misionCompletadaTexto:
+    "Ya quedó la misión registrada en tu Pasaporte Digital 💜 " +
+    "¡Seguí explorando los espacios para ver tu progreso!",
+
   yaRegistradaTitulo: "Esta ya la tenías",
   yaRegistradaTexto:
     "Registraste esta misión hace un rato. Está guardada en tu pasaporte.",
@@ -84,6 +90,7 @@ window.PUMM.TEXTOS = {
   /* --- Botones --- */
   botonCerrar: "Entendido",
   botonVerPasaporte: "Ver mi pasaporte",
+  botonVolverPasaporte: "Volver al pasaporte",
   botonVerMisiones: "Ver misiones",
   botonRegistrarme: "Registrarme",
   botonReintentar: "Volver a intentar",

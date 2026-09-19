@@ -123,19 +123,22 @@ window.PUMM.UI = (function () {
 
       var htmlAcciones = acciones.map(function (a) {
         var clase = a.secundario ? "boton boton--fantasma" : "boton boton--primario";
+        /* icono opcional (string HTML, ej. un <img>): va antes del texto,
+           el gap del .boton lo separa. */
+        var contenido = (a.icono || "") + a.texto;
         /* Ir a otra pantalla del flujo (registro/pasaporte): se resuelve
            con mostrarPantalla, que navega en local y cambia de vista en
            el bundle. Cierra el modal antes de moverse. */
         if (a.pantalla) {
           return '<button class="' + clase + ' boton--ancho" data-ir-pantalla="' +
-                 a.pantalla + '">' + a.texto + "</button>";
+                 a.pantalla + '">' + contenido + "</button>";
         }
         if (a.href) {
           return '<a class="' + clase + ' boton--ancho" href="' + a.href + '">' +
-                 a.texto + "</a>";
+                 contenido + "</a>";
         }
         return '<button class="' + clase + ' boton--ancho" data-cerrar-modal>' +
-               a.texto + "</button>";
+               contenido + "</button>";
       }).join("");
 
       dialogo.innerHTML =

@@ -65,7 +65,7 @@
 .campo__etiqueta {
   margin-bottom: 0;
 }
-.campo{
+.campo--buscador {  /* La sombra la lleva el wrapper .campo-buscador, no el input */
   box-shadow: none;
 }
 

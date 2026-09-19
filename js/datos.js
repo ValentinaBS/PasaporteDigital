@@ -168,27 +168,64 @@ window.PUMM.Datos = (function () {
       });
     },
 
-    /* Registra una misión. Devuelve uno de estos estados:
+    /* Registra una misión. Devuelve SIEMPRE una Promise que resuelve
+       a uno de estos estados (string, no true/false, porque la
+       pantalla muestra algo distinto en cada caso):
          "ok"          · se registró bien
          "repetida"    · ya la tenía (no es un error, es info)
          "desconocida" · el id del QR no existe
-       Devolvemos un string y no true/false porque la pantalla
-       muestra un modal distinto en cada caso. */
+         "error"       · el servidor falló o no hay sesión
+
+       Es asíncrona por el mismo motivo que registrarParticipante: en
+       Apps Script el sello va al servidor (Google Sheets, la fuente de
+       verdad del progreso) y vuelve por callback. En local (sin
+       servidor) cae al modo demo y guarda en localStorage. */
     registrarMision: function (misionId) {
+      var self = this;
       var existe = window.PUMM.MISIONES.some(function (a) {
         return a.id === misionId;
       });
-      if (!existe) return "desconocida";
 
-      if (this.yaRegistro(misionId)) return "repetida";
+      return new Promise(function (resolve) {
+        if (!existe) {
+          resolve("desconocida");
+          return;
+        }
 
-      var registros = this.obtenerRegistros();
-      registros.push({
-        misionId: misionId,
-        fecha: new Date().toISOString()
+        /* --- En Apps Script: sellar en Google Sheets (procesarSello) --- */
+        if (hayServidor()) {
+          var participante = self.obtenerParticipante();
+          if (!participante) {
+            resolve("error");
+            return;
+          }
+          google.script.run
+            .withSuccessHandler(function (res) {
+              if (res && res.status === "success") resolve("ok");
+              else if (res && res.status === "repetida") resolve("repetida");
+              else resolve("error");
+            })
+            .withFailureHandler(function (err) {
+              console.warn("[PUMM] Falló registrarMision", err);
+              resolve("error");
+            })
+            .procesarSello({ dni: participante.dni, mision: misionId });
+          return;
+        }
+
+        /* --- En local: modo demo con localStorage --- */
+        if (self.yaRegistro(misionId)) {
+          resolve("repetida");
+          return;
+        }
+        var registros = self.obtenerRegistros();
+        registros.push({
+          misionId: misionId,
+          fecha: new Date().toISOString()
+        });
+        guardarJSON(CONFIG.CLAVE_REGISTROS, registros);
+        resolve("ok");
       });
-      guardarJSON(CONFIG.CLAVE_REGISTROS, registros);
-      return "ok";
     },
 
     /* --- Progreso y logros --- */

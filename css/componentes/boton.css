@@ -54,6 +54,12 @@
   width: 0.6em;
 }
 
+/* Da vuelta el ícono en horizontal: reusa la flecha "der" como flecha
+   "izq" (ej. el botón "Volver al pasaporte" del modal). */
+.boton__icono--voltear {
+  transform: scaleX(-1);
+}
+
 /* Acción principal de la pantalla. Una sola por vista. */
 .boton--primario {
   background-color: var(--color-primario);

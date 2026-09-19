@@ -77,9 +77,10 @@
 }
 
 .actividad__subtitulo-magenta {
-    font-family: var(--fuente-titulo);
+    font-family: var(--fuente-texto);
+    font-weight: bold;
     color: var(--color-error, #E6007E);
-    font-size: var(--texto-lg);
+    font-size: var(--texto-md);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -89,7 +90,7 @@
     background-color: var(--color-secundario, #FFCC00);
     border: 2.5px solid var(--pumm-negro, #000);
     box-shadow: 3px 3px 0 #000;
-    padding: var(--espacio-3) var(--espacio-4);
+    padding: var(--espacio-2) var(--espacio-4);
 }
 
 .actividad__mision-nombre {
@@ -116,14 +117,15 @@
 }
 
 .actividad__nivel-etiqueta {
-    font-family: var(--fuente-titulo);
+    font-family: var(--fuente-texto);
     color: var(--color-primario, #5B0099);
-    font-size: var(--texto-lg);
+    font-size: var(--texto-md);
+    font-weight: bold;
 }
 
 .actividad__nivel-valor {
     font-family: var(--fuente-titulo);
-    font-size: var(--texto-xl);
+    font-size: var(--texto-1xl);
     color: var(--pumm-negro, #000);
 }
 
@@ -146,11 +148,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: var(--espacio-1);
 }
 
 .actividad__corazon {
-    font-size: 1.4rem;
+    height: 30px;
 }
 
 .actividad__xp-badge {
@@ -158,7 +159,7 @@
     border: 2px solid var(--pumm-negro, #000);
     font-family: var(--fuente-titulo);
     font-size: var(--texto-lg);
-    padding: 2px 8px;
+    padding: 0 8px;
     box-shadow: 2px 2px 0 #000;
 }
 

@@ -33,16 +33,38 @@
     }
 
     /* ---------- Modales ---------- */
-    function mostrarModalRepetida() {
+    /* Primera vez que se completa una misión: modal de festejo y de
+       ahí al pasaporte. (Si la misión ya estaba registrada, en cambio,
+       se va a la pantalla mision-ya-registrada; ver irAYaRegistrada.) */
+    function mostrarModalCompletada() {
         var TEXTOS = window.PUMM.TEXTOS || {};
 
         PUMM.UI.abrirModal({
-            tipo: "aviso",
-            icono: '<img class="modal__icono-img" src="../assets/iconos/alerta-blanco.svg" alt="">',
-            titulo: TEXTOS.yaRegistradaTitulo,
-            texto: TEXTOS.yaRegistradaTexto,
-            acciones: [{texto: TEXTOS.botonVerPasaporte, pantalla: "pasaporte"}]
+            tipo: "exito",
+            icono: '<img class="modal__icono-img" src="../assets/iconos/celebracion-negro.svg" alt="">',
+            titulo: TEXTOS.misionCompletadaTitulo,
+            texto: TEXTOS.misionCompletadaTexto,
+            acciones: [{
+                texto: TEXTOS.botonVolverPasaporte,
+                pantalla: "pasaporte",
+                /* flecha der. dada vuelta → apunta a la izquierda (volver) */
+                icono: '<img class="boton__icono boton__icono--voltear" src="../assets/iconos/flecha-der-blanca.svg" alt="">'
+            }]
         });
+    }
+
+    /* Misión ya registrada (escaneada antes): pantalla completa. Lleva
+       el id para mostrar la misión correcta en los dos modos. */
+    function irAYaRegistrada() {
+        if (document.querySelector("[data-vista]")) {
+            /* Bundle: leerParametro cae a window.PUMM.MISION_QR (el QR
+               que trajo al usuario), que la pantalla vuelve a leer. */
+            UI.mostrarPantalla("mision-ya-registrada");
+        } else {
+            /* Local: mostrarPantalla no arrastra el query, así que
+               navegamos con ?mision= para que pinte la misión correcta. */
+            window.location.href = "mision-ya-registrada.html?mision=" + encodeURIComponent(misionActual.id);
+        }
     }
 
     function mostrarModalDesconocida() {
@@ -96,17 +118,16 @@
                 }
 
                 if (misionActual && misionActual.id) {
-                    var resultado = Datos.registrarMision(misionActual.id);
-
-                    if (resultado === "ok") {
-                        if (UI && typeof UI.mostrarPantalla === "function")
-                            UI.mostrarPantalla("mision-ya-registrada", { mision: misionActual.id });
+                    /* registrarMision devuelve una Promise (en Apps Script
+                       el sello va al servidor y vuelve por callback). */
+                    Datos.registrarMision(misionActual.id).then(function (resultado) {
+                        if (resultado === "ok")
+                            mostrarModalCompletada();   // primera vez → modal
+                        else if (resultado === "repetida")
+                            irAYaRegistrada();          // ya escaneada → pantalla
                         else
-                            window.location.href = "mision-ya-registrada.html?mision=" + encodeURIComponent(misionActual.id);
-                    } else if (resultado === "repetida")
-                        mostrarModalRepetida();
-                    else if (resultado === "desconocida")
-                        mostrarModalDesconocida();
+                            mostrarModalDesconocida();  // "desconocida" / "error"
+                    });
                 }
             });
         }
