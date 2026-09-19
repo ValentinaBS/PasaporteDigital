@@ -18,12 +18,6 @@
   var Datos = window.PUMM.Datos;
   var TEXTOS = window.PUMM.TEXTOS;
 
-  /* Las constantes de nivel viven en data/misiones.js (un solo lugar
-     para todas las variables de misiones). Se leen acá como alias
-     para no cambiar el resto del archivo. */
-  var MISIONES_POR_NIVEL = window.PUMM.MISIONES_POR_NIVEL;
-  var TOTAL_NIVELES = window.PUMM.TOTAL_NIVELES;
-
   function pintarSaludo(participante) {
     /* Solo el primer nombre: si el registro trae "Ana María Pérez",
        en el pasaporte saludamos "Ana". El nombre completo se guarda
@@ -32,24 +26,6 @@
       (participante.nombre || "").trim().split(/\s+/)[0] || participante.nombre;
     UI.$("#pasaporte-saludo").textContent =
       TEXTOS.pasaporteSaludo + ", " + primerNombre + "!";
-  }
-
-    /* Dado el total acumulado de misiones hechas, calcula en qué
-     nivel está la participante y cuántas lleva DENTRO de ese
-     nivel (no el total). Es la pieza que faltaba: antes se
-     calculaba el nivel bien, pero la fracción y la pista seguían
-     mirando el total acumulado en vez de "cuánto llevás de este
-     nivel", por eso la fracción no volvía a 0 al subir de nivel. */
-  function calcularProgresoDeNivel(misionesHechas) {
-    var nivel = Math.min(
-      TOTAL_NIVELES,
-      Math.floor(misionesHechas / MISIONES_POR_NIVEL) + 1
-    );
-
-    var hechasEnNivel = misionesHechas - (nivel - 1) * MISIONES_POR_NIVEL;
-    hechasEnNivel = Math.max(0, Math.min(MISIONES_POR_NIVEL, hechasEnNivel));
-
-    return { nivel: nivel, hechasEnNivel: hechasEnNivel, meta: MISIONES_POR_NIVEL };
   }
 
   /* Pinta el nivel, la fracción (hechas EN EL NIVEL/meta del
@@ -64,8 +40,7 @@
      acá es solo el CONTEO total que ya viene sincronizado de la
      planilla (Datos.obtenerProgreso().hechas). */
   function pintarProgreso() {
-    var progresoTotal = Datos.obtenerProgreso();
-    var progreso = calcularProgresoDeNivel(progresoTotal.hechas);
+    var progreso = Datos.obtenerNivel();
 
     UI.$("#progreso-nivel-numero").textContent = progreso.nivel;
     UI.$("#progreso-fraccion").textContent =

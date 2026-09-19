@@ -284,6 +284,24 @@ window.PUMM.Datos = (function () {
       };
     },
 
+    /* Traduce el conteo total de misiones a nivel + avance DENTRO del
+       nivel. Es la fuente única del cálculo de nivel: la usan tanto el
+       pasaporte como la pantalla de misión ya registrada, así las dos
+       muestran siempre lo mismo (nivel y "X/meta"). Se apoya en
+       obtenerProgreso(), que ya trae el conteo real (planilla en Apps
+       Script, localStorage en demo). */
+    obtenerNivel: function () {
+      var hechas = this.obtenerProgreso().hechas;
+      var porNivel = window.PUMM.MISIONES_POR_NIVEL;
+      var totalNiveles = window.PUMM.TOTAL_NIVELES;
+
+      var nivel = Math.min(totalNiveles, Math.floor(hechas / porNivel) + 1);
+      var hechasEnNivel = hechas - (nivel - 1) * porNivel;
+      hechasEnNivel = Math.max(0, Math.min(porNivel, hechasEnNivel));
+
+      return { nivel: nivel, hechasEnNivel: hechasEnNivel, meta: porNivel };
+    },
+
     /* Devuelve todos los logros con campos extra para pintarlos:
          desbloqueada · true/false según su condición
          meta         · umbral de misiones (null si es por registro)
