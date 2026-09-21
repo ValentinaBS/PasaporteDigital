@@ -3,6 +3,7 @@
 
     var UI = window.PUMM.UI;
     var Datos = window.PUMM.Datos;
+    var TEXTOS = window.PUMM.TEXTOS;
 
     function obtenerMisiones() {
         return window.PUMM && window.PUMM.MISIONES ? window.PUMM.MISIONES : [];
@@ -76,7 +77,7 @@
         /* Igual que el pasaporte: primero sincronizamos el conteo con la
            planilla (en Apps Script) y recién ahí pintamos nivel/XP. En
            local resuelve al instante con el conteo de localStorage. */
-        Datos.sincronizarProgreso().then(pintarNivel);
+        UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(pintarNivel);
     }
 
     /* BUNDLE: el router corre pintar al mostrar la vista. */
