@@ -161,10 +161,12 @@
          se envíe dos veces. */
       if (boton) {
         boton.disabled = true;
-        boton.textContent = "Registrando…";
       }
 
-      Datos.registrarParticipante({ email: email, nombre: nombre, dni: dni }).then(function (res) {
+      UI.conCarga(
+        Datos.registrarParticipante({ email: email, nombre: nombre, dni: dni }),
+        TEXTOS.cargandoRegistro
+      ).then(function (res) {
         if (res.ok) {
           modalExito();
         } else {
@@ -175,6 +177,7 @@
           }
         }
       });
+
     });
   }
 
