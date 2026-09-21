@@ -96,5 +96,8 @@ window.PUMM.TEXTOS = {
   botonReintentar: "Volver a intentar",
   botonContinuar: "Continuar",
   botonCertificadoParticipacion: "Certificado de participación",
-  botonCertificadoLogros: "Certificado de logros"
+  botonCertificadoLogros: "Certificado de logros",
+
+  /* --- Pantalla de carga --- */
+  cargando: "Cargando…",
 };
