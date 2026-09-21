@@ -85,6 +85,12 @@
   color: var(--color-primario);
 }
 
+.carga__mensaje {
+  margin-top: var(--espacio-2);
+  font-size: var(--texto-md);
+  color: var(--color-texto-suave);
+}
+
 /* reset.css ya acorta las animaciones a 0.01ms para quien pidió
    "reducir movimiento", pero como estas son infinitas quedarían
    parpadeando a toda velocidad. Mejor apagarlas del todo: el
