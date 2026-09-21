@@ -139,7 +139,7 @@
        tiene esta participante. Recién con esa respuesta pintamos
        el nivel, la fracción y la pista: si pintáramos antes,
        mostraríamos el valor viejo (o vacío) un instante. */
-    Datos.sincronizarProgreso().then(function () {
+    UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(function () {
       pintarProgreso();
       pintarMisionDestacada();
     });
