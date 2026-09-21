@@ -100,8 +100,8 @@ window.PUMM.TEXTOS = {
 
   /* --- Pantalla de carga --- */
   cargando: "Cargando…",
-  cargandoPasaporte: "Buscando tu progreso…",
-  cargandoRegistro: "Guardando tu registro…",
-  cargandoMision: "Registrando tu misión…",
-  cargandoLogros: "Sumando tus logros…",
+  cargandoPasaporte: "Obteniendo progreso…",
+  cargandoRegistro: "Registrando…",
+  cargandoMision: "Registrando misión…",
+  cargandoLogros: "Obteniendo logros…",
 };
