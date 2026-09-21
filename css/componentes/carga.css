@@ -1,0 +1,103 @@
+/* ============================================================
+   COMPONENTE · CARGA
+   ------------------------------------------------------------
+   Pantalla que tapa todo mientras esperamos una respuesta de
+   Google Sheets (Apps Script). La crea js/ui.js → mostrarCarga,
+   así que no hay HTML que duplicar en cada pantalla.
+
+   z-index 100: por encima de la nav (10). El <dialog> del modal
+   va en la "top layer" del navegador, así que siempre queda
+   arriba de esto.
+   ============================================================ */
+
+.carga {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacio-4);
+
+  background-color: var(--color-primario);
+  overscroll-behavior: contain;
+}
+
+.carga__tarjeta {
+  width: 100%;
+  max-width: 18rem;
+  overflow: hidden;
+
+  background-color: var(--color-superficie);
+  border: 3px solid var(--pumm-negro);
+  box-shadow: var(--sombra-dura);
+
+  text-align: center;
+  rotate: -1deg;
+}
+
+/* La franja usa la receta de .franja-ajedrez (utilidades.css);
+   acá solo la animamos: corre 16px en X, que es justo el ancho de
+   una celda, así el loop no tiene salto. */
+.carga__franja {
+  animation: carga-franja 0.8s linear infinite;
+}
+
+@keyframes carga-franja {
+  from { background-position: 0 0,    0 8px,  8px -8px, -8px 0; }
+  to   { background-position: 16px 0, 16px 8px, 24px -8px, 8px 0; }
+}
+
+.carga__cuerpo {
+  padding: var(--espacio-8) var(--espacio-6);
+}
+
+.carga__cuadros {
+  display: flex;
+  justify-content: center;
+  gap: var(--espacio-3);
+  margin-bottom: var(--espacio-6);
+}
+
+.carga__cuadro {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--pumm-negro);
+  box-shadow: 3px 3px 0 var(--pumm-negro);
+  animation: carga-salto 0.9s ease-in-out infinite;
+}
+
+.carga__cuadro--amarillo { background-color: var(--pumm-amarillo); }
+.carga__cuadro--cian     { background-color: var(--pumm-cian);     animation-delay: 0.15s; }
+.carga__cuadro--fucsia   { background-color: var(--pumm-fucsia);   animation-delay: 0.3s; }
+
+@keyframes carga-salto {
+  0%, 100% { transform: translateY(0)     rotate(0deg); }
+  50%      { transform: translateY(-14px) rotate(45deg); }
+}
+
+.carga__titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-1xl);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--color-primario);
+}
+
+.carga__mensaje {
+  margin-top: var(--espacio-2);
+  font-size: var(--texto-md);
+  color: var(--color-texto-suave);
+}
+
+/* reset.css ya acorta las animaciones a 0.01ms para quien pidió
+   "reducir movimiento", pero como estas son infinitas quedarían
+   parpadeando a toda velocidad. Mejor apagarlas del todo: el
+   texto ya dice que está cargando. */
+@media (prefers-reduced-motion: reduce) {
+  .carga__franja,
+  .carga__cuadro {
+    animation: none !important;
+  }
+}
