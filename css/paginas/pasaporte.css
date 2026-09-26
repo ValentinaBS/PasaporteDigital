@@ -56,95 +56,41 @@
   transform: rotate(1deg)
 }
 
-.contenedor.con-nav {
-  padding-right: 10px;
-  padding-left: 10px;
-  /* Contiene los adornos que "asoman" (ej. el rayo del aviso QR con
-     translate) para que no generen scroll horizontal en mobile. */
-  overflow-x: hidden;
+/* --- Progreso de misiones (X/8 + barra) ---
+   El recuadro usa el componente .tarjeta; acá se define la barra y la
+   fila de botones de certificado que van debajo. */
+.pasaporte-progreso {
+  text-align: left;
 }
 
-.tarjeta-progreso {
-  overflow: hidden;
-  background-color: var(--pumm-cian);
-  border: 2px solid var(--pumm-negro);
-  box-shadow: var(--sombra-dura);
-}
-
-.tarjeta-progreso__encabezado {
-  margin: 0;
-  padding: var(--espacio-3) var(--espacio-2);
-  background-color: var(--pumm-cian);
-  color: var(--pumm-blanco);
-  font-family: var(--fuente-titulo);
-  font-size: var(--texto-xl);
-  text-align: center;
-  text-transform: uppercase;
-  transform: rotate(-1deg);
-}
-
-.tarjeta-progreso__encabezado span {
-  display: inline-block;
-  padding: 0.1rem var(--espacio-6);
-  background-color: var(--pumm-negro);
-}
-
-.tarjeta-progreso__cuerpo {
-  padding: var(--espacio-1) var(--espacio-3) var(--espacio-3);
-  font-family: var(--fuente-texto);
-  font-weight: 700;
-}
-
-.tarjeta-progreso__resumen {
-  padding: var(--espacio-1) var(--espacio-3);
-  background-color: var(--color-superficie);
-  border: 2px solid var(--pumm-negro);
-  box-shadow: 2px 2px 0 var(--pumm-negro);
-}
-
-.tarjeta-progreso__nivel {
-  font-size: var(--texto-md);
-  text-transform: uppercase;
-}
-
-.tarjeta-progreso__fraccion {
-  font-size: var(--texto-md);
-  color: var(--color-texto);
-}
-
-.tarjeta-progreso__pista {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: var(--espacio-3);
-  overflow-x: auto;
-  padding-bottom: var(--espacio-1);
-}
-
-.paso {
-  flex: 0 0 auto;
-  display: grid;
-  width: 37px;
-  height: 33px;
-  place-items: center;
-  color: var(--pumm-negro);
+.pasaporte-progreso__etiqueta {
+  margin: 0 0 var(--espacio-2);
   font-size: var(--texto-sm);
-  border: 2px solid var(--pumm-negro);
-  border-radius: 20px;
-  background-color: var(--pumm-blanco);
-  box-shadow: 2px 2px 0 var(--pumm-negro);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.paso--hecho {
-  background-color: var(--pumm-amarillo);
+/* Barra cuadrada con contorno negro, pista gris y relleno violeta
+   (mismo criterio que la barra de Logros). */
+.pasaporte-progreso__barra {
+  border: 3px solid var(--pumm-negro);
+  background-color: var(--gris-200);
+  height: 1.5rem;
 }
 
-.paso--actual {
-  background-color: var(--pumm-violeta);
+.pasaporte-progreso__barra .progreso__relleno {
+  background-color: var(--color-primario);
 }
 
-.paso__check {
-  width: 14px;
-  height: 11px;
+/* Botones de certificado, debajo de la barra. Solo dejan margen si hay
+   alguno visible (los ocultos llevan .oculto → display:none). */
+.pasaporte-acciones:has(.boton:not(.oculto)) {
+  margin-top: var(--espacio-4);
+}
+
+.pasaporte-acciones .boton {
+  margin-top: 0;
 }
 
 .aviso-qr {
@@ -208,26 +154,80 @@
   pointer-events: none;
 }
 
-.misiones-resumen {
-  margin-top: var(--espacio-4);
-  padding: var(--espacio-4);
+/* --- Recuadro: actividad destacada + checklist de misiones --- */
+.pasaporte-recuadro {
+  margin-top: var(--espacio-6);
+}
+
+.pasaporte-misiones__titulo {
+  margin: var(--espacio-8) 0 var(--espacio-3);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  text-transform: uppercase;
+  color: var(--color-texto);
+}
+
+/* Checklist de las 8 misiones (recuadros cuadrados, borde negro). */
+.pasaporte-misiones {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.mision-item {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
   background-color: var(--color-superficie);
   border: 2px solid var(--pumm-negro);
-  box-shadow: 4px 4px 0 var(--pumm-negro);
+  box-shadow: var(--sombra-dura-sm);
 }
 
-.boton--buscar {
-  min-height: 42px;
-  margin-top: 0;
-  padding: var(--espacio-1) var(--espacio-3);
-  justify-content: space-between;
-  font-size: var(--texto-1xl);
-  box-shadow: 3px 3px 0 var(--pumm-negro);
+/* Hecha: se resalta en amarillo. */
+.mision-item--hecha {
+  background-color: var(--pumm-amarillo);
 }
 
-.boton__flecha {
-  width: 16px;
-  height: 16px;
+.mision-item__icono {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-superficie);
+  border: 2px solid var(--pumm-negro);
+  box-shadow: 2px 2px 0 var(--pumm-negro);
+  font-size: var(--texto-lg);
+  line-height: 1;
+}
+
+.mision-item__nombre {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: var(--texto-md);
+  line-height: 1.15;
+}
+
+.mision-item__estado {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+}
+
+/* Check redondo con borde negro (mismo criterio que en Logros). */
+.mision-item__estado--ok {
+  border: 2px solid var(--pumm-negro);
+  border-radius: var(--radio-full);
+  background-color: var(--color-acento);
+  color: var(--pumm-negro);
+  font-weight: 700;
 }
 
 .tarjeta--mision {

@@ -20,6 +20,24 @@
   padding-bottom: calc(var(--alto-nav) + var(--espacio-8));
 }
 
+/* Fondo blanco texturado a pantalla completa. Va en el <main> de la
+   pantalla (no en el <body>): el bundle comparte un solo <body> pero
+   conserva el <main> de cada vista, así el fondo viaja con la pantalla.
+   Lo usan Pasaporte, Actividades y Logros.
+   El padding-top cumple doble función: da aire arriba y contiene el
+   margin-collapse del primer hijo (si no, su margin-top se escaparía y
+   dejaría ver una franja del fondo del body por encima de la imagen).
+   overflow-x contiene adornos que "asoman" (ej. el rayo del aviso QR). */
+.fondo-blanco {
+  min-height: 100dvh;
+  padding-top: var(--espacio-4);
+  overflow-x: hidden;
+  background-color: var(--color-fondo);
+  background-image: url("../../assets/img/fondo-blanco.webp");
+  background-size: cover;
+  background-position: center;
+}
+
 /* Apila elementos con separación pareja. */
 .pila       { display: flex; flex-direction: column; gap: var(--espacio-4); }
 .pila-sm    { display: flex; flex-direction: column; gap: var(--espacio-2); }

@@ -37,7 +37,7 @@ var ROOT = path.resolve(__dirname, "..");
 var PAGINAS = [
   { archivo: "html/index.html", vista: "index" },
   { archivo: "html/pasaporte.html", vista: "pasaporte" },
-  { archivo: "html/misiones.html", vista: "misiones" },
+  { archivo: "html/actividades.html", vista: "actividades" },
   { archivo: "html/logros.html", vista: "logros" },
   { archivo: "html/nueva-mision.html", vista: "nueva-mision" },
   { archivo: "html/mision-ya-registrada.html", vista: "mision-ya-registrada" },

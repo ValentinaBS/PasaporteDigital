@@ -27,11 +27,11 @@
 
 <body data-pagina="logros">
 
-  <!-- .logros-fondo lleva la imagen de fondo. Va dentro del main y no
-       en el body a propósito: el bundle conserva el main de cada vista
-       pero comparte un solo body, así que el fondo tiene que viajar con
-       la pantalla. Mismo patrón que .registro (ver css/paginas/registro.css). -->
-  <main class="logros-fondo con-nav">
+  <!-- .fondo-blanco (css/base/utilidades.css) lleva la imagen de fondo.
+       Va dentro del main y no en el body a propósito: el bundle conserva
+       el main de cada vista pero comparte un solo body, así que el fondo
+       tiene que viajar con la pantalla. Mismo patrón que .registro. -->
+  <main class="fondo-blanco con-nav">
 
     <div class="contenedor">
 
@@ -48,19 +48,6 @@
         </p>
         <div class="progreso__barra logros-total__barra">
           <div class="progreso__relleno" id="logros-relleno" style="width: 0%"></div>
-        </div>
-
-        <!-- Certificados: ocultos hasta que se cumpla su condición.
-             Apuntan a completado.html (todavía no existe). -->
-        <div class="pila logros-acciones" id="logros-acciones">
-          <a class="boton boton--secundario boton--ancho oculto"
-              id="logros-cert-secundario" href="completado.html">
-            Certificado de participación
-          </a>
-          <a class="boton boton--primario boton--ancho oculto"
-             id="logros-cert-logros" href="completado.html">
-            Certificado de logros
-          </a>
         </div>
       </section>
 
@@ -81,9 +68,9 @@
         <img class="nav__icono" src="../assets/iconos/pasaporte-negro.svg" alt="Ícono de pasaporte">
         Pasaporte
       </a>
-      <a class="nav__item" data-seccion="misiones" href="misiones.html">
-        <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="Ícono de misiones">
-        Misiones
+      <a class="nav__item" data-seccion="actividades" href="actividades.html">
+        <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="Ícono de actividades">
+        Actividades
       </a>
       <a class="nav__item nav__item--activo" data-seccion="logros" href="logros.html">
         <img class="nav__icono" src="../assets/iconos/logros-blanco.svg" alt="Ícono de logros">

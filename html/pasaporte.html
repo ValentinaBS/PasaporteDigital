@@ -28,91 +28,100 @@
 
 <body data-pagina="pasaporte">
 
-  <main class="contenedor con-nav">
+  <!-- .fondo-blanco (css/base/utilidades.css) da el fondo a pantalla
+       completa; va en el main para viajar con la vista en el bundle. -->
+  <main class="fondo-blanco con-nav">
 
-    <header class="encabezado encabezado--pasaporte">
-      
-      <div class="encabezado-fila-1">
-        <h1 class="encabezado__titulo" id="pasaporte-saludo"></h1>
-        <img class="encabezado__celular" src="../assets/iconos/celular.svg" alt="Ícono de celular">
-      </div>
+    <div class="contenedor">
 
-      <div class="encabezado-fila-2">
-        <img class="encabezado__corazon" src="../assets/iconos/corazon-violeta-2.svg" alt="Ícono de corazón">
-        <p class="encabezado__bajada">¿Lista para tu próxima aventura?</p>
-      </div>
-      
-    </header>
+      <header class="encabezado encabezado--pasaporte">
 
-    <!-- Progreso del recorrido: nivel + pista de misiones. -->
-    <section class="tarjeta-progreso" aria-label="Tu progreso">
-      <p class="tarjeta-progreso__encabezado"><span>Tu progreso</span></p>
-
-      <div class="tarjeta-progreso__cuerpo">
-        <div class="tarjeta-progreso__resumen fila-entre">
-          <p class="tarjeta-progreso__nivel">
-            Nivel <span id="progreso-nivel-numero"></span>
-          </p>
-          <p class="tarjeta-progreso__fraccion" id="progreso-fraccion"></p>
+        <div class="encabezado-fila-1">
+          <h1 class="encabezado__titulo" id="pasaporte-saludo"></h1>
+          <img class="encabezado__celular" src="../assets/iconos/celular.svg" alt="Ícono de celular">
         </div>
 
-        <!-- Un <span class="paso"> por misión, lo arma pintarProgreso() -->
-        <div class="tarjeta-progreso__pista" id="progreso-pista"></div>
-      </div>
-    </section>
+        <div class="encabezado-fila-2">
+          <img class="encabezado__corazon" src="../assets/iconos/corazon-violeta-2.svg" alt="Ícono de corazón">
+          <p class="encabezado__bajada">¿Lista para tu próxima aventura?</p>
+        </div>
 
-    <br>
-    <div class="franja-ajedrez" aria-hidden="true"></div>
-    <br>
-    
-    <!-- Llamado a escanear QR. -->
-    <section>
-      <div class="aviso-qr">
-        <p class="aviso-qr__icono"><img src="../assets/iconos/qr-negro.svg" alt="Ícono de código QR"></p>
-        <p class="aviso-qr__texto">
-          ¡Buscá los QR y escanealos para subir de nivel!
+      </header>
+
+      <!-- Progreso del recorrido: misiones completadas (X/8) + barra. -->
+      <section class="tarjeta pasaporte-progreso" aria-label="Tu progreso">
+        <p class="pasaporte-progreso__etiqueta">
+          MISIONES COMPLETADAS (<span id="progreso-fraccion">0/0</span>)
         </p>
-        <img class="aviso-qr__rayo" src="../assets/iconos/rayo.svg" alt="Ícono de rayo">
-      </div>
-      
-    </section>
-
-    <section class="misiones-resumen">
-      <!-- Acceso al listado completo de misiones. -->
-      <a class="boton boton--secundario boton--ancho boton--buscar" href="misiones.html">
-        Buscar misiones
-        <img class="boton__flecha" src="../assets/iconos/flecha-negro.svg" alt="Ícono de flecha">
-      </a>
-
-      <!-- Misión dummy destacada del momento. -->
-      <article class="tarjeta tarjeta--mision" id="destacada-tarjeta">
-        <div class="fila-entre">
-          <h2 class="tarjeta__titulo" id="destacada-titulo"></h2>
-          <span class="tarjeta__etiqueta">Destacado</span>
+        <div class="progreso__barra pasaporte-progreso__barra">
+          <div class="progreso__relleno" id="progreso-relleno" style="width: 0%"></div>
         </div>
-        <p id="destacada-texto"></p>
-        <p class="tarjeta__meta" id="destacada-lugar"></p>
-      </article>
-    </section>
+
+        <!-- Certificados: ocultos hasta cumplir su condición. Van a la
+             pantalla de felicitaciones (completado.html). -->
+        <div class="pila pasaporte-acciones" id="pasaporte-acciones">
+          <a class="boton boton--secundario boton--ancho oculto" id="cert-participacion" href="completado.html">
+            Certificado de participación
+          </a>
+          <a class="boton boton--primario boton--ancho oculto" id="cert-logros" href="completado.html">
+            ¡Reclama tu premio!
+          </a>
+        </div>
+      </section>
+
+      <br>
+      <div class="franja-ajedrez" aria-hidden="true"></div>
+      <br>
+
+      <!-- Llamado a escanear QR. -->
+      <section>
+        <div class="aviso-qr">
+          <p class="aviso-qr__icono"><img src="../assets/iconos/qr-negro.svg" alt="Ícono de código QR"></p>
+          <p class="aviso-qr__texto">
+            ¡Buscá los QR y escanealos para completar misiones!
+          </p>
+          <img class="aviso-qr__rayo" src="../assets/iconos/rayo.svg" alt="Ícono de rayo">
+        </div>
+      </section>
+
+      <!-- Actividad destacada + checklist de misiones. -->
+      <section class="pasaporte-recuadro">
+        <!-- Actividad destacada del momento (del cronograma). -->
+        <article class="tarjeta tarjeta--mision" id="destacada-tarjeta">
+          <div class="fila-entre">
+            <h2 class="tarjeta__titulo" id="destacada-titulo"></h2>
+            <span class="tarjeta__etiqueta">Destacado</span>
+          </div>
+          <p id="destacada-texto"></p>
+          <p class="tarjeta__meta" id="destacada-lugar"></p>
+        </article>
+
+        <!-- Checklist de las 8 misiones (la arma pintarMisiones). -->
+        <h2 class="pasaporte-misiones__titulo">Tus misiones</h2>
+        <ul class="pasaporte-misiones" id="pasaporte-misiones" aria-live="polite"></ul>
+      </section>
+
+    </div>
 
     <!--
-    NAVEGACIÓN — igual que en html/_plantilla.html.
-    ⚠️ Duplicada a propósito, ver README → "Lo que sabemos que duele".
-  -->
-  <nav class="nav" aria-label="Secciones principales">
-    <a class="nav__item nav__item--activo" data-seccion="pasaporte" href="pasaporte.html">
-      <img class="nav__icono" src="../assets/iconos/pasaporte-blanco.svg" alt="Ícono de pasaporte">
-      Pasaporte
-    </a>
-    <a class="nav__item" data-seccion="misiones" href="misiones.html">
-      <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="Ícono de misiones">
-      Misiones
-    </a>
-    <a class="nav__item" data-seccion="logros" href="logros.html">
-      <img class="nav__icono" src="../assets/iconos/logros-negro.svg" alt="Ícono de logros">
-      Logros
-    </a>
-  </nav>
+      NAVEGACIÓN — va DENTRO del main a propósito (el bundle solo conserva
+      el main de cada pantalla). Como es position:fixed, su lugar en el DOM
+      no cambia dónde se ve.
+    -->
+    <nav class="nav" aria-label="Secciones principales">
+      <a class="nav__item nav__item--activo" data-seccion="pasaporte" href="pasaporte.html">
+        <img class="nav__icono" src="../assets/iconos/pasaporte-blanco.svg" alt="Ícono de pasaporte">
+        Pasaporte
+      </a>
+      <a class="nav__item" data-seccion="actividades" href="actividades.html">
+        <img class="nav__icono" src="../assets/iconos/misiones-negro.svg" alt="Ícono de actividades">
+        Actividades
+      </a>
+      <a class="nav__item" data-seccion="logros" href="logros.html">
+        <img class="nav__icono" src="../assets/iconos/logros-negro.svg" alt="Ícono de logros">
+        Logros
+      </a>
+    </nav>
 
   </main>
 
@@ -121,6 +130,7 @@
 
   <!-- Mismo orden de scripts que el resto de las pantallas. -->
   <script src="../data/misiones.js"></script>
+  <script src="../data/actividades.js"></script>
   <script src="../data/logros.js"></script>
   <script src="../data/textos.js"></script>
 

@@ -1,5 +1,5 @@
 /* Encabezado */
-.encabezado__misiones {
+.encabezado__actividades {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@
   border: 3px solid var(--pumm-negro);
   box-shadow: var(--sombra-dura);
 }
-.encabezado__titulo-misiones{
+.encabezado__titulo-actividades{
   color: var(--color-secundario-texto);
 }
 
@@ -41,7 +41,7 @@
 }
 .campo--buscador {
   padding-left: calc(var(--espacio-4) * 2 + 20px);
-  border: 0.1px solid var(--gris-600);
+  border: 3px solid var(--pumm-negro);  /* borde negro como el resto de los inputs */
 }
 
 
@@ -71,7 +71,7 @@
 
 
 /* Tarjetas */
-#lista-misiones {  /* Separa las tarjetas del panel de filtros */
+#lista-actividades {  /* Separa las tarjetas del panel de filtros */
   margin-top: var(--espacio-8);
 }
 .tarjeta {
@@ -93,33 +93,47 @@
   font-family: var(--fuente-titulo);
   font-size: var(--texto-2xl);
   font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.05;
 }
-.tarjeta__horario {
-  font-family: var(--fuente-texto);
-  font-size: var(--texto-md);
-  font-weight: 700;
-  color: var(--pumm-negro);
-  
-  transform: rotate(-3deg);
-  background-color: var(--color-acento);
-  padding: var(--espacio-1) var(--espacio-2);
-  border: 3px solid var(--pumm-negro);
-}
-.tarjeta__descripcion {
+/* Categoría del evento (ej. "Charla de chicas para chicas"): debajo del
+   título, con la barra de acento a la izquierda. */
+.tarjeta__categoria {
   border-left: 3px solid var(--color-acento);
   padding-left: var(--espacio-4);
-  
+
   font-size: var(--texto-lg);
   font-weight: 400;
-  margin-top: var(--espacio-4)
+  margin-top: var(--espacio-3);
+}
+/* Pie de la tarjeta: ubicación a la izquierda, horario a la derecha. */
+.tarjeta__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-4);
 }
 .tarjeta__ubicacion {
   display: flex;
   align-items: center;
   gap: var(--espacio-1);
+  min-width: 0;  /* deja que el texto se acomode sin empujar al horario */
   font-size: var(--texto-md);
   font-weight: 700;
-  margin-top: var(--espacio-4)
+}
+/* La etiqueta de horario ocupa su contenido en UNA sola línea
+   (nunca "10:00" arriba y "hs" abajo). */
+.tarjeta__horario {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-md);
+  font-weight: 700;
+  color: var(--pumm-negro);
+  background-color: var(--color-acento);
+  padding: var(--espacio-1) var(--espacio-2);
+  border: 3px solid var(--pumm-negro);
 }
 .tarjeta__icono-ubicacion {
   width: 24px;
@@ -137,7 +151,7 @@
 .tarjeta--violeta .tarjeta__icono-ubicacion {
   color: var(--pumm-amarillo);
 }
-.tarjeta--violeta .tarjeta__descripcion {
+.tarjeta--violeta .tarjeta__categoria {
   border-left: 3px solid var(--pumm-amarillo);
 }
 .tarjeta--violeta .tarjeta__horario {
@@ -148,7 +162,7 @@
 .tarjeta--cian .tarjeta__icono-ubicacion {
   color: var(--pumm-blanco);
 }
-.tarjeta--cian .tarjeta__descripcion {
+.tarjeta--cian .tarjeta__categoria {
   border-left: 3px solid var(--pumm-blanco);
 }
 .tarjeta--cian .tarjeta__horario {
@@ -159,7 +173,7 @@
 .tarjeta--amarillo .tarjeta__icono-ubicacion {
   color: var(--pumm-violeta);
 }
-.tarjeta--amarillo .tarjeta__descripcion {
+.tarjeta--amarillo .tarjeta__categoria {
   border-left: 3px solid var(--pumm-violeta);
 }
 .tarjeta--amarillo .tarjeta__horario {

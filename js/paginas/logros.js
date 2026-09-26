@@ -97,20 +97,6 @@
     Datos.obtenerLogros().forEach(function (logro) {
       lista.appendChild(crearTarjeta(logro));
     });
-
-    /* Certificado de participación: solo desde la fecha habilitada. */
-    var ahora = new Date();
-    var desde = new Date(CONFIG.FECHA_CERTIFICADO);
-    var certParticipacion = UI.$("#logros-cert-secundario");
-    if (certParticipacion && ahora >= desde) {
-      certParticipacion.classList.remove("oculto");
-    }
-
-    /* Certificado de logros: solo con el 100% desbloqueado. */
-    var certLogros = UI.$("#logros-cert-logros");
-    if (certLogros && pl.completo) {
-      certLogros.classList.remove("oculto");
-    }
   }
 
   /* BUNDLE: el router corre initLogros cuando se muestra la vista. */

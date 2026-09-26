@@ -11,23 +11,12 @@
    borde negro y sombra dura. Ver .boton para el mismo criterio.
    ============================================================ */
 
-/* --- Fondo de la pantalla ---
-   Va en .logros-fondo (un elemento DENTRO de <main>), no en <body>:
-   el bundle comparte un solo <body> pero conserva el <main> de cada
-   vista, así el fondo viaja con la pantalla. Mismo patrón que
-   .registro. Se deja el color del tema como fallback si la textura
-   no carga (wifi saturado del evento). */
-.logros-fondo {
-  min-height: 100dvh;
-  background-color: var(--color-fondo);
-  background-image: url("../../assets/img/fondo-blanco.webp");
-  background-size: cover;
-  background-position: center;
-}
+/* El fondo blanco lo pone la clase compartida .fondo-blanco
+   (css/base/utilidades.css), aplicada al <main> de esta pantalla. */
 
 /* --- Banner "Mis Logros" --- */
 .logros-banner {
-  margin: var(--espacio-4) auto var(--espacio-8);
+  margin: 0 auto var(--espacio-8);
   padding: var(--espacio-3) var(--espacio-6);
   background-color: var(--pumm-amarillo);
   border: 2px solid var(--pumm-negro);
@@ -75,22 +64,6 @@
 
 .logros-total__barra .progreso__relleno {
   background-color: var(--color-primario);
-}
-
-/* --- Botones de certificado ---
-   .boton ya trae borde negro + sombra dura (sin radios). */
-
-/* El margen superior solo aparece cuando hay al menos un botón
-   visible. Los botones ocultos llevan .oculto (display:none), así
-   que sin botones el contenedor no deja un hueco de más. */
-.logros-acciones:has(.boton:not(.oculto)) {
-  margin-top: var(--espacio-6);
-}
-
-/* .boton trae margin-top propio; dentro de la pila lo anulamos
-   para que el gap de .pila mande. */
-.logros-acciones .boton {
-  margin-top: 0;
 }
 
 /* --- Lista de logros (tarjetas-fila) --- */

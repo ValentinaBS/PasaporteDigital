@@ -85,7 +85,8 @@ window.PUMM.TEXTOS = {
   logrosMensajeCasi:
     "¡Ya casi! Te faltan poquitos para completarlos todos.",
   logrosMensajeCompleto:
-    "¡Increíble! Desbloqueaste todos los logros del PUMM 2026.",
+    "¡Increíble! Desbloqueaste todos los logros del PUMM 2026. " +
+    "Andá a Mi Pasaporte para recibir tu premio.",
 
   /* --- Botones --- */
   botonCerrar: "Entendido",

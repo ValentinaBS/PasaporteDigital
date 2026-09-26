@@ -1,14 +1,18 @@
 /* ============================================================
    PANTALLA · PASAPORTE (Mi Pasaporte)
    ------------------------------------------------------------
-   Pantalla principal del recorrido: saludo a la participante,
-   su progreso (pista de misiones) y la misión destacada del
-   momento. Reemplaza al placeholder de "dummy de verificación"
-   que había antes (nombre + DNI a secas).
+   Pantalla principal del recorrido: saludo, progreso de misiones
+   (X/8 + barra), botones de certificado, la ACTIVIDAD destacada
+   del momento (del cronograma) y la checklist de las 8 MISIONES.
 
-   No decide por su cuenta si mostrarse: solo registra su
-   inicializador con UI.alMostrar("pasaporte", ...). El router de
-   js/app.js decide cuál pantalla mostrar según haya sesión.
+   Ojo con los dos conceptos:
+     · MISIONES (data/misiones.js): las 8 que se completan por QR y
+       cuentan para el progreso/logros. Van en la checklist.
+     · ACTIVIDADES (data/actividades.js): el cronograma informativo.
+       De ahí sale la "actividad destacada".
+
+   No decide por su cuenta si mostrarse: registra su init con
+   UI.alMostrar("pasaporte", ...); el router de js/app.js decide.
    ============================================================ */
 
 (function () {
@@ -17,99 +21,126 @@
   var UI = window.PUMM.UI;
   var Datos = window.PUMM.Datos;
   var TEXTOS = window.PUMM.TEXTOS;
+  var CONFIG = window.PUMM.CONFIG;
 
   function pintarSaludo(participante) {
     /* Solo el primer nombre: si el registro trae "Ana María Pérez",
-       en el pasaporte saludamos "Ana". El nombre completo se guarda
-       igual (registro.js / datos.js no se tocan). */
+       saludamos "Ana". El nombre completo se guarda igual. */
     var primerNombre =
       (participante.nombre || "").trim().split(/\s+/)[0] || participante.nombre;
     UI.$("#pasaporte-saludo").textContent =
       TEXTOS.pasaporteSaludo + ", " + primerNombre + "!";
   }
 
-  /* Pinta el nivel, la fracción (hechas EN EL NIVEL/meta del
-     nivel) y la pista de casilleros del nivel actual.
-
-     ⚠️ Los 8 casilleros no representan 8 misiones puntuales de
-     data/misiones.js: son un cupo genérico por nivel (todavía no
-     hay una regla de qué misiones cuentan para cada nivel). Por
-     eso NO se recorre window.PUMM.MISIONES ni se usa
-     Datos.yaRegistro(id) acá — eso mira si UNA misión puntual
-     está en el registro local, que es otra cosa. Lo que importa
-     acá es solo el CONTEO total que ya viene sincronizado de la
-     planilla (Datos.obtenerProgreso().hechas). */
+  /* Progreso simple de misiones: X/meta + barra. El conteo real viene
+     de Datos.obtenerProgreso() (planilla en Apps Script, localStorage
+     en demo). */
   function pintarProgreso() {
-    var progreso = Datos.obtenerNivel();
+    var p = Datos.obtenerProgreso();
+    UI.$("#progreso-fraccion").textContent = p.hechas + "/" + p.meta;
+    UI.$("#progreso-relleno").style.width = p.porcentaje + "%";
+  }
 
-    UI.$("#progreso-nivel-numero").textContent = progreso.nivel;
-    UI.$("#progreso-fraccion").textContent =
-      progreso.hechasEnNivel + "/" + progreso.meta;
+  /* Checklist de las 8 misiones: ícono + nombre + estado (✓ si está
+     hecha). El estado se decide con Datos.misionHecha (correcto en los
+     dos modos). */
+  function pintarMisiones() {
+    var lista = UI.$("#pasaporte-misiones");
+    if (!lista) return;
+    lista.innerHTML = "";
 
-    var pista = UI.$("#progreso-pista");
-    pista.innerHTML = ""; // por si initPasaporte corriera dos veces
+    (window.PUMM.MISIONES || []).forEach(function (m) {
+      var hecha = Datos.misionHecha(m.id);
 
-    for (var i = 1; i <= progreso.meta; i++) {
-      var esHecho = i < progreso.hechasEnNivel;
-      var esActual = i === progreso.hechasEnNivel && progreso.hechasEnNivel > 0;
+      var li = document.createElement("li");
+      li.className = "mision-item" + (hecha ? " mision-item--hecha" : "");
 
-      var paso = document.createElement("span");
-      paso.className = "paso" +
-        (esHecho ? " paso--hecho" : "") +
-        (esActual ? " paso--actual" : "");
+      var icono = document.createElement("span");
+      icono.className = "mision-item__icono";
+      icono.setAttribute("aria-hidden", "true");
+      icono.textContent = m.icono || "";
+      li.appendChild(icono);
 
-      var etiqueta = document.createElement("span");
-      etiqueta.className = "solo-lectores";
+      var nombre = document.createElement("span");
+      nombre.className = "mision-item__nombre";
+      nombre.textContent = m.nombre;
+      li.appendChild(nombre);
 
-      if (esActual) {
-        var check = document.createElement("img");
-        check.src = "../assets/iconos/check-blanco.svg";
-        check.alt = "";
-        check.className = "paso__check";
-        paso.appendChild(check);
-        etiqueta.textContent = "Misión " + i + " completada (la más reciente) del nivel " + progreso.nivel;
-      } else {
-        paso.appendChild(document.createTextNode(String(i)));
-        etiqueta.textContent =
-          (esHecho ? "Misión " + i + " completada" : "Falta la misión " + i) +
-          " del nivel " + progreso.nivel;
-      }
+      var estado = document.createElement("span");
+      estado.className =
+        "mision-item__estado" + (hecha ? " mision-item__estado--ok" : "");
+      estado.textContent = hecha ? "✓" : "";
+      estado.setAttribute("aria-label", hecha ? "Completada" : "Pendiente");
+      li.appendChild(estado);
 
-      paso.appendChild(etiqueta);
-      pista.appendChild(paso);
+      lista.appendChild(li);
+    });
+  }
+
+  /* Botones de certificado (debajo de la barra):
+       · Participación: desde CONFIG.FECHA_CERTIFICADO.
+       · Logros: con el 100% de logros desbloqueados.
+     Se usa toggle(force) para que, al re-mostrar la vista en el bundle,
+     el estado se recalcule (no queden visibles de una visita anterior). */
+  function pintarCertificados() {
+    var ahora = new Date();
+    var desde = new Date(CONFIG.FECHA_CERTIFICADO);
+
+    var certPart = UI.$("#cert-participacion");
+    if (certPart) certPart.classList.toggle("oculto", (ahora >= desde));
+
+    var certLogros = UI.$("#cert-logros");
+    if (certLogros) {
+      certLogros.classList.toggle("oculto", Datos.obtenerProgresoLogros().completo);
     }
   }
 
-  /* "HH:MM" → minutos desde medianoche, para comparar horarios. */
-  function horarioAMinutos(horario) {
-    var p = String(horario || "").split(":");
+  /* "HH:MM" → minutos desde medianoche, para comparar/ordenar horarios. */
+  function horarioAMinutos(hora) {
+    var p = String(hora || "").split(":");
     return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0);
   }
 
-  /* La misión destacada es la actividad más cercana a la hora actual
-     que TODAVÍA no empezó (la próxima). Compara por hora del día
-     porque el evento es de un solo día. Si ya pasaron todas, null. */
-  function elegirMisionDestacada() {
-    var ahora = new Date();
-    var minutos = ahora.getHours() * 60 + ahora.getMinutes();
-
-    return window.PUMM.MISIONES
-      .filter(function (m) {
-        return m.horario && horarioAMinutos(m.horario) >= minutos;
-      })
-      .sort(function (a, b) {
-        return horarioAMinutos(a.horario) - horarioAMinutos(b.horario);
-      })[0] || null;
+  /* Una actividad "tiene hora" si su campo hora es "HH:MM"
+     (las de "Todo el día" no). */
+  function esConHora(act) {
+    return /^\d{1,2}:\d{2}$/.test(act.hora);
   }
 
-  /* Pinta la tarjeta de la misión destacada con la próxima actividad.
-     Si ya pasaron todas las del día, la tarjeta NO se oculta: muestra
-     un agradecimiento por participar (sin ubicación/horario). */
-  function pintarMisionDestacada() {
-    var mision = elegirMisionDestacada();
+  /* Elige la actividad destacada según la hora actual:
+       1. ≥ 16:00              → null (mostramos agradecimiento).
+       2. hay actividad futura → la próxima por horario.
+       3. no quedan con hora   → una de "Todo el día" al azar. */
+  function elegirActividadDestacada() {
+    var ahora = new Date();
+    if (ahora.getHours() >= 16) return null;
+
+    var minutos = ahora.getHours() * 60 + ahora.getMinutes();
+    var actividades = window.PUMM.ACTIVIDADES || [];
+
+    var proximas = actividades
+      .filter(function (a) {
+        return esConHora(a) && horarioAMinutos(a.hora) >= minutos;
+      })
+      .sort(function (a, b) {
+        return horarioAMinutos(a.hora) - horarioAMinutos(b.hora);
+      });
+    if (proximas.length) return proximas[0];
+
+    var todoElDia = actividades.filter(function (a) { return !esConHora(a); });
+    if (todoElDia.length) {
+      return todoElDia[Math.floor(Math.random() * todoElDia.length)];
+    }
+    return null;
+  }
+
+  /* Pinta la tarjeta destacada. Si no hay actividad (después de las 16),
+     la tarjeta no se oculta: agradece por participar. */
+  function pintarActividadDestacada() {
+    var act = elegirActividadDestacada();
     var etiqueta = UI.$("#destacada-tarjeta .tarjeta__etiqueta");
 
-    if (!mision) {
+    if (!act) {
       if (etiqueta) etiqueta.classList.add("oculto");
       UI.$("#destacada-titulo").textContent = TEXTOS.destacadaFinTitulo;
       UI.$("#destacada-texto").textContent = TEXTOS.destacadaFinTexto;
@@ -118,16 +149,14 @@
     }
 
     if (etiqueta) etiqueta.classList.remove("oculto");
-    UI.$("#destacada-titulo").textContent = mision.nombre;
-    UI.$("#destacada-texto").textContent = mision.descripcion;
+    UI.$("#destacada-titulo").textContent = act.nombre;
+    UI.$("#destacada-texto").textContent = "";
     UI.$("#destacada-lugar").innerHTML =
       '<img src="../assets/iconos/localizacion-violeta.svg" alt="icono lugar">' +
-      mision.ubicacion + " - " + mision.horario + " hs";
+      act.ubicacion + " · " + act.hora + (esConHora(act) ? " hs" : "");
   }
 
-    /* Inicializa la pantalla: pinta el saludo, sincroniza el progreso
-    con la planilla y pinta el nivel, la fracción y la pista. */
-    function initPasaporte() {
+  function initPasaporte() {
     var participante = Datos.obtenerParticipante();
     /* Defensa: si llegara sin sesión, al registro. */
     if (!participante || !participante.nombre) {
@@ -135,13 +164,15 @@
       return;
     }
     pintarSaludo(participante);
-    /* sincronizarProgreso pregunta a la planilla cuántas misiones
-       tiene esta participante. Recién con esa respuesta pintamos
-       el nivel, la fracción y la pista: si pintáramos antes,
-       mostraríamos el valor viejo (o vacío) un instante. */
+    pintarActividadDestacada(); // no depende del servidor: dato local
+
+    /* sincronizarProgreso trae de la planilla cuántas/ cuáles misiones
+       tiene la participante. Recién con eso pintamos progreso, checklist
+       y certificados, para no mostrar valores viejos un instante. */
     UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(function () {
       pintarProgreso();
-      pintarMisionDestacada();
+      pintarMisiones();
+      pintarCertificados();
     });
   }
 

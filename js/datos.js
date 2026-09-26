@@ -168,6 +168,20 @@ window.PUMM.Datos = (function () {
       });
     },
 
+    /* ¿La participante ya completó ESTA misión? Es la fuente correcta
+       para la checklist del pasaporte en los dos modos:
+       - Apps Script: la lista real viene de la planilla, cacheada en
+         CLAVE_PROGRESO.misiones por sincronizarProgreso().
+       - Demo/local: no hay planilla, se mira el registro de localStorage.
+       (yaRegistro() sigue existiendo para el flujo de registro de QR.) */
+    misionHecha: function (misionId) {
+      var remoto = leerJSON(CONFIG.CLAVE_PROGRESO, null);
+      if (remoto && remoto.misiones) {
+        return remoto.misiones.indexOf(misionId) !== -1;
+      }
+      return this.yaRegistro(misionId);
+    },
+
     /* Registra una misión. Devuelve SIEMPRE una Promise que resuelve
        a uno de estos estados (string, no true/false, porque la
        pantalla muestra algo distinto en cada caso):
@@ -282,24 +296,6 @@ window.PUMM.Datos = (function () {
         porcentaje: Math.min(100, Math.round((hechas / meta) * 100)),
         completo: hechas >= meta
       };
-    },
-
-    /* Traduce el conteo total de misiones a nivel + avance DENTRO del
-       nivel. Es la fuente única del cálculo de nivel: la usan tanto el
-       pasaporte como la pantalla de misión ya registrada, así las dos
-       muestran siempre lo mismo (nivel y "X/meta"). Se apoya en
-       obtenerProgreso(), que ya trae el conteo real (planilla en Apps
-       Script, localStorage en demo). */
-    obtenerNivel: function () {
-      var hechas = this.obtenerProgreso().hechas;
-      var porNivel = window.PUMM.MISIONES_POR_NIVEL;
-      var totalNiveles = window.PUMM.TOTAL_NIVELES;
-
-      var nivel = Math.min(totalNiveles, Math.floor(hechas / porNivel) + 1);
-      var hechasEnNivel = hechas - (nivel - 1) * porNivel;
-      hechasEnNivel = Math.max(0, Math.min(porNivel, hechasEnNivel));
-
-      return { nivel: nivel, hechasEnNivel: hechasEnNivel, meta: porNivel };
     },
 
     /* Devuelve todos los logros con campos extra para pintarlos:

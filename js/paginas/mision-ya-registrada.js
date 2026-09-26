@@ -27,28 +27,24 @@
         return misiones.length > 0 ? misiones[0].id : null;
     }
 
-    /* Pinta nivel, XP (X/meta del nivel) y barra usando el MISMO
-       cálculo que el pasaporte (Datos.obtenerNivel), así las dos
-       pantallas muestran exactamente lo mismo. */
-    function pintarNivel() {
-        var nivel = Datos.obtenerNivel();
+    /* Pinta el progreso de misiones (X/8 + barra) con el MISMO dato que
+       el pasaporte (Datos.obtenerProgreso), así las dos pantallas
+       muestran exactamente lo mismo. */
+    function pintarProgreso() {
+        var p = Datos.obtenerProgreso();
 
-        var elNivelValor = UI ? UI.$(".actividad__nivel-valor") : document.querySelector(".actividad__nivel-valor");
-        var elXpBadge = UI ? UI.$(".actividad__xp-badge") : document.querySelector(".actividad__xp-badge");
+        var elValor = UI ? UI.$(".actividad__nivel-valor") : document.querySelector(".actividad__nivel-valor");
+        var elBadge = UI ? UI.$(".actividad__xp-badge") : document.querySelector(".actividad__xp-badge");
         var elBarraRelleno = UI ? UI.$(".actividad__barra-relleno") : document.querySelector(".actividad__barra-relleno");
 
-        if (elNivelValor)
-            elNivelValor.textContent = "Nivel " + nivel.nivel;
+        if (elValor)
+            elValor.textContent = p.hechas + "/" + p.meta;
 
-        if (elXpBadge)
-            elXpBadge.textContent = nivel.hechasEnNivel + "/" + nivel.meta + " XP";
+        if (elBadge)
+            elBadge.textContent = "MISIONES";
 
-        if (elBarraRelleno) {
-            var porcentajeBarra = nivel.meta > 0
-                ? Math.round((nivel.hechasEnNivel / nivel.meta) * 100)
-                : 0;
-            elBarraRelleno.style.width = porcentajeBarra + "%";
-        }
+        if (elBarraRelleno)
+            elBarraRelleno.style.width = p.porcentaje + "%";
     }
 
     function pintar() {
@@ -75,9 +71,9 @@
         }
 
         /* Igual que el pasaporte: primero sincronizamos el conteo con la
-           planilla (en Apps Script) y recién ahí pintamos nivel/XP. En
+           planilla (en Apps Script) y recién ahí pintamos el progreso. En
            local resuelve al instante con el conteo de localStorage. */
-        UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(pintarNivel);
+        UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(pintarProgreso);
     }
 
     /* BUNDLE: el router corre pintar al mostrar la vista. */
