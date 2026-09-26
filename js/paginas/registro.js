@@ -63,15 +63,23 @@
   /* --- Modales de resultado --- */
 
   function modalExito() {
+    /* Si entró escaneando el QR de una misión (…?mision=id), después de
+       registrarse la mandamos a validar ESA misión y no al pasaporte:
+       de lo contrario el QR que escaneó se perdería. En el bundle el id
+       viaja en window.PUMM.MISION_QR (lo lee leerParametro), así que
+       persiste aunque el registro haya cambiado de vista. */
+    var mision = UI.leerParametro(window.PUMM.CONFIG.PARAM_QR);
+    var destino = mision ? "nueva-mision" : "pasaporte";
+
     UI.abrirModal({
       tipo: "exito",
       icono: ICONO_EXITO,
       titulo: TEXTOS.registroParticipanteExitoTitulo,
       texto: TEXTOS.registroParticipanteExitoTexto,
-      /* "Continuar" lleva al pasaporte: en local navega a
-         pasaporte.html; en el bundle muestra la vista de pasaporte. */
+      /* "Continuar" lleva al pasaporte (o a validar la misión del QR):
+         en local navega al .html; en el bundle muestra la vista. */
       acciones: [
-        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, pantalla: "pasaporte" }
+        { texto: TEXTOS.botonContinuar + " " + ICONO_FLECHA, pantalla: destino }
       ]
     });
   }
