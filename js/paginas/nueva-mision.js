@@ -120,7 +120,10 @@
                 if (misionActual && misionActual.id) {
                     /* registrarMision devuelve una Promise (en Apps Script
                        el sello va al servidor y vuelve por callback). */
-                    Datos.registrarMision(misionActual.id).then(function (resultado) {
+                    UI.conCarga(
+                        Datos.registrarMision(misionActual.id), 
+                        TEXTOS.cargandoMision
+                    ).then(function (resultado) {
                         if (resultado === "ok")
                             mostrarModalCompletada();   // primera vez → modal
                         else if (resultado === "repetida")

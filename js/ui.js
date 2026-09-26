@@ -18,6 +18,101 @@ window.PUMM.UI = (function () {
      pantalla se vuelve visible. Ver la explicación en mostrarPantalla. */
   var inits = {};
 
+    /* --- Pantalla de carga ---
+     Contador (n) en vez de un booleano: si dos pedidos corren a la
+     vez, la pantalla se cierra recién cuando terminaron los dos. */
+  var carga = {
+    n: 0,
+    visible: false,
+    desde: 0,
+    timerMostrar: null,
+    timerOcultar: null
+  };
+
+  function elementoCarga() {
+    var el = document.getElementById("carga");
+    if (el) return el;
+
+    el = document.createElement("div");
+    el.id = "carga";
+    el.className = "carga oculto";
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-live", "polite");
+    el.innerHTML =
+      '<div class="carga__tarjeta">' +
+        '<div class="franja-ajedrez carga__franja" aria-hidden="true"></div>' +
+        '<div class="carga__cuerpo">' +
+          '<div class="carga__cuadros" aria-hidden="true">' +
+            '<span class="carga__cuadro carga__cuadro--amarillo"></span>' +
+            '<span class="carga__cuadro carga__cuadro--cian"></span>' +
+            '<span class="carga__cuadro carga__cuadro--fucsia"></span>' +
+          "</div>" +
+          '<p class="carga__titulo">Cargando</p>' +
+          '<p class="carga__mensaje"></p>' +
+        "</div>" +
+      "</div>";
+    document.body.appendChild(el);
+    return el;
+  }
+
+  function mostrarCarga(mensaje) {
+    var CONFIG = window.PUMM.CONFIG || {};
+    var el = elementoCarga();
+
+    carga.n++;
+    el.querySelector(".carga__mensaje").textContent =
+      mensaje || window.PUMM.TEXTOS.cargando;
+
+    /* Si estaba por cerrarse (tiempo mínimo), la dejamos abierta. */
+    if (carga.timerOcultar) {
+      clearTimeout(carga.timerOcultar);
+      carga.timerOcultar = null;
+    }
+    if (carga.visible || carga.timerMostrar) return;
+
+    carga.timerMostrar = setTimeout(function () {
+      carga.timerMostrar = null;
+      carga.visible = true;
+      carga.desde = Date.now();
+      el.classList.remove("oculto");
+    }, CONFIG.CARGA_DEMORA_MS || 200);
+  }
+
+  function ocultarCarga() {
+    var CONFIG = window.PUMM.CONFIG || {};
+
+    if (carga.n > 0) carga.n--;
+    if (carga.n > 0) return;               // todavía hay otro pedido en curso
+
+    /* Terminó antes de la demora: nunca llegó a mostrarse. */
+    if (carga.timerMostrar) {
+      clearTimeout(carga.timerMostrar);
+      carga.timerMostrar = null;
+      return;
+    }
+    if (!carga.visible) return;
+
+    var minimo = CONFIG.CARGA_MIN_MS || 400;
+    var restante = Math.max(0, minimo - (Date.now() - carga.desde));
+
+    carga.timerOcultar = setTimeout(function () {
+      carga.timerOcultar = null;
+      carga.visible = false;
+      elementoCarga().classList.add("oculto");
+    }, restante);
+  }
+
+  /* Atajo para lo más común: mostrar la carga mientras dura una
+     Promise y cerrarla al terminar (bien o mal). Devuelve la misma
+     Promise, así que se puede seguir encadenando con .then(). */
+  function conCarga(promesa, mensaje) {
+    mostrarCarga(mensaje);
+    return promesa.then(
+      function (resultado) { ocultarCarga(); return resultado; },
+      function (error) { ocultarCarga(); throw error; }
+    );
+  }
+
   return {
 
     /* Atajo para no escribir document.querySelector en todos lados. */
@@ -72,6 +167,10 @@ window.PUMM.UI = (function () {
     alMostrar: function (clave, fn) {
       inits[clave] = fn;
     },
+
+    mostrarCarga: mostrarCarga,
+    ocultarCarga: ocultarCarga,
+    conCarga: conCarga,
 
     mostrarPantalla: function (clave) {
       var vistas = this.$$("[data-vista]");

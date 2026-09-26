@@ -106,6 +106,42 @@
     marcarNavegacionActiva();
     cablearNavegacion();
     blindarModal();
-    rutearFlujo();
+
+    /* El ruteo necesita saber si se entró por un QR (?mision=id).
+       En Apps Script ese query del /exec NO llega a window.location: la
+       app corre en un iframe sandbox cuyo src es .../userCodeAppPanel, sin
+       el parámetro. La vía OFICIAL para leerlo en el cliente es
+       google.script.url.getLocation; dejamos el resultado en
+       window.PUMM.MISION_QR (lo mismo que lee UI.leerParametro). Así el QR
+       funciona aunque el template del servidor no evalúe <?= misionQR ?>.
+       En local / dist directo google.script.url no existe: se rutea al
+       toque leyendo window.location.search. */
+    var yaRuteo = false;
+    function rutearUnaVez() {
+      if (yaRuteo) return;
+      yaRuteo = true;
+      rutearFlujo();
+    }
+
+    var enAppsScript = window.google && google.script && google.script.url &&
+                       typeof google.script.url.getLocation === "function";
+
+    if (!enAppsScript) {
+      rutearUnaVez();
+      return;
+    }
+
+    try {
+      google.script.url.getLocation(function (loc) {
+        var m = loc && loc.parameter && loc.parameter.mision;
+        if (m) window.PUMM.MISION_QR = m;
+        rutearUnaVez();
+      });
+    } catch (e) {
+      rutearUnaVez();
+    }
+    /* Red de seguridad: si getLocation no respondiera, arrancamos igual
+       (con lo que haya en MISION_QR / location) en vez de quedar colgados. */
+    setTimeout(rutearUnaVez, 1500);
   });
 })();

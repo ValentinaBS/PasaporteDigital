@@ -40,6 +40,13 @@ window.PUMM.CONFIG = {
      El valor tiene que coincidir con un id de data/misiones.js */
   PARAM_QR: "mision",
 
+    /* Pantalla de carga (js/ui.js → mostrarCarga).
+     DEMORA: no se muestra si la respuesta llega antes (evita el
+     parpadeo en cargas rápidas). MIN: una vez visible, se queda al
+     menos este tiempo para que no aparezca y desaparezca de golpe. */
+  CARGA_DEMORA_MS: 200,
+  CARGA_MIN_MS: 400,
+
   /* El certificado de participación se habilita recién a esta
      fecha y hora (hora de Argentina, UTC-3). Antes, el botón de
      la pantalla de Logros queda oculto.
