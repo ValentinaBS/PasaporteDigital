@@ -13,35 +13,41 @@
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    padding-top: var(--espacio-6);
-    padding-bottom: var(--espacio-6);
     text-align: center;
 }
 
 .felicitaciones__franja {
     width: 100%;
-    height: 65px;
-    border: 3px solid var(--pumm-negro);
-    box-shadow: var(--sombra-dura-sm);
-    transform: rotate(-1deg);
+    height: 60px;
+
+    background-image: conic-gradient(var(--pumm-negro) 90deg, transparent 90deg 180deg, var(--pumm-negro) 180deg 270deg, transparent 270deg);
+    background-size: 40px 40px;
+    background-position: 0 0;
+
+    transform: rotate(-1.5deg);
+    margin: 1.5rem 0;
 }
 
 .felicitaciones__titulo {
-    font-size: 4.3rem;
-    font-weight: 900;
-    color: var(--pumm-amarillo, #FFCC00);
+    font-size: 4.4rem;
+    font-family: var(--fuente-titulo);
+    font-weight: 400;
+    color: var(--pumm-amarillo);
     text-align: center;
     transform: rotate(-3deg);
     display: block;
     width: 100%;
     text-shadow:
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px  1px 0 #000,
-            1px  1px 0 #000,
-            4px  4px 0 #000;
+            -2px -2px 0 var(--pumm-negro),
+            2px -2px 0 var(--pumm-negro),
+            -2px  2px 0 var(--pumm-negro),
+            2px  2px 0 var(--pumm-negro),
+            3px  3px 0 var(--pumm-negro),
+            4px  4px 0 var(--pumm-negro),
+            5px  5px 0 var(--pumm-negro),
+            6px  6px 0 var(--pumm-negro),
+            7px  7px 0 var(--pumm-negro);
 
-    letter-spacing: 1px;
     margin: var(--espacio-4, 1rem) 0;
 }
 
@@ -69,11 +75,12 @@
     background-color: var(--pumm-amarillo);
     color: var(--pumm-negro);
     border: 2.5px solid var(--pumm-negro);
-    box-shadow: var(--sombra-dura-sm);
     padding: var(--espacio-3) var(--espacio-4);
     font-weight: 800;
     font-size: var(--color-texto);
     line-height: 1.3;
+
+    transform: rotate(-2.3deg);
 }
 
 .felicitaciones__estrella {
