@@ -279,6 +279,17 @@ window.PUMM.UI = (function () {
       });
     },
 
+    /* El nombre de una actividad viene como "Categoría: título del evento"
+       (ej. "Charla de chicas para chicas: Algoritmos: ¿Quién le enseña a la IA?").
+       Se parte en el PRIMER ": " → { categoria, titulo }; el resto del
+       título puede tener más ":" y se conserva entero. */
+    separarActividad: function (nombre) {
+      var texto = String(nombre || "");
+      var i = texto.indexOf(": ");
+      if (i === -1) return { categoria: "", titulo: texto };
+      return { categoria: texto.slice(0, i), titulo: texto.slice(i + 2) };
+    },
+
     /* Busca una misión por id en data/misiones.js. */
     buscarMision: function (id) {
       return window.PUMM.MISIONES.filter(function (a) {

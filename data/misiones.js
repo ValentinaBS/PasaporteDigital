@@ -1,9 +1,9 @@
 /* ============================================================
    DATOS · MISIONES del recorrido PUMM
    ------------------------------------------------------------
-   Las MISIONES son los 8 objetivos que la participante completa
+   Las MISIONES son los 7 objetivos que la participante completa
    durante el evento escaneando QRs. SÍ cuentan para el progreso
-   (X/8 en el pasaporte) y para desbloquear logros (data/logros.js).
+   (X/7 en el pasaporte) y para desbloquear logros (data/logros.js).
 
    No confundir con las ACTIVIDADES (data/actividades.js): esas son
    el cronograma informativo del evento. Una misión se puede
@@ -23,10 +23,9 @@
 
 window.PUMM = window.PUMM || {};
 
-/* Las 8 misiones del recorrido. */
+/* Las 7 misiones del recorrido. */
 window.PUMM.MISIONES = [
-  { id: "charla",      nombre: "Asistir a una charla de chicas para chicas", icono: "🎤" },
-  { id: "lab",         nombre: "Participar de un lab",                        icono: "🔬" },
+  { id: "lab",        nombre: "Participar de un lab",                        icono: "🔬" },
   { id: "feria",       nombre: "Visitar la Feria de Proyectos",              icono: "🚀" },
   { id: "sala-escape", nombre: "Pasar por la sala de escape",                icono: "🔐" },
   { id: "photo",       nombre: "Sacarse una foto en el Photo Opportunity",   icono: "📸" },

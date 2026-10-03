@@ -21,6 +21,21 @@
 
 window.PUMM = window.PUMM || {};
 
+/* Emoji que acompaña a cada categoría (lo que va antes de ": " en el
+   nombre). Lo usa la actividad destacada del pasaporte. Si se agrega
+   una categoría nueva, sumala acá; sin entrada se muestra sin emoji. */
+window.PUMM.ICONOS_CATEGORIA = {
+  "Lab": "🔬",
+  "Charla de chicas para chicas": "🎤",
+  "Charla PUMM": "💬",
+  "Feria": "🚀",
+  "Juegos": "🎮",
+  "Photo Opportunity": "📸",
+  "Pitch": "🎯",
+  "Experiencia": "🔐",
+  "Interacción": "👩‍🔬"
+};
+
 window.PUMM.ACTIVIDADES = [
   { hora: "10:00", nombre: "Lab: Armá tu primer robot", ubicacion: "Espacio Labs 1" },
   { hora: "10:00", nombre: "Lab: Explorá el mundo de los datos", ubicacion: "Espacio Labs 2" },

@@ -156,7 +156,9 @@
 
 /* --- Recuadro: actividad destacada + checklist de misiones --- */
 .pasaporte-recuadro {
-  margin-top: var(--espacio-6);
+  /* Aire extra: el rayo del aviso QR asoma por abajo y el cartel
+     "Destacado" asoma por arriba; así no se pisan. */
+  margin-top: var(--espacio-12);
 }
 
 .pasaporte-misiones__titulo {
@@ -246,14 +248,32 @@
   text-transform: uppercase;
   font-family: var(--fuente-titulo);
   font-size: var(--texto-xl);
-  margin-bottom: var(--espacio-2);
+  /* Reserva el lugar del cartel "Destacado" para que no pise el texto. */
+  padding-right: var(--espacio-12);
+}
+
+/* En la actividad destacada el texto va vacío: que no deje un hueco. */
+#destacada-texto:empty {
+  display: none;
+}
+
+/* Categoría (ej. "🔬 Lab"): entre el título y la ubicación. */
+.destacada__categoria {
+  margin: 0 0 var(--espacio-4);
+  color: var(--pumm-negro);
+  font-size: var(--texto-md);
+  font-weight: 700;
+}
+
+.destacada__categoria:empty {
+  display: none;
 }
 
 .tarjeta--mision .tarjeta__meta {
   display: flex;
   align-items: center;
   gap: var(--espacio-2);
-  margin-top: var(--espacio-4);
+  margin-top: var(--espacio-2);
   color: var(--pumm-negro);
   font-size: var(--texto-md);
   font-weight: 700;
@@ -266,8 +286,8 @@
 
 .tarjeta__etiqueta {
   position: absolute;
-  top: -9px;
-  right: -9px;
+  top: -18px;
+  right: -10px;
   z-index: 1;
   flex: 0 0 auto;
   align-self: flex-start;
@@ -280,5 +300,5 @@
   text-transform: uppercase;
   box-shadow: 2px 2px 0 var(--pumm-negro);
   border: 2px solid var(--pumm-negro);
-  transform: rotate(8deg);
+  transform: rotate(4deg);
 }
