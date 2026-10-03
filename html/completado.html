@@ -20,7 +20,7 @@
         <img class="felicitaciones__estrella felicitaciones__estrella--top" src="../assets/img/estrella-amarrilla.png" alt="" aria-hidden="true">
 
         <p class="felicitaciones__texto">
-            Completaste todas las misiones del <strong>PUMM 2026 🤩</strong>.
+            Completaste todas las misiones del PUMM 2026 🤩
         </p>
 
         <div class="felicitaciones__destacado">
@@ -31,14 +31,17 @@
     </div>
 
     <div class="felicitaciones__acciones">
-        <a id="btn-compartir" class="boton boton--primario" href="https://www.tfaforms.com/5237002">
-            <span>COMPLETAR ENCUESTA </span>
+        <!-- target="_blank": la encuesta abre en otra pestaña. En el bundle
+             (Apps Script) evita que el <base target="_top"> reemplace la app. -->
+        <a id="btn-encuesta" class="boton boton--primario" href="https://www.tfaforms.com/5237002"
+           target="_blank" rel="noopener">
+            <span>COMPLETAR ENCUESTA</span>
             <img src="../assets/iconos/encuesta.svg" alt="" aria-hidden="true">
         </a>
 
-        <button id="btn-inicio" class="boton boton--secundario" style="background-color: var(--color-secundario)">
+        <button id="btn-inicio" class="boton boton--secundario">
             <img src="../assets/iconos/home.svg" alt="" aria-hidden="true">
-            <span style="color: #4A3700">VOLVER AL INICIO</span>
+            <span>VOLVER AL INICIO</span>
         </button>
     </div>
 

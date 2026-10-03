@@ -65,6 +65,7 @@
   --texto-xl:  1.75rem;   /* 28px · títulos de pantalla, botones principales */
   --texto-1xl: 2rem;   /* 32px · botones principales */
   --texto-2xl: 3rem;    /* 48px · números grandes de progreso */
+  --texto-3xl: 4.4rem;  /* ~70px · títulos de celebración (Felicitaciones) */
 
   /* ---------- Espaciado ----------
      Escala de 4px. Usar siempre múltiplos de esta escala para que

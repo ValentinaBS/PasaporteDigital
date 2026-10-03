@@ -1,10 +1,14 @@
 /* .felicitaciones va en el <body> en local y en el <div data-vista> en
    el bundle (ver scripts/empaquetar.js): se estila por clase, no por
-   body, para que el fondo aplique en los dos modos. */
+   body, para que el fondo aplique en los dos modos. El violeta de marca
+   queda de respaldo si la textura no carga. */
 .felicitaciones {
-    background: url("../../assets/img/fondo-violeta.webp");
+    background-color: var(--color-primario);
+    background-image: url("../../assets/img/fondo-violeta.webp");
+    background-size: cover;
+    background-position: center;
     color: var(--color-superficie);
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .felicitaciones__contenedor {
@@ -12,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 100vh;
+    min-height: 100dvh;
     text-align: center;
 }
 
@@ -25,14 +29,14 @@
     background-position: 0 0;
 
     transform: rotate(-1.5deg);
-    margin: 1.5rem 0;
+    margin: var(--espacio-6) 0;
 }
 
 .felicitaciones__titulo {
-    font-size: 4.4rem;
+    font-size: var(--texto-3xl);
     font-family: var(--fuente-titulo);
     font-weight: 400;
-    color: var(--pumm-amarillo);
+    color: var(--color-secundario);
     text-align: center;
     transform: rotate(-3deg);
     display: block;
@@ -48,7 +52,7 @@
             6px  6px 0 var(--pumm-negro),
             7px  7px 0 var(--pumm-negro);
 
-    margin: var(--espacio-4, 1rem) 0;
+    margin: var(--espacio-4) 0;
 }
 
 .felicitaciones__tarjeta {
@@ -65,19 +69,20 @@
 }
 
 .felicitaciones__texto {
-    font-size: var(--texto-lg);
+    font-size: var(--texto-md);
+    font-weight: 700;
     line-height: 1.4;
     margin-bottom: var(--espacio-6);
     color: var(--color-texto);
 }
 
 .felicitaciones__destacado {
-    background-color: var(--pumm-amarillo);
-    color: var(--pumm-negro);
-    border: 2.5px solid var(--pumm-negro);
+    background-color: var(--color-secundario);
+    color: var(--color-secundario-texto);
+    border: 3px solid var(--pumm-negro);
     padding: var(--espacio-3) var(--espacio-4);
-    font-weight: 800;
-    font-size: var(--color-texto);
+    font-size: var(--texto-md);
+    font-weight: 700;
     line-height: 1.3;
 
     transform: rotate(-2.3deg);
@@ -110,8 +115,16 @@
     margin: var(--espacio-4) 0;
 }
 
+/* "Volver al inicio": amarillo con el texto oscuro del sistema. */
 .felicitaciones__acciones .boton--secundario {
-    background-color: var(--color-primario);
-    color: var(--color-superficie);
+    background-color: var(--color-secundario);
+    color: var(--color-secundario-texto);
     border: 3px solid var(--pumm-negro);
+}
+
+/* Íconos de los botones (encuesta a la derecha, casa a la izquierda):
+   del tamaño del texto, el gap del .boton los separa. */
+.felicitaciones__acciones .boton img {
+    width: 0.7em;
+    height: 0.7em;
 }
