@@ -2,11 +2,11 @@
    PANTALLA · PASAPORTE (Mi Pasaporte)
    ------------------------------------------------------------
    Pantalla principal del recorrido: saludo, progreso de misiones
-   (X/8 + barra), botones de certificado, la ACTIVIDAD destacada
-   del momento (del cronograma) y la checklist de las 8 MISIONES.
+   (X/total + barra), botones de certificado, la ACTIVIDAD destacada
+   del momento (del cronograma) y la checklist de las 7 MISIONES.
 
    Ojo con los dos conceptos:
-     · MISIONES (data/misiones.js): las 8 que se completan por QR y
+     · MISIONES (data/misiones.js): las 7 que se completan por QR y
        cuentan para el progreso/logros. Van en la checklist.
      · ACTIVIDADES (data/actividades.js): el cronograma informativo.
        De ahí sale la "actividad destacada".
@@ -41,7 +41,7 @@
     UI.$("#progreso-relleno").style.width = p.porcentaje + "%";
   }
 
-  /* Checklist de las 8 misiones: ícono + nombre + estado (✓ si está
+  /* Checklist de las misiones: ícono + nombre + estado (✓ si está
      hecha). El estado se decide con Datos.misionHecha (correcto en los
      dos modos). */
   function pintarMisiones() {
@@ -87,11 +87,11 @@
     var desde = new Date(CONFIG.FECHA_CERTIFICADO);
 
     var certPart = UI.$("#cert-participacion");
-    if (certPart) certPart.classList.toggle("oculto", (ahora >= desde));
+    if (certPart) certPart.classList.toggle("oculto", !(ahora >= desde));
 
     var certLogros = UI.$("#cert-logros");
     if (certLogros) {
-      certLogros.classList.toggle("oculto", Datos.obtenerProgresoLogros().completo);
+      certLogros.classList.toggle("oculto", !Datos.obtenerProgresoLogros().completo);
     }
   }
 
@@ -139,21 +139,31 @@
   function pintarActividadDestacada() {
     var act = elegirActividadDestacada();
     var etiqueta = UI.$("#destacada-tarjeta .tarjeta__etiqueta");
+    var categoria = UI.$("#destacada-categoria");
 
     if (!act) {
       if (etiqueta) etiqueta.classList.add("oculto");
       UI.$("#destacada-titulo").textContent = TEXTOS.destacadaFinTitulo;
       UI.$("#destacada-texto").textContent = TEXTOS.destacadaFinTexto;
       UI.$("#destacada-lugar").textContent = "";
+      if (categoria) categoria.textContent = "";
       return;
     }
 
+    /* "Lab: Armá tu primer robot" → título "Armá tu primer robot" y la
+       categoría "🔬 Lab" va debajo del título (emoji a la izquierda). */
+    var p = UI.separarActividad(act.nombre);
+    var emoji = (window.PUMM.ICONOS_CATEGORIA || {})[p.categoria] || "";
+
     if (etiqueta) etiqueta.classList.remove("oculto");
-    UI.$("#destacada-titulo").textContent = act.nombre;
+    UI.$("#destacada-titulo").textContent = p.titulo;
     UI.$("#destacada-texto").textContent = "";
     UI.$("#destacada-lugar").innerHTML =
       '<img src="../assets/iconos/localizacion-violeta.svg" alt="icono lugar">' +
-      act.ubicacion + " · " + act.hora + (esConHora(act) ? " hs" : "");
+      act.ubicacion + " - " + act.hora + (esConHora(act) ? " hs" : "");
+    if (categoria) {
+      categoria.textContent = p.categoria + (emoji ? " " + emoji : "");
+    }
   }
 
   function initPasaporte() {

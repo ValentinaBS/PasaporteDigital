@@ -37,17 +37,6 @@
 
   var COLORES = ["blanco", "cian", "violeta", "amarillo"];
 
-  /* El nombre viene como "Categoría: título del evento" (ej.
-     "Charla de chicas para chicas: Algoritmos: ¿Quién le enseña a la IA?").
-     Se parte en el PRIMER ": " → { categoria, titulo }. El resto del
-     título puede tener más ":" y se conserva entero. */
-  function separar(nombre) {
-    var texto = String(nombre || "");
-    var i = texto.indexOf(": ");
-    if (i === -1) return { categoria: "", titulo: texto };
-    return { categoria: texto.slice(0, i), titulo: texto.slice(i + 2) };
-  }
-
   function renderizar(lista) {
     var contenedor = UI.$("#lista-actividades");
     contenedor.innerHTML = lista.map(function (a, indice) {
@@ -55,7 +44,7 @@
       var clases = ["tarjeta"];
       if (color !== "blanco") clases.push("tarjeta--" + color);
 
-      var p = separar(a.nombre);
+      var p = UI.separarActividad(a.nombre);
       var horaTexto = esConHora(a) ? a.hora + "hs" : a.hora;
 
       return (

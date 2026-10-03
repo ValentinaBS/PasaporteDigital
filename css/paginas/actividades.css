@@ -9,6 +9,7 @@
   padding: var(--espacio-2) var(--espacio-6);
   margin-top: var(--espacio-4);
   background-color: var(--color-secundario);
+  transform: rotate(2deg);
 
   font-family: var(--fuente-titulo);
   font-size: var(--texto-2xl);
@@ -103,7 +104,7 @@
   padding-left: var(--espacio-4);
 
   font-size: var(--texto-lg);
-  font-weight: 400;
+  font-weight: 700;
   margin-top: var(--espacio-3);
 }
 /* Pie de la tarjeta: ubicación a la izquierda, horario a la derecha. */

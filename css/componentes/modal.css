@@ -27,8 +27,19 @@
   box-shadow: var(--sombra-dura);
   color: var(--color-texto);
 
-  position: relative;
-  overflow: hidden;
+  /* Centrado en la pantalla, sin importar el scroll de la página.
+     showModal() ya pone el <dialog> en position:fixed; antes lo
+     pisábamos con position:relative y el modal quedaba arriba de todo
+     en el flujo (había que scrollear para verlo). Si el contenido es
+     más alto que la pantalla, scrollea adentro del modal. El ::before
+     (franja) sigue anclado al modal porque fixed también es contexto. */
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  max-height: calc(100dvh - var(--espacio-8));
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .modal::backdrop {
