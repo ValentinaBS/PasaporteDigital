@@ -77,17 +77,18 @@
     });
   }
 
-  /* Botones de certificado (debajo de la barra):
-       · Participación: desde CONFIG.FECHA_CERTIFICADO.
-       · Logros: con el 100% de logros desbloqueados.
+  /* Botones de acción (debajo de la barra):
+       · Encuesta: desde CONFIG.FECHA_ENCUESTA, haya completado o no
+         las misiones.
+       · Premio: con el 100% de logros desbloqueados.
      Se usa toggle(force) para que, al re-mostrar la vista en el bundle,
      el estado se recalcule (no queden visibles de una visita anterior). */
-  function pintarCertificados() {
+  function pintarAcciones() {
     var ahora = new Date();
-    var desde = new Date(CONFIG.FECHA_CERTIFICADO);
+    var desde = new Date(CONFIG.FECHA_ENCUESTA);
 
-    var certPart = UI.$("#cert-participacion");
-    if (certPart) certPart.classList.toggle("oculto", !(ahora >= desde));
+    var encuesta = UI.$("#btn-encuesta-pasaporte");
+    if (encuesta) encuesta.classList.toggle("oculto", !(ahora >= desde));
 
     var certLogros = UI.$("#cert-logros");
     if (certLogros) {
@@ -182,7 +183,7 @@
     UI.conCarga(Datos.sincronizarProgreso(), TEXTOS.cargandoPasaporte).then(function () {
       pintarProgreso();
       pintarMisiones();
-      pintarCertificados();
+      pintarAcciones();
     });
   }
 

@@ -47,13 +47,10 @@ window.PUMM.CONFIG = {
   CARGA_DEMORA_MS: 200,
   CARGA_MIN_MS: 400,
 
-  /* El certificado de participación se habilita recién a esta
-     fecha y hora (hora de Argentina, UTC-3). Antes, el botón de
-     Mi Pasaporte queda oculto.
-     ⚠️ POR AHORA está en una fecha imposible A PROPÓSITO, para que el
-     botón no aparezca nunca. Para habilitarlo, volver a la fecha real:
-         "2026-10-14T16:00:00-03:00"
+  /* El botón "Completar encuesta" de Mi Pasaporte aparece recién a
+     esta fecha y hora (hora de Argentina, UTC-3), haya completado o no
+     las misiones. Antes queda oculto.
      ⚠️ Formato ISO: mes y día SIEMPRE con dos dígitos ("08", no "8"),
      si no new Date() lo lee como Invalid Date y el botón no aparece. */
-  FECHA_CERTIFICADO: "9999-12-31T23:59:59-03:00"
+  FECHA_ENCUESTA: "2026-10-14T16:00:00-03:00"
 };

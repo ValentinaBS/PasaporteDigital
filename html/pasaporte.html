@@ -57,14 +57,19 @@
           <div class="progreso__relleno" id="progreso-relleno" style="width: 0%"></div>
         </div>
 
-        <!-- Certificados: ocultos hasta cumplir su condición. Van a la
-             pantalla de felicitaciones (completado.html). -->
+        <!-- Acciones, ocultas hasta cumplir su condición:
+             · Encuesta: desde CONFIG.FECHA_ENCUESTA, haya completado o no
+               las misiones. Abre en otra pestaña (en el bundle evita que el
+               <base target="_top"> reemplace la app).
+             · Premio: con el 100% de logros, va a felicitaciones. -->
         <div class="pila pasaporte-acciones" id="pasaporte-acciones">
-          <a class="boton boton--secundario boton--ancho oculto" id="cert-participacion" href="completado.html">
-            Certificado de participación
+          <a class="boton boton--primario boton--ancho oculto" id="btn-encuesta-pasaporte"
+             href="https://www.tfaforms.com/5237002" target="_blank" rel="noopener">
+            <span>COMPLETAR ENCUESTA</span>
+            <img src="../assets/iconos/encuesta.svg" alt="" aria-hidden="true">
           </a>
-          <a class="boton boton--primario boton--ancho oculto" id="cert-logros" href="completado.html">
-            ¡Reclama tu premio!
+          <a class="boton boton--secundario boton--ancho oculto" id="cert-logros" href="completado.html">
+            ¡Reclamá tu premio!
           </a>
         </div>
       </section>

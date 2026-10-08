@@ -180,6 +180,10 @@ window.PUMM.UI = (function () {
         vistas.forEach(function (v) {
           v.classList.toggle("oculto", v.getAttribute("data-vista") !== clave);
         });
+        /* La pantalla nueva arranca siempre arriba: al ser la misma
+           página, si no, conserva el scroll de la anterior y te deja a
+           la mitad (en LOCAL no pasa porque se navega a otro .html). */
+        window.scrollTo(0, 0);
         if (inits[clave]) inits[clave]();
         return;
       }

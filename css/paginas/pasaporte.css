@@ -93,6 +93,12 @@
   margin-top: 0;
 }
 
+/* Ícono de la encuesta: mismo tamaño que en Felicitaciones. */
+.pasaporte-acciones .boton img {
+  width: 0.7em;
+  height: 0.7em;
+}
+
 .aviso-qr {
   position: relative;
   display: flex;

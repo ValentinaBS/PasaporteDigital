@@ -9,7 +9,7 @@
 
    ⚠️ Los umbrales son PROVISIONALES: los define Producción. Están
    acá, en un solo lugar, para que cambiarlos sea tocar una línea.
-   Se apoyan en MISIONES_PARA_COMPLETAR (data/misiones.js), hoy 7.
+   Se apoyan en MISIONES_PARA_COMPLETAR (data/misiones.js).
 
    `dificultad` colorea el borde de la tarjeta en la pantalla de
    Logros: "facil" (violeta), "media" (amarillo), "dificil" (rosa).
@@ -57,8 +57,8 @@ window.PUMM.LOGROS = [
     id: "recorrido",
     nombre: "Recorrido completo",
     icono: "🏆",
-    descripcion: "Completaste las 7 misiones del PUMM 2026.",
-    misiones: 7,
+    descripcion: "Completaste todas las misiones del PUMM 2026.",
+    misiones: window.PUMM.MISIONES_PARA_COMPLETAR,  // todas
     dificultad: "dificil"
   }
 ];

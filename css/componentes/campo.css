@@ -25,6 +25,23 @@
   box-shadow: var(--sombra-dura);
 }
 
+/* iOS/Safari: los inputs de fecha y hora traen apariencia nativa con un
+   ancho mínimo propio que ignora width:100% y se salen del contenedor.
+   Les sacamos la apariencia nativa y les permitimos achicarse. */
+.campo[type="time"],
+.campo[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.campo[type="time"]::-webkit-date-and-time-value,
+.campo[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
 .campo:focus {
   outline: none;
   border-color: var(--color-primario);
