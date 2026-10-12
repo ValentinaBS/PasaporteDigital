@@ -9,7 +9,10 @@ Forms (que notificaba pero no guardaba).
 - **Google Apps Script** sirve un único `Index.html` (nuestra pantalla) y expone
   funciones de servidor.
 - El registro llama a `google.script.run.registrarParticipante(...)` y esa función
-  **escribe una fila en la planilla**. La identidad es el **DNI** (no se duplica).
+  **escribe una fila en la planilla**. La identidad es el par **DNI + email** (email
+  sin espacios y en minúsculas): el mismo par no se duplica, pero un DNI repetido
+  con otro email es otra participante (evita que dos chicas compartan progreso si
+  una tipea mal su DNI).
 
 Durante el desarrollo seguimos usando la carpeta modular con Live Server. Para
 publicar, se **empaqueta** todo en un solo archivo (paso 1) y se pega en Apps
@@ -116,8 +119,14 @@ las imágenes/fuentes embebidas (base64). Es lo que se pega en Apps Script.
    email, nombre, dni y fecha. ✅
 5. Volvé a abrir la URL: como ya hay sesión guardada, arranca directo en la vista
    de pasaporte (no vuelve a pedir el registro).
-6. Registrá el **mismo DNI** otra vez (desde otro dispositivo o borrando los
-   datos del navegador): **no** se duplica la fila (idempotente por DNI).
+6. Registrá el **mismo DNI y email** otra vez (desde otro dispositivo o borrando
+   los datos del navegador, aunque cambies mayúsculas del email): **no** se
+   duplica la fila y ves tu progreso (idempotente por DNI + email).
+7. Registrá el **mismo DNI con otro email**: aparece una fila nueva, con su propio
+   progreso. Si era la misma persona con otro email, se unifica a mano en la planilla.
+
+> **Al actualizar desde una versión anterior:** este cambio toca el servidor.
+> Pegá también el `Codigo.gs` nuevo (no solo el `Index`) y creá una nueva versión.
 
 > **Para probar el modal de error:** registrate con el DNI `00000000`. Está
 > reservado como disparador de error (mismo criterio en local y en el servidor),
@@ -141,8 +150,10 @@ las imágenes/fuentes embebidas (base64). Es lo que se pega en Apps Script.
 - **Contrato cliente ↔ servidor** (por si tocás el código):
   - Registro: el cliente llama `registrarParticipante({ email, nombre, dni })`; el
     servidor devuelve `{ status: "success" }` o `{ status: "error", message }`.
-  - Misión (futuro): `procesarSello({ dni, mision })` devuelve
+  - Misión: `procesarSello({ dni, email, mision })` devuelve
     `{ status: "success" | "repetida", numeroMisiones }` o `{ status: "error", message }`.
+  - Progreso: `obtenerEstadoParticipante({ dni, email })` devuelve
+    `{ status: "success", numeroMisiones, misiones }` o `{ status: "error", message }`.
   - `js/datos.js` detecta solo si está en Apps Script (`google.script.run`); en
     local usa localStorage. El mismo bundle sirve en los dos lados.
 - **Dos páginas en dev, una en producción:** en local, registro y pasaporte son

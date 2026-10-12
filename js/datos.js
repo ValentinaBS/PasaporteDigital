@@ -69,12 +69,26 @@ window.PUMM.Datos = (function () {
            google.script && google.script.run;
   }
 
+  /* Email comparable: sin espacios y en minúsculas. El servidor
+     normaliza igual (Codigo.gs → normalizarEmail_), así la misma persona
+     no queda como dos por tipear "Ana@Gmail.com" y "ana@gmail.com". */
+  function normalizarEmail(s) {
+    return String(s || "").trim().toLowerCase();
+  }
+
+  /* Lo que identifica a la participante ante la planilla: DNI + email. */
+  function identidad(participante) {
+    return { dni: participante.dni, email: normalizarEmail(participante.email) };
+  }
+
   /* ---------- API pública ---------- */
   return {
 
     /* --- Sesión de la participante (registro) ---
-       La identidad es el DNI: no generamos un id aparte. Los datos de
-       la sesión activa viven en CLAVE_PARTICIPANTE como { nombre, dni }. */
+       La identidad es DNI + email (no generamos un id aparte): si una
+       chica tipea mal su DNI y coincide con el de otra, no comparten
+       progreso. Los datos de la sesión activa viven en CLAVE_PARTICIPANTE
+       como { email, nombre, dni }. */
 
     obtenerParticipante: function () {
       return leerJSON(CONFIG.CLAVE_PARTICIPANTE, null);
@@ -109,7 +123,7 @@ window.PUMM.Datos = (function () {
        y, para poder probar el modal de error, simula una falla con el
        DNI 00000000 (el servidor hace lo mismo, ver Codigo.gs). */
     registrarParticipante: function (datos) {
-      var email = (datos && datos.email) || "";
+      var email = normalizarEmail(datos && datos.email);
       var nombre = (datos && datos.nombre) || "";
       var dni = String((datos && datos.dni) || "");
       var self = this;
@@ -223,7 +237,7 @@ window.PUMM.Datos = (function () {
               console.warn("[PUMM] Falló registrarMision", err);
               resolve("error");
             })
-            .procesarSello({ dni: participante.dni, mision: misionId });
+            .procesarSello(Object.assign(identidad(participante), { mision: misionId }));
           return;
         }
 
@@ -277,7 +291,7 @@ window.PUMM.Datos = (function () {
             console.warn("[PUMM] Falló sincronizarProgreso", err);
             resolve(); // seguimos con el último valor cacheado
           })
-          .obtenerEstadoParticipante({ dni: participante.dni });
+          .obtenerEstadoParticipante(identidad(participante));
       });
     },
 

@@ -7,8 +7,9 @@
 
    Expone al cliente (google.script.run.<funcion>(payload)):
      · doGet                 → sirve la página (el HTML "Index").
-     · registrarParticipante → alta de la participante.
-     · procesarSello         → registra una misión completada.
+     · registrarParticipante     → alta de la participante.
+     · procesarSello             → registra una misión completada.
+     · obtenerEstadoParticipante → progreso de la participante.
 
    ------------------------------------------------------------
    ESTRUCTURA DE LA PLANILLA · dos hojas
@@ -19,6 +20,12 @@
 
    Hoja "historial_misiones" — una fila por misión completada (log):
      nombre | dni | mision_completada | fecha_hora
+
+   IDENTIDAD: una participante es el par DNI + email (email normalizado:
+   sin espacios y en minúsculas). Así, si una chica tipea mal su DNI y
+   coincide con el de otra, NO comparten fila ni progreso: queda una fila
+   aparte (un "duplicado" que se unifica a mano si hiciera falta).
+   Re-registrarse con los mismos DNI + email recupera el mismo progreso.
 
    ============================================================ */
 
@@ -32,7 +39,8 @@ var COL_PARTICIPANTES = [
   "nombres_misiones_completadas"
 ];
 
-/* En "participantes" el DNI es la 3ª columna (email, nombre, DNI, …). */
+/* En "participantes" el email es la 1ª columna y el DNI la 3ª. */
+var COL_EMAIL_PARTICIPANTES = 1;
 var COL_DNI_PARTICIPANTES = 3;
 
 var HOJA_HISTORIAL = "historial_misiones";
@@ -63,12 +71,14 @@ function doGet(e) {
 
 /* ---------- Registro de la participante ----------
    payload = { email, nombre, dni }.
-   La identidad es el DNI: si ya existe, no duplica (idempotente).
+   La identidad es DNI + email: si ya existe ese par, no duplica
+   (idempotente). Mismo DNI con otro email → fila nueva.
    Al registrarse arranca con 0 misiones completadas.
    Devuelve { status: "success" } o { status: "error", message }. */
 function registrarParticipante(payload) {
+  var lock = LockService.getScriptLock();
   try {
-    var email = String((payload && payload.email) || "").trim();
+    var email = normalizarEmail_(payload && payload.email);
     var nombre = String((payload && payload.nombre) || "").trim();
     var dni = String((payload && payload.dni) || "").trim();
 
@@ -82,9 +92,13 @@ function registrarParticipante(payload) {
       return { status: "error", message: "DNI de prueba (error simulado)." };
     }
 
+    /* El lock evita que dos pedidos simultáneos (ej. doble toque)
+       pasen los dos la búsqueda y dupliquen la fila. */
+    lock.waitLock(10000);
+
     var hoja = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
 
-    if (buscarFilaPorDni_(hoja, dni, COL_DNI_PARTICIPANTES)) {
+    if (buscarFilaParticipante_(hoja, dni, email)) {
       return { status: "success" };   // ya registrada, no duplicamos
     }
 
@@ -94,12 +108,15 @@ function registrarParticipante(payload) {
 
   } catch (err) {
     return { status: "error", message: String(err) };
+  } finally {
+    lock.releaseLock();
   }
 }
 
 /* ---------- Registro de una misión completada ----------
-   payload = { dni, mision }  (mision = slug, ej. "vr", "robotica";
-   viaja en el QR como ?mision=slug).
+   payload = { dni, email, mision }  (mision = id, ej. "lab", "feria";
+   viaja en el QR como ?mision=id). La participante se busca por
+   DNI + email.
 
    Anota la misión en "historial_misiones" y actualiza el resumen de
    la participante en "participantes" (contador + lista de misiones).
@@ -110,19 +127,24 @@ function registrarParticipante(payload) {
      { status: "repetida", numeroMisiones }  · ya la tenía
      { status: "error",    message }         · datos malos / no registrada
 
-   ⚠️ El flujo de misiones todavía no está construido en el cliente;
-   esta función deja la estructura lista para cuando se arme. */
+   Lo llama js/datos.js → registrarMision() al completar una misión. */
 function procesarSello(payload) {
+  var lock = LockService.getScriptLock();
   try {
     var dni = String((payload && payload.dni) || "").trim();
+    var email = normalizarEmail_(payload && payload.email);
     var mision = String((payload && payload.mision) || "").trim();
 
-    if (!/^\d{8}$/.test(dni) || !mision) {
+    if (!/^\d{8}$/.test(dni) || !email || !mision) {
       return { status: "error", message: "Datos incompletos o inválidos." };
     }
 
+    /* Leer la lista y escribirla tiene que ser atómico: sin el lock, dos
+       sellos simultáneos podrían pisarse o contar la misma misión dos veces. */
+    lock.waitLock(10000);
+
     var hojaP = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
-    var fila = buscarFilaPorDni_(hojaP, dni, COL_DNI_PARTICIPANTES);
+    var fila = buscarFilaParticipante_(hojaP, dni, email);
     if (!fila) {
       return { status: "error", message: "La participante no está registrada." };
     }
@@ -152,10 +174,18 @@ function procesarSello(payload) {
 
   } catch (err) {
     return { status: "error", message: String(err) };
+  } finally {
+    lock.releaseLock();
   }
 }
 
 /* ---------- Helpers ---------- */
+
+/* Email comparable: sin espacios y en minúsculas, así "Ana@Gmail.com "
+   y "ana@gmail.com" son la misma persona (también contra filas viejas). */
+function normalizarEmail_(s) {
+  return String(s || "").trim().toLowerCase();
+}
 
 /* Obtiene (o crea con encabezados) una hoja por nombre. */
 function obtenerHoja_(nombre, columnas) {
@@ -168,38 +198,43 @@ function obtenerHoja_(nombre, columnas) {
   return hoja;
 }
 
-/* Devuelve el número de fila (1-based) del DNI en la hoja, o 0 si no
-   está. Recibe en qué columna vive el DNI (cambia según la hoja: en
-   "participantes" es la 3ª porque el email va primero). */
-function buscarFilaPorDni_(hoja, dni, colDni) {
+/* Devuelve el número de fila (1-based) de la participante con ese
+   DNI + email en "participantes", o 0 si no está. Lee las columnas de
+   email (1ª) a DNI (3ª) de una sola vez. */
+function buscarFilaParticipante_(hoja, dni, email) {
   var ultima = hoja.getLastRow();
   if (ultima < 2) return 0;
-  var dnis = hoja.getRange(2, colDni, ultima - 1, 1).getValues();
-  for (var i = 0; i < dnis.length; i++) {
-    if (String(dnis[i][0]).trim() === dni) return i + 2;
+  var desde = COL_EMAIL_PARTICIPANTES;
+  var ancho = COL_DNI_PARTICIPANTES - COL_EMAIL_PARTICIPANTES + 1;
+  var filas = hoja.getRange(2, desde, ultima - 1, ancho).getValues();
+  for (var i = 0; i < filas.length; i++) {
+    var emailFila = normalizarEmail_(filas[i][0]);
+    var dniFila = String(filas[i][ancho - 1]).trim();
+    if (dniFila === dni && emailFila === email) return i + 2;
   }
   return 0;
 }
 
 /* ---------- Consultar el estado de la participante ----------
-   payload = { dni }.
-   Le permite al cliente preguntar "¿cuántas misiones tiene este
-   DNI ya registradas?" en vez de confiar en lo que guardó en su
-   celular. Es la pieza que faltaba para que la planilla sea la
-   fuente de verdad del progreso, no el localStorage.
+   payload = { dni, email }.
+   Le permite al cliente preguntar "¿cuántas misiones tiene esta
+   participante (DNI + email) ya registradas?" en vez de confiar en lo
+   que guardó en su celular. La planilla es la fuente de verdad del
+   progreso, no el localStorage.
 
    Devuelve { status: "success", numeroMisiones, misiones } o
    { status: "error", message }. */
 function obtenerEstadoParticipante(payload) {
   try {
     var dni = String((payload && payload.dni) || "").trim();
+    var email = normalizarEmail_(payload && payload.email);
 
-    if (!/^\d{8}$/.test(dni)) {
-      return { status: "error", message: "DNI inválido." };
+    if (!/^\d{8}$/.test(dni) || !email) {
+      return { status: "error", message: "DNI o email inválido." };
     }
 
     var hoja = obtenerHoja_(HOJA_PARTICIPANTES, COL_PARTICIPANTES);
-    var fila = buscarFilaPorDni_(hoja, dni, COL_DNI_PARTICIPANTES);
+    var fila = buscarFilaParticipante_(hoja, dni, email);
 
     if (!fila) {
       return { status: "error", message: "La participante no está registrada." };
